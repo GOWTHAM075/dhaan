@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dhaan Smart Start Health Mix | 26 Natural Ingredients, 18g Protein</title>
+<meta name="description" content="Dhaan Smart Start Health Mix — a quick, healthy meal made with 26 natural ingredients. 18g protein, high fibre, high iron, gluten free. 500g pack, ₹299.">
+<link rel="icon" href="assets/img/logo.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <div class="container">
+    <span>🚚 Fast &amp; Secure Delivery Across India</span>
+    <span>🌿 100% Natural Ingredients</span>
+    <span>❤️ Made with Love in India</span>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="siteHeader">
+  <div class="container nav-wrap">
+    <a href="index.html" class="brand">
+      <img src="assets/img/logo.png" alt="Dhaan — Delivering Holistic and Authentic Nutrition">
+    </a>
+
+    <nav class="nav-links">
+      <a href="#home" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#ingredients">Ingredients</a>
+      <a href="#benefits">Benefits</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="nav-cta">
+      <a href="#order" class="btn btn-maroon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 3H5L5.4 5M5.4 5H21L18 13H7M5.4 5L7 13M7 13L4.7 15.3C4 16 4.5 17 5.4 17H18M9 21C9.6 21 10 20.6 10 20C10 19.4 9.6 19 9 19C8.4 19 8 19.4 8 20C8 20.6 8.4 21 9 21ZM18 21C18.6 21 19 20.6 19 20C19 19.4 18.6 19 18 19C17.4 19 17 19.4 17 20C17 20.6 17.4 21 18 21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Order Now
+      </a>
+    </div>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span></button>
+  </div>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#ingredients">Ingredients</a>
+    <a href="#benefits">Benefits</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#contact">Contact</a>
+    <a href="#order" class="btn btn-maroon btn-block">Order Now</a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="home">
+  <div class="container">
+    <div class="hero-copy">
+      <span class="badge-protein">18g PROTEIN PER SERVING</span>
+      <h1>Smart Start<span class="script">Health Mix</span></h1>
+      <p class="tagline">Quick &amp; Healthy Meal</p>
+      <p class="desc">A perfect blend of 26 natural ingredients for a nutritious start to your day — for kids and adults alike.</p>
+
+      <div class="price-box">
+        <div class="mrp">
+          <small>MRP</small>
+          <span class="old">₹349</span>
+        </div>
+        <div class="offer">
+          <small>Offer Price</small>
+          <span class="new">₹299</span>
+        </div>
+        <div class="off-pill">14%<span>OFF</span></div>
+      </div>
+
+      <div class="hero-actions">
+        <a href="#order" class="btn btn-maroon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M3 3H5L5.4 5M5.4 5H21L18 13H7M5.4 5L7 13M7 13L4.7 15.3C4 16 4.5 17 5.4 17H18M9 21C9.6 21 10 20.6 10 20C10 19.4 9.6 19 9 19C8.4 19 8 19.4 8 20C8 20.6 8.4 21 9 21ZM18 21C18.6 21 19 20.6 19 20C19 19.4 18.6 19 18 19C17.4 19 17 19.4 17 20C17 20.6 17.4 21 18 21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Buy Now
+        </a>
+        <span style="font-size:13px;color:var(--ink-500);font-weight:600;">You save ₹50 on this pack</span>
+      </div>
+
+      <ul class="hero-meta">
+        <li>500g Pack</li>
+        <li>26 Natural Ingredients</li>
+        <li>100% Nutrition</li>
+      </ul>
+    </div>
+
+    <div class="hero-art">
+      <div class="video-frame">
+        <video
+          id="heroVideo"
+          class="hero-video"
+          poster="assets/video/poster.jpg"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata">
+          <source src="assets/video/hero-video.mp4" type="video/mp4">
+        </video>
+        <button class="mute-toggle" id="muteToggle" aria-label="Unmute video">
+          <svg id="iconMuted" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 9V15H8L13 20V4L8 9H4Z" fill="#fff"/><path d="M16 8L21 16M21 8L16 16" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg id="iconUnmuted" width="18" height="18" viewBox="0 0 24 24" fill="none" style="display:none;"><path d="M4 9V15H8L13 20V4L8 9H4Z" fill="#fff"/><path d="M16.5 8.5C17.5 9.5 18 10.7 18 12C18 13.3 17.5 14.5 16.5 15.5M19.5 5.5C21.2 7.2 22 9.5 22 12C22 14.5 21.2 16.8 19.5 18.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="chip chip-1">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 2L14.5 8.5L21 9L16 13.5L17.5 20L12 16.5L6.5 20L8 13.5L3 9L9.5 8.5L12 2Z" fill="#F0A93B"/></svg>
+        8000+ Packs Sold
+      </div>
+      <div class="chip chip-2">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 21C12 21 4 15.5 4 9.5C4 6.5 6.5 4 9.5 4C11 4 12 4.8 12 4.8C12 4.8 13 4 14.5 4C17.5 4 20 6.5 20 9.5C20 15.5 12 21 12 21Z" fill="#83182A"/></svg>
+        10,000+ Happy Families
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURE STRIP ============ -->
+<section class="feature-strip">
+  <div class="container">
+    <div class="f-item">
+      <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2C12 2 6 8 6 13C6 16.3 8.7 19 12 19C15.3 19 18 16.3 18 13C18 8 12 2 12 2Z" stroke="#F0A93B" stroke-width="1.8"/></svg></span>
+      <span><strong>18g Protein</strong><span>Per Serving</span></span>
+    </div>
+    <div class="f-item">
+      <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="#F0A93B" stroke-width="1.8"/><path d="M12 8V12L15 14" stroke="#F0A93B" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+      <span><strong>26 Natural</strong><span>Ingredients</span></span>
+    </div>
+    <div class="f-item">
+      <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M5 12C5 8 8 5 12 5C16 5 19 8 19 12M5 12C5 16 8 19 12 19C16 19 19 16 19 12" stroke="#F0A93B" stroke-width="1.8"/></svg></span>
+      <span><strong>High in Fibre</strong><span>For Digestion</span></span>
+    </div>
+    <div class="f-item">
+      <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14H12L11 22L20 10H12L13 2Z" stroke="#F0A93B" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+      <span><strong>High in Iron</strong><span>For Strength</span></span>
+    </div>
+    <div class="f-item">
+      <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 20L20 4M9 4H4V9M15 20H20V15" stroke="#F0A93B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span><strong>Gluten Free</strong><span>100% Safe</span></span>
+    </div>
+    <div class="f-item">
+      <span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14H12L11 22L20 10H12L13 2Z" fill="#F0A93B"/></svg></span>
+      <span><strong>High Energy</strong><span>For Active You</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INGREDIENTS ============ -->
+<section class="ingredients" id="ingredients">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">What's Inside</span>
+      <h2>Made With 26 Powerful Ingredients</h2>
+      <p>Every scoop blends nuts, sprouted grains, millets and dry fruits — hand-picked for their nutrition.</p>
+    </div>
+
+    <div class="ing-grid" id="ingGrid"></div>
+  </div>
+</section>
+
+<!-- ============ WATCH VIDEO ============ -->
+<section class="watch-video">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">See It In Action</span>
+      <h2>Watch Smart Start Come Together</h2>
+      <p>From 26 real ingredients to a warm, wholesome bowl — see how Dhaan Smart Start is made.</p>
+    </div>
+
+    <div class="promo-video-frame reveal">
+      <video
+        id="promoVideo"
+        class="promo-video"
+        poster="assets/video/promo-poster.jpg"
+        muted
+        playsinline
+        preload="metadata">
+        <source src="assets/video/promo-video.mp4" type="video/mp4">
+      </video>
+      <button class="play-overlay" id="playOverlay" aria-label="Play video">
+        <span class="play-btn">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M7 4L19 12L7 20V4Z" fill="#6B1420"/></svg>
+        </span>
+      </button>
+      <button class="promo-mute-toggle" id="promoMuteToggle" aria-label="Unmute video" style="display:none;">
+        <svg id="promoIconMuted" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 9V15H8L13 20V4L8 9H4Z" fill="#fff"/><path d="M16 8L21 16M21 8L16 16" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <svg id="promoIconUnmuted" width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:none;"><path d="M4 9V15H8L13 20V4L8 9H4Z" fill="#fff"/><path d="M16.5 8.5C17.5 9.5 18 10.7 18 12C18 13.3 17.5 14.5 16.5 15.5M19.5 5.5C21.2 7.2 22 9.5 22 12C22 14.5 21.2 16.8 19.5 18.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY UNIQUE (boy image) ============ -->
+<section class="split" id="about">
+  <div class="container">
+    <div class="split-media reveal">
+      <div class="blob"></div>
+      <img src="assets/img/boy-drinking.png" alt="Happy child drinking Dhaan Smart Start health mix">
+    </div>
+    <div class="split-card reveal">
+      <span class="eyebrow">Why I Am Unique</span>
+      <h2>A Recipe Built On Real Nutrition</h2>
+      <ul class="check-list">
+        <li>
+          <span class="tick"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13L9 17L19 7" stroke="#4CA82A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span>I am rich in protein — <b>18.1g per serving</b>, to keep you fuller and stronger for longer.</span>
+        </li>
+        <li>
+          <span class="tick"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13L9 17L19 7" stroke="#4CA82A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span>I have the goodness of <b>6 sprouted ingredients</b>, rich in iron, zinc, folic acid, vitamins and minerals.</span>
+        </li>
+        <li>
+          <span class="tick"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13L9 17L19 7" stroke="#4CA82A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span>I have <b>dates powder</b> to improve iron levels and build immune power naturally.</span>
+        </li>
+        <li>
+          <span class="tick"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13L9 17L19 7" stroke="#4CA82A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span>I am versatile — make porridge, idly, dosa, adai, puttu, laddus, smoothies and more, or use me as a substitute flour for chapathis and baking.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HEALTHY START (bowl/glass image) ============ -->
+<section class="split" id="benefits">
+  <div class="container">
+    <div class="split-card reveal">
+      <span class="eyebrow">Health Benefits</span>
+      <h2>A Healthy Start For A Stronger You</h2>
+      <div class="benefit-grid">
+        <div class="benefit-item">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2L19 5V11C19 16 16 19.5 12 21C8 19.5 5 16 5 11V5L12 2Z" stroke="#F0A93B" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+          <strong>Supports Immunity</strong>
+        </div>
+        <div class="benefit-item">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 20V10M12 20V4M18 20V13" stroke="#F0A93B" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          <strong>Improves Strength</strong>
+        </div>
+        <div class="benefit-item">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="7" r="3" stroke="#F0A93B" stroke-width="1.8"/><path d="M5 21C5 17 8 14.5 12 14.5C16 14.5 19 17 19 21" stroke="#F0A93B" stroke-width="1.8"/></svg></span>
+          <strong>Good for Kids &amp; Adults</strong>
+        </div>
+        <div class="benefit-item">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14H12L11 22L20 10H12L13 2Z" stroke="#F0A93B" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+          <strong>Keeps You Active All Day</strong>
+        </div>
+      </div>
+    </div>
+    <div class="split-media reveal">
+      <div class="blob"></div>
+      <img src="assets/img/bowl-glass.png" alt="A bowl of Dhaan health mix porridge and a glass of health mix drink">
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY CHOOSE DHAAN ============ -->
+<section class="why-choose">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Why Choose Dhaan</span>
+      <h2>Why Choose Dhaan Smart Start?</h2>
+      <p>Trusted by thousands of families across India for a wholesome, everyday meal.</p>
+    </div>
+
+    <div class="why-grid reveal">
+      <div class="why-card">
+        <span class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 2L19 5V11C19 16 16 19.5 12 21C8 19.5 5 16 5 11V5L12 2Z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+        <strong>Natural &amp; Pure</strong>
+        <span>Made with 26 carefully selected natural ingredients.</span>
+      </div>
+      <div class="why-card">
+        <span class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 2C12 2 6 8 6 13C6 16.3 8.7 19 12 19C15.3 19 18 16.3 18 13C18 8 12 2 12 2Z" stroke="#fff" stroke-width="1.8"/></svg></span>
+        <strong>Protein Rich</strong>
+        <span>18g of protein per serving to support your active lifestyle.</span>
+      </div>
+      <div class="why-card">
+        <span class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M5 12C5 8 8 5 12 5C16 5 19 8 19 12M5 12C5 16 8 19 12 19C16 19 19 16 19 12" stroke="#fff" stroke-width="1.8"/></svg></span>
+        <strong>Nutrient Dense</strong>
+        <span>High in fibre and iron to support overall well-being.</span>
+      </div>
+      <div class="why-card">
+        <span class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="#fff" stroke-width="1.8"/><path d="M12 8V12L15 14" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        <strong>Easy &amp; Quick</strong>
+        <span>Ready in minutes for a wholesome and delicious meal.</span>
+      </div>
+    </div>
+
+    <div class="stats-banner reveal">
+      <div class="stat">
+        <b data-count="8000">0</b>
+        <span>Packs Sold</span>
+      </div>
+      <div class="divider">Proudly Trusted By Families<br>Across India</div>
+      <div class="stat">
+        <b data-count="10000">0</b>
+        <span>Happy Families</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW TO USE ============ -->
+<section class="steps">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">How To Prepare</span>
+      <h2>Ready In 3 Easy Steps, Just 5 Minutes</h2>
+    </div>
+    <div class="steps-grid reveal">
+      <div class="step-card">
+        <span class="step-num">1</span>
+        <span class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M4 4H20M6 4V16C6 17.5 7.5 19 9 19H15C16.5 19 18 17.5 18 16V4" stroke="#83182A" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        <h3>Mix</h3>
+        <p>Take 2 tbsp (25g) of Smart Start Health Mix and 1 cup of water or milk.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">2</span>
+        <span class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M4 12H20V15C20 17.5 18 19 15 19H9C6 19 4 17.5 4 15V12Z" stroke="#83182A" stroke-width="1.8"/><path d="M8 12C8 9 9 7 9 5M12 12C12 9 13 7 13 5M16 12C16 9 17 7 17 5" stroke="#83182A" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        <h3>Cook</h3>
+        <p>Boil the mixture for 4–5 minutes on medium flame, stirring continuously.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">3</span>
+        <span class="ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M6 3V9C6 12 8 14 10 14H12C14 14 16 12 16 9V3M4 21H18M9 21V14M13 21V14" stroke="#83182A" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        <h3>Enjoy</h3>
+        <p>Add jaggery, honey or fruits as per taste. Enjoy a warm, nutritious meal!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REVIEWS ============ -->
+<section class="reviews" id="reviews">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Customer Love</span>
+      <h2>What Families Are Saying</h2>
+      <p>Real feedback from parents and health-conscious customers across India.</p>
+    </div>
+
+    <div class="review-grid reveal" id="reviewGrid"></div>
+  </div>
+</section>
+
+<!-- ============ ORDER SECTION ============ -->
+<section class="order-section" id="order">
+  <div class="container">
+    <div class="order-panel reveal">
+      <div class="order-head">
+        <h2>Order Smart Start Health Mix Now</h2>
+        <p>Secure checkout · Delivered across India in 3–5 business days</p>
+      </div>
+
+      <form class="order-grid" id="orderForm" novalidate>
+
+        <!-- QUANTITY -->
+        <div class="order-block">
+          <h3><span class="num">1</span> Choose Quantity</h3>
+          <div class="product-mini">
+            <img src="assets/img/product-pack.png" alt="Smart Start Health Mix pack">
+            <div>
+              <strong>Smart Start Health Mix</strong>
+              <span>500g Pack</span>
+            </div>
+          </div>
+          <div class="qty-control">
+            <button type="button" id="qtyMinus" aria-label="Decrease quantity">–</button>
+            <input type="text" id="qtyInput" value="1" readonly aria-live="polite">
+            <button type="button" id="qtyPlus" aria-label="Increase quantity">+</button>
+          </div>
+          <div class="price-line"><span>Unit price</span><strong>₹299</strong></div>
+          <div class="price-line"><span>MRP</span><strong style="text-decoration:line-through;opacity:.6;">₹349</strong></div>
+        </div>
+
+        <!-- DELIVERY DETAILS -->
+        <div class="order-block">
+          <h3><span class="num">2</span> Delivery Details</h3>
+          <div class="form-grid">
+            <div class="field full">
+              <label for="fullName">Full Name</label>
+              <input type="text" id="fullName" name="fullName" placeholder="e.g. Priya Raman" required>
+              <span class="err-msg"></span>
+            </div>
+            <div class="field">
+              <label for="mobile">Mobile Number</label>
+              <input type="tel" id="mobile" name="mobile" placeholder="10-digit mobile" maxlength="10" required>
+              <span class="err-msg"></span>
+            </div>
+            <div class="field">
+              <label for="email">Email (optional)</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com">
+              <span class="err-msg"></span>
+            </div>
+            <div class="field full">
+              <label for="address">Address</label>
+              <input type="text" id="address" name="address" placeholder="House no, street, area" required>
+              <span class="err-msg"></span>
+            </div>
+            <div class="field">
+              <label for="city">City</label>
+              <input type="text" id="city" name="city" placeholder="City" required>
+              <span class="err-msg"></span>
+            </div>
+            <div class="field">
+              <label for="state">State</label>
+              <input type="text" id="state" name="state" placeholder="State" required value="Tamil Nadu">
+              <span class="err-msg"></span>
+            </div>
+            <div class="field full">
+              <label for="pincode">Pincode</label>
+              <input type="text" id="pincode" name="pincode" placeholder="6-digit pincode" maxlength="6" required>
+              <span class="err-msg"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ORDER SUMMARY -->
+        <div class="order-block">
+          <h3><span class="num">3</span> Order Summary</h3>
+          <div class="summary-rows">
+            <div class="row"><span>Product (<span id="sumQty">1</span> × ₹299)</span><span id="sumProduct">₹299</span></div>
+            <div class="row"><span>Delivery Charges</span><span id="sumDelivery">₹40</span></div>
+            <div class="row total"><span>Total Amount</span><span id="sumTotal">₹339</span></div>
+          </div>
+          <button type="submit" class="btn btn-gold btn-block">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="#0A1830" stroke-width="1.8"/><path d="M8 11V8C8 5.8 9.8 4 12 4C14.2 4 16 5.8 16 8V11" stroke="#0A1830" stroke-width="1.8"/></svg>
+            Proceed to Payment
+          </button>
+          <p class="pay-note">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 11V8C8 5.8 9.8 4 12 4C14.2 4 16 5.8 16 8V11" stroke="currentColor" stroke-width="1.8"/></svg>
+            Secure &amp; Safe Payments via Razorpay
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MODALS ============ -->
+<div class="modal-overlay" id="processingModal">
+  <div class="modal-card modal-processing">
+    <div class="spinner"></div>
+    <h3>Processing your order…</h3>
+    <p>Please don't close this window while we take you to Razorpay's secure payment gateway.</p>
+  </div>
+</div>
+
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal-card">
+    <div class="icon-circle">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M5 13L9 17L19 7" stroke="#4CA82A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <h3>Order Confirmed!</h3>
+    <p>Thank you for choosing Dhaan. A confirmation will be sent to your mobile number shortly. Your Smart Start Health Mix is on its way!</p>
+    <div class="order-id" id="orderIdDisplay">Order ID: DHN000000</div>
+    <button class="btn btn-maroon btn-block" id="closeConfirm">Continue Shopping</button>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer" id="contact">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="assets/img/logo.png" alt="Dhaan">
+        <p>Delivering holistic and authentic nutrition since 1996. Wholesome, natural, and made with love in India.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M14 9H16V6H14C12.3 6 11 7.3 11 9V11H9V14H11V20H14V14H16L17 11H14V9Z" fill="#FDF8EF"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="#FDF8EF" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="#FDF8EF" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="1" fill="#FDF8EF"/></svg></a>
+          <a href="#" aria-label="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3C7 3 3 7 3 12C3 13.7 3.5 15.3 4.3 16.6L3 21L7.5 19.7C8.8 20.5 10.4 21 12 21C17 21 21 17 21 12C21 7 17 3 12 3Z" stroke="#FDF8EF" stroke-width="1.6"/><path d="M8.5 11C9.3 13.5 10.5 14.7 13 15.5C13.6 15.7 14.5 15.5 14.9 14.9L15.2 14.4" stroke="#FDF8EF" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#ingredients">Ingredients</a></li>
+          <li><a href="#benefits">Benefits</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Policies</h4>
+        <ul>
+          <li><a href="shipping-policy.html">Shipping Policy</a></li>
+          <li><a href="refund-policy.html">Refund Policy</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Contact Us</h4>
+        <ul class="footer-contact">
+          <li>📞 <a href="tel:8608686455">8608686455</a></li>
+          <li>✉️ <a href="mailto:dhaanfoods@gmail.com">dhaanfoods@gmail.com</a></li>
+          <li>📍 Tamil Nadu, India</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Newsletter</h4>
+        <p style="font-size:13px;color:rgba(253,248,239,.55);">Subscribe for healthy tips and offers.</p>
+        <form class="newsletter-form" id="newsletterForm">
+          <input type="email" placeholder="Enter your email" required>
+          <button type="submit" aria-label="Subscribe">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 12H20M20 12L14 6M20 12L14 18" stroke="#0A1830" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Dhaan Foods. All Rights Reserved.</span>
+      <span><a href="privacy-policy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="shipping-policy.html">Shipping</a> · <a href="refund-policy.html">Refunds</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ MOBILE STICKY ORDER BAR ============ -->
+<div class="mobile-order-bar">
+  <div class="price">₹299 <small>₹349</small></div>
+  <a href="#order" class="btn btn-maroon">Order Now</a>
+</div>
+
+<!-- Razorpay Checkout script — used by js/main.js when live keys are connected -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
