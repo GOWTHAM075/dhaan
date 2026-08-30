@@ -140,7 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* =========================================================
      HTML ESCAPE
-     Prevents customer data from becoming HTML.
      ========================================================= */
 
   function escapeHtml(value) {
@@ -361,10 +360,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    /* -------------------------------------------------------
-       JWT EXPIRED / INVALID
-       ------------------------------------------------------- */
-
     if (
       response.status === 401
     ) {
@@ -380,10 +375,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-
-    /* -------------------------------------------------------
-       OTHER API ERROR
-       ------------------------------------------------------- */
 
     if (!response.ok) {
 
@@ -665,18 +656,6 @@ document.addEventListener('DOMContentLoaded', () => {
       );
 
 
-    /*
-     * Your backend currently returns:
-     *
-     * [
-     *   { orderId: "...", ... }
-     * ]
-     *
-     * This also supports:
-     *
-     * { orders: [...] }
-     */
-
     if (Array.isArray(data)) {
 
       return data;
@@ -906,19 +885,6 @@ document.addEventListener('DOMContentLoaded', () => {
       orders.map(
         order => {
 
-
-          /*
-           * IMPORTANT:
-           *
-           * Your MongoDB/backend uses:
-           *
-           * order.orderId
-           *
-           * NOT:
-           *
-           * order.id
-           */
-
           const orderId =
             escapeHtml(
               order.orderId ||
@@ -1019,8 +985,6 @@ document.addEventListener('DOMContentLoaded', () => {
               data-id="${orderId}"
             >
 
-              <!-- ORDER ID -->
-
               <td>
 
                 <div
@@ -1042,8 +1006,6 @@ document.addEventListener('DOMContentLoaded', () => {
               </td>
 
 
-              <!-- CUSTOMER -->
-
               <td>
 
                 <div
@@ -1054,6 +1016,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 <div
                   class="cust-sub"
+                  data-customer-mobile="${mobile}"
                 >
                   ${mobile}
                 </div>
@@ -1066,8 +1029,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
               </td>
 
-
-              <!-- ADDRESS -->
 
               <td>
 
@@ -1083,14 +1044,10 @@ document.addEventListener('DOMContentLoaded', () => {
               </td>
 
 
-              <!-- QUANTITY -->
-
               <td>
                 ${quantity}
               </td>
 
-
-              <!-- TOTAL -->
 
               <td>
 
@@ -1102,8 +1059,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
               </td>
 
-
-              <!-- PAYMENT -->
 
               <td>
 
@@ -1117,8 +1072,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
               </td>
 
-
-              <!-- STATUS -->
 
               <td>
 
@@ -1156,8 +1109,6 @@ document.addEventListener('DOMContentLoaded', () => {
               </td>
 
 
-              <!-- TRACKING -->
-
               <td>
 
                 <div
@@ -1184,8 +1135,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
               </td>
 
-
-              <!-- ACTIONS -->
 
               <td>
 
@@ -1259,12 +1208,6 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
 
-
-        /*
-         * IMPORTANT:
-         *
-         * data-id contains orderId.
-         */
 
         const orderId =
           row.dataset.id;
@@ -1375,10 +1318,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
 
-            /*
-             * Reload real MongoDB data
-             */
-
             await loadOrders();
 
 
@@ -1411,109 +1350,113 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         /* =================================================
-           MANUAL NOTIFICATION
+           FREE WHATSAPP CLICK-TO-CHAT
            ================================================= */
 
-      /* =========================================================
-   WHATSAPP CLICK-TO-CHAT NOTIFICATION
-   ========================================================= */
+        if (
+          button.dataset.action ===
+          'notify'
+        ) {
 
-if (
-  button.dataset.action === 'notify'
-) {
+          /*
+           * IMPORTANT:
+           * Get mobile from the attribute we created
+           * specifically for the WhatsApp button.
+           */
 
-  /* -------------------------------------------------------
-     CUSTOMER DETAILS
-     ------------------------------------------------------- */
-
-  const customerName =
-    row.querySelector('.cust-name')?.textContent.trim() ||
-    'Customer';
-
-
-  const mobileText =
-    row.querySelector('.cust-sub')?.textContent.trim() ||
-    '';
+          const mobileElement =
+            row.querySelector(
+              '[data-customer-mobile]'
+            );
 
 
-  const status =
-    row.querySelector('[data-field="status"]')?.value ||
-    'Pending';
+          const mobileText =
+            mobileElement
+              ?.getAttribute(
+                'data-customer-mobile'
+              ) ||
+            '';
 
 
-  const trackingId =
-    row.querySelector('[data-field="trackingId"]')?.value.trim() ||
-    '';
+          const customerName =
+            row.querySelector(
+              '.cust-name'
+            )?.textContent.trim() ||
+            'Customer';
 
 
-  const courier =
-    row.querySelector('[data-field="courier"]')?.value.trim() ||
-    '';
+          /* -------------------------------------------------
+             CLEAN PHONE NUMBER
+             ------------------------------------------------- */
+
+          let phone =
+            mobileText.replace(
+              /\D/g,
+              ''
+            );
 
 
-  /* -------------------------------------------------------
-     CLEAN MOBILE NUMBER
-     ------------------------------------------------------- */
+          /*
+           * Indian 10-digit number:
+           *
+           * 9876543210
+           *
+           * becomes:
+           *
+           * 919876543210
+           */
 
-  let phone =
-    mobileText.replace(/\D/g, '');
+          if (
+            phone.length === 10
+          ) {
 
+            phone =
+              '91' + phone;
 
-  /*
-   * Indian number:
-   *
-   * 9876543210
-   * ↓
-   * 919876543210
-   */
-
-  if (
-    phone.length === 10
-  ) {
-
-    phone =
-      '91' + phone;
-
-  }
+          }
 
 
-  /*
-   * Handle numbers that already contain 91.
-   */
+          /*
+           * If number is already:
+           *
+           * 919876543210
+           *
+           * leave it unchanged.
+           */
 
-  if (
-    phone.length === 12 &&
-    phone.startsWith('91')
-  ) {
+          if (
+            phone.length === 12 &&
+            phone.startsWith('91')
+          ) {
 
-    // already correct
+            // Correct Indian WhatsApp number.
 
-  }
-
-
-  /* -------------------------------------------------------
-     VALIDATE PHONE
-     ------------------------------------------------------- */
-
-  if (
-    phone.length !== 12 ||
-    !phone.startsWith('91')
-  ) {
-
-    showToast(
-      'Invalid customer mobile number.'
-    );
-
-    return;
-
-  }
+          }
 
 
-  /* -------------------------------------------------------
-     BUILD MESSAGE
-     ------------------------------------------------------- */
+          /* -------------------------------------------------
+             VALIDATE
+             ------------------------------------------------- */
 
-  let message =
+          if (
+            phone.length !== 12 ||
+            !phone.startsWith('91')
+          ) {
+
+            alert(
+              'Customer mobile number is missing or invalid.'
+            );
+
+            return;
+
+          }
+
+
+          /* -------------------------------------------------
+             BUILD MESSAGE
+             ------------------------------------------------- */
+
+          let message =
 `Hi ${customerName} 👋
 
 Your Dhaan Foods order has been updated.
@@ -1522,59 +1465,66 @@ Order ID: ${orderId}
 Status: ${status}`;
 
 
-  if (trackingId) {
+          if (trackingId) {
 
-    message +=
+            message +=
 `\nTracking ID: ${trackingId}`;
 
-  }
+          }
 
 
-  if (courier) {
+          if (courier) {
 
-    message +=
+            message +=
 `\nCourier: ${courier}`;
 
-  }
+          }
 
 
-  if (!trackingId) {
+          if (!trackingId) {
 
-    message +=
+            message +=
 `\nTracking details will be shared once your order is dispatched.`;
 
-  }
+          }
 
 
-  message +=
+          message +=
 `
 
 Thank you for choosing Dhaan Foods! 🌾`;
 
 
-  /* -------------------------------------------------------
-     WHATSAPP URL
-     ------------------------------------------------------- */
+          /* -------------------------------------------------
+             WHATSAPP URL
+             ------------------------------------------------- */
 
-  const whatsappUrl =
-    `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-
-
-  /* -------------------------------------------------------
-     OPEN WHATSAPP
-     ------------------------------------------------------- */
-
-  window.open(
-    whatsappUrl,
-    '_blank'
-  );
+          const whatsappUrl =
+            `https://wa.me/${phone}?text=${encodeURIComponent(
+              message
+            )}`;
 
 
-  showToast(
-    'WhatsApp message prepared.'
-  );
+          /* -------------------------------------------------
+             OPEN WHATSAPP
+             ------------------------------------------------- */
 
-}
+          window.open(
+            whatsappUrl,
+            '_blank'
+          );
+
+
+          showToast(
+            'WhatsApp message prepared.'
+          );
+
+        }
+
+      }
+    );
+
+  }
 
 
   /* =========================================================
@@ -1652,12 +1602,6 @@ Thank you for choosing Dhaan Foods! 🌾`;
           searchTimer
         );
 
-
-        /*
-         * Small delay so we don't
-         * request the backend on
-         * every single keystroke.
-         */
 
         searchTimer =
           setTimeout(
