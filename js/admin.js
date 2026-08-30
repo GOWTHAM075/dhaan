@@ -1,281 +1,1590 @@
 /* =========================================================
-   DHAAN Admin — admin.js
-   Demo data layer: reads/writes orders in localStorage under
-   'dhaan_orders'. Swap the functions marked BACKEND HOOK for
-   real API calls once the server is ready.
+   DHAAN ADMIN — REAL BACKEND VERSION
+   Uses Render API + MongoDB
    ========================================================= */
 
-const ORDERS_KEY = 'dhaan_orders';
-const AUTH_KEY = 'dhaan_admin_authed';
-const DEMO_USER = 'admin';
-const DEMO_PASS = 'dhaan2026';
+document.addEventListener('DOMContentLoaded', () => {
 
-const STATUS_OPTIONS = ['Pending', 'Confirmed', 'Shipped', 'Out for Delivery', 'Delivered', 'Cancelled'];
+  /* =========================================================
+     CONFIGURATION
+     ========================================================= */
 
-/* ---------- BACKEND HOOK: fetch orders ----------
-   Replace with: const res = await fetch('/api/orders'); return res.json();
-------------------------------------------------- */
-function getOrders() {
-  try {
-    return JSON.parse(localStorage.getItem(ORDERS_KEY) || '[]');
-  } catch (e) {
-    return [];
-  }
-}
+  const API_URL =
+    'https://dhaan-backend.onrender.com';
 
-/* ---------- BACKEND HOOK: persist an order update ----------
-   Replace with: await fetch(`/api/orders/${id}`, { method:'PATCH', body: JSON.stringify(changes) })
----------------------------------------------------------- */
-function saveOrders(orders) {
-  localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
-}
+  const TOKEN_KEY =
+    'dhaan_admin_token';
 
-function statusSlug(status) {
-  return status.toLowerCase().replace(/\s+/g, '-');
-}
 
-function formatDate(iso) {
-  const d = new Date(iso);
-  if (isNaN(d)) return '';
-  return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) +
-    ' · ' + d.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
-}
-
-/* ---------- Sample data for first-time preview ---------- */
-function seedDemoOrders() {
-  const now = Date.now();
-  const demo = [
-    {
-      id: 'DHN284193', createdAt: new Date(now - 3600e3 * 2).toISOString(),
-      status: 'Pending', paymentStatus: 'Paid', trackingId: '', courier: '',
-      fullName: 'Priya Ramesh', mobile: '9876543210', email: 'priya@example.com',
-      address: '12 Lake View Street', city: 'Chennai', state: 'Tamil Nadu', pincode: '600041',
-      quantity: 2, unitPrice: 299, delivery: 40, total: 638
-    },
-    {
-      id: 'DHN117582', createdAt: new Date(now - 3600e3 * 30).toISOString(),
-      status: 'Shipped', paymentStatus: 'Paid', trackingId: 'SR482910334IN', courier: 'India Post Speed',
-      fullName: 'Arun Kumar', mobile: '9123456780', email: '',
-      address: '45, Race Course Road', city: 'Coimbatore', state: 'Tamil Nadu', pincode: '641018',
-      quantity: 1, unitPrice: 299, delivery: 40, total: 339
-    },
-    {
-      id: 'DHN990213', createdAt: new Date(now - 3600e3 * 96).toISOString(),
-      status: 'Delivered', paymentStatus: 'Paid', trackingId: 'DTDC7739021AA', courier: 'DTDC',
-      fullName: 'Meena Iyer', mobile: '9988776655', email: 'meena@example.com',
-      address: '7B, Fairlands', city: 'Salem', state: 'Tamil Nadu', pincode: '636016',
-      quantity: 3, unitPrice: 299, delivery: 40, total: 937
-    }
+  const STATUS_OPTIONS = [
+    'Pending',
+    'Confirmed',
+    'Shipped',
+    'Out for Delivery',
+    'Delivered',
+    'Cancelled'
   ];
-  saveOrders(demo);
-  return demo;
-}
 
-/* ================= LOGIN ================= */
-const loginScreen = document.getElementById('loginScreen');
-const adminShell = document.getElementById('adminShell');
-const loginForm = document.getElementById('loginForm');
-const loginError = document.getElementById('loginError');
-const logoutBtn = document.getElementById('logoutBtn');
 
-function showDashboard() {
-  loginScreen.style.display = 'none';
-  adminShell.classList.add('show');
-  renderOrders();
-}
+  let currentFilter = 'All';
+  let currentSearch = '';
 
-if (sessionStorage.getItem(AUTH_KEY) === 'true') {
-  showDashboard();
-}
+  let toastTimer = null;
 
-loginForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const user = document.getElementById('loginUser').value.trim();
-  const pass = document.getElementById('loginPass').value;
-  /* ---------- BACKEND HOOK: real authentication ----------
-     Replace this check with a call to your login API, e.g.
-     fetch('/api/admin/login', { method:'POST', body: JSON.stringify({user,pass}) })
-     and store the returned session token instead of a boolean flag.
-  --------------------------------------------------------- */
-  if (user === DEMO_USER && pass === DEMO_PASS) {
-    sessionStorage.setItem(AUTH_KEY, 'true');
-    loginError.textContent = '';
-    showDashboard();
-  } else {
-    loginError.textContent = 'Incorrect username or password.';
-  }
-});
 
-logoutBtn.addEventListener('click', () => {
-  sessionStorage.removeItem(AUTH_KEY);
-  adminShell.classList.remove('show');
-  loginScreen.style.display = 'flex';
-  document.getElementById('loginPass').value = '';
-});
+  /* =========================================================
+     ELEMENTS
+     ========================================================= */
 
-/* ================= TOAST ================= */
-let toastTimer;
-function showToast(msg) {
-  const toast = document.getElementById('toast');
-  toast.textContent = msg;
-  toast.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
-}
+  const loginScreen =
+    document.getElementById('loginScreen');
 
-/* ================= NOTIFY CUSTOMER ----------
-   BACKEND HOOK: this is where the real automated message goes out.
-   Two common approaches once the backend exists:
-     1) WhatsApp: Meta WhatsApp Cloud API (or a provider like Twilio's
-        WhatsApp Business API) — send a template message such as
-        "Your Dhaan order {{id}} is now {{status}}. Track: {{trackingId}}"
-        to the customer's `mobile` number.
-     2) Email: a transactional service like SendGrid/Postmark/Nodemailer,
-        emailing the customer's `email` with the same order update.
-   Best practice is to trigger this automatically from the backend the
-   moment an order's status changes (e.g. in the PATCH /api/orders/:id
-   handler), rather than relying on the admin remembering to click a
-   button. The manual button here is kept for the demo / edge cases.
-------------------------------------------------------------- */
-function notifyCustomer(order) {
-  const channel = order.email ? 'WhatsApp + Email' : 'WhatsApp';
-  showToast(`(Demo) ${channel} sent to ${order.fullName} — "Order ${order.id} is now ${order.status}."`);
-}
+  const adminShell =
+    document.getElementById('adminShell');
 
-/* ================= RENDER ================= */
-let currentFilter = 'All';
-let currentSearch = '';
+  const loginForm =
+    document.getElementById('loginForm');
 
-function computeStats(orders) {
-  const total = orders.length;
-  const pending = orders.filter(o => o.status === 'Pending').length;
-  const shipped = orders.filter(o => o.status === 'Shipped' || o.status === 'Out for Delivery').length;
-  const delivered = orders.filter(o => o.status === 'Delivered').length;
-  document.getElementById('statTotal').textContent = total;
-  document.getElementById('statPending').textContent = pending;
-  document.getElementById('statShipped').textContent = shipped;
-  document.getElementById('statDelivered').textContent = delivered;
-}
+  const loginError =
+    document.getElementById('loginError');
 
-function matchesFilters(order) {
-  const filterOk = currentFilter === 'All' || order.status === currentFilter;
-  if (!filterOk) return false;
-  if (!currentSearch) return true;
-  const q = currentSearch.toLowerCase();
-  return (
-    (order.fullName || '').toLowerCase().includes(q) ||
-    (order.mobile || '').includes(q) ||
-    (order.id || '').toLowerCase().includes(q)
-  );
-}
+  const logoutBtn =
+    document.getElementById('logoutBtn');
 
-function renderOrders() {
-  const orders = getOrders();
-  computeStats(orders);
+  const ordersBody =
+    document.getElementById('ordersBody');
 
-  const tbody = document.getElementById('ordersBody');
-  const emptyState = document.getElementById('emptyState');
-  const table = document.getElementById('ordersTable');
+  const filterChips =
+    document.getElementById('filterChips');
 
-  const visible = orders.filter(matchesFilters);
+  const searchInput =
+    document.getElementById('searchInput');
 
-  if (orders.length === 0) {
-    table.style.display = 'none';
-    emptyState.style.display = 'block';
-    return;
-  }
-  table.style.display = 'table';
-  emptyState.style.display = 'none';
 
-  if (visible.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:30px;color:var(--ink-500);">No orders match this filter/search.</td></tr>`;
-    return;
+  /* =========================================================
+     AUTH HELPERS
+     ========================================================= */
+
+  function getToken() {
+
+    return sessionStorage.getItem(
+      TOKEN_KEY
+    );
+
   }
 
-  tbody.innerHTML = visible.map(order => `
-    <tr data-id="${order.id}">
-      <td>
-        <div class="order-id-cell">${order.id}</div>
-        <div class="order-date">${formatDate(order.createdAt)}</div>
-      </td>
-      <td>
-        <div class="cust-name">${order.fullName || '—'}</div>
-        <div class="cust-sub">${order.mobile || ''}</div>
-        <div class="cust-sub">${order.email || ''}</div>
-      </td>
-      <td>
-        <div class="addr-cell">${order.address || ''}, ${order.city || ''}, ${order.state || ''} – ${order.pincode || ''}</div>
-      </td>
-      <td>${order.quantity || 1}</td>
-      <td><strong>₹${order.total || 0}</strong></td>
-      <td><span class="badge ${statusSlug(order.paymentStatus || 'Paid')}">${order.paymentStatus || 'Paid'}</span></td>
-      <td>
-        <select class="status-select" data-field="status">
-          ${STATUS_OPTIONS.map(s => `<option value="${s}" ${s === order.status ? 'selected' : ''}>${s}</option>`).join('')}
-        </select>
-      </td>
-      <td>
-        <div class="tracking-fields">
-          <input type="text" class="mini-input" data-field="trackingId" placeholder="Tracking ID" value="${order.trackingId || ''}">
-          <input type="text" class="mini-input" data-field="courier" placeholder="Courier name" value="${order.courier || ''}">
-        </div>
-      </td>
-      <td>
-        <div class="row-actions">
-          <button class="btn btn-save" data-action="save">Save Changes</button>
-          <button class="btn btn-notify" data-action="notify">Notify Customer</button>
-          <span class="save-msg"></span>
-        </div>
-      </td>
-    </tr>
-  `).join('');
-}
 
-/* ================= EVENTS ================= */
-document.getElementById('ordersBody').addEventListener('click', (e) => {
-  const btn = e.target.closest('button[data-action]');
-  if (!btn) return;
-  const row = e.target.closest('tr');
-  const id = row.dataset.id;
-  const orders = getOrders();
-  const idx = orders.findIndex(o => o.id === id);
-  if (idx === -1) return;
+  function setToken(token) {
 
-  const status = row.querySelector('[data-field="status"]').value;
-  const trackingId = row.querySelector('[data-field="trackingId"]').value.trim();
-  const courier = row.querySelector('[data-field="courier"]').value.trim();
+    sessionStorage.setItem(
+      TOKEN_KEY,
+      token
+    );
 
-  orders[idx] = { ...orders[idx], status, trackingId, courier };
-  saveOrders(orders);
-
-  if (btn.dataset.action === 'save') {
-    const msg = row.querySelector('.save-msg');
-    msg.textContent = 'Saved ✓';
-    setTimeout(() => { msg.textContent = ''; }, 2000);
-    computeStats(orders);
-  } else if (btn.dataset.action === 'notify') {
-    notifyCustomer(orders[idx]);
   }
-});
 
-document.getElementById('filterChips').addEventListener('click', (e) => {
-  const chip = e.target.closest('.filter-chip');
-  if (!chip) return;
-  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-  chip.classList.add('active');
-  currentFilter = chip.dataset.filter;
-  renderOrders();
-});
 
-document.getElementById('searchInput').addEventListener('input', (e) => {
-  currentSearch = e.target.value.trim();
-  renderOrders();
-});
+  function clearToken() {
 
-const seedBtn = document.getElementById('seedBtn');
-if (seedBtn) {
-  seedBtn.addEventListener('click', () => {
-    seedDemoOrders();
-    renderOrders();
-  });
-}
+    sessionStorage.removeItem(
+      TOKEN_KEY
+    );
+
+  }
+
+
+  function showLogin() {
+
+    if (adminShell) {
+
+      adminShell.classList.remove(
+        'show'
+      );
+
+    }
+
+
+    if (loginScreen) {
+
+      loginScreen.style.display =
+        'flex';
+
+    }
+
+  }
+
+
+  function showDashboard() {
+
+    if (loginScreen) {
+
+      loginScreen.style.display =
+        'none';
+
+    }
+
+
+    if (adminShell) {
+
+      adminShell.classList.add(
+        'show'
+      );
+
+    }
+
+
+    loadOrders();
+
+  }
+
+
+  /* =========================================================
+     HTML ESCAPE
+     Prevents customer data from becoming HTML.
+     ========================================================= */
+
+  function escapeHtml(value) {
+
+    return String(
+      value ?? ''
+    )
+      .replace(
+        /&/g,
+        '&amp;'
+      )
+      .replace(
+        /</g,
+        '&lt;'
+      )
+      .replace(
+        />/g,
+        '&gt;'
+      )
+      .replace(
+        /"/g,
+        '&quot;'
+      )
+      .replace(
+        /'/g,
+        '&#039;'
+      );
+
+  }
+
+
+  /* =========================================================
+     STATUS CLASS
+     ========================================================= */
+
+  function statusSlug(status) {
+
+    return String(
+      status || ''
+    )
+      .toLowerCase()
+      .replace(
+        /\s+/g,
+        '-'
+      );
+
+  }
+
+
+  /* =========================================================
+     DATE FORMAT
+     ========================================================= */
+
+  function formatDate(iso) {
+
+    if (!iso) {
+      return '';
+    }
+
+
+    const d =
+      new Date(iso);
+
+
+    if (
+      Number.isNaN(
+        d.getTime()
+      )
+    ) {
+
+      return '';
+
+    }
+
+
+    return (
+
+      d.toLocaleDateString(
+        'en-IN',
+        {
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric'
+        }
+      )
+
+      +
+
+      ' · '
+
+      +
+
+      d.toLocaleTimeString(
+        'en-IN',
+        {
+          hour: '2-digit',
+          minute: '2-digit'
+        }
+      )
+
+    );
+
+  }
+
+
+  /* =========================================================
+     TOAST
+     ========================================================= */
+
+  function showToast(message) {
+
+    const toast =
+      document.getElementById(
+        'toast'
+      );
+
+
+    if (!toast) {
+      return;
+    }
+
+
+    toast.textContent =
+      message;
+
+
+    toast.classList.add(
+      'show'
+    );
+
+
+    clearTimeout(
+      toastTimer
+    );
+
+
+    toastTimer =
+      setTimeout(
+        () => {
+
+          toast.classList.remove(
+            'show'
+          );
+
+        },
+        3200
+      );
+
+  }
+
+
+  /* =========================================================
+     API REQUEST
+     ========================================================= */
+
+  async function apiRequest(
+    endpoint,
+    options = {}
+  ) {
+
+    const token =
+      getToken();
+
+
+    const headers = {
+
+      'Content-Type':
+        'application/json',
+
+      ...(options.headers || {})
+
+    };
+
+
+    if (token) {
+
+      headers.Authorization =
+        `Bearer ${token}`;
+
+    }
+
+
+    let response;
+
+
+    try {
+
+      response =
+        await fetch(
+          `${API_URL}${endpoint}`,
+          {
+            ...options,
+            headers
+          }
+        );
+
+    } catch (networkError) {
+
+      throw new Error(
+        'Could not connect to Dhaan server. Please try again.'
+      );
+
+    }
+
+
+    let data = {};
+
+
+    try {
+
+      data =
+        await response.json();
+
+    } catch {
+
+      data = {};
+
+    }
+
+
+    /* -------------------------------------------------------
+       JWT EXPIRED / INVALID
+       ------------------------------------------------------- */
+
+    if (
+      response.status === 401
+    ) {
+
+      clearToken();
+
+      showLogin();
+
+      throw new Error(
+        data.error ||
+        'Your session has expired. Please login again.'
+      );
+
+    }
+
+
+    /* -------------------------------------------------------
+       OTHER API ERROR
+       ------------------------------------------------------- */
+
+    if (!response.ok) {
+
+      throw new Error(
+
+        data.error ||
+
+        data.message ||
+
+        `Request failed (${response.status})`
+
+      );
+
+    }
+
+
+    return data;
+
+  }
+
+
+  /* =========================================================
+     ADMIN LOGIN
+     POST /api/admin/login
+     ========================================================= */
+
+  if (loginForm) {
+
+    loginForm.addEventListener(
+      'submit',
+      async (e) => {
+
+        e.preventDefault();
+
+
+        const username =
+          document
+            .getElementById(
+              'loginUser'
+            )
+            ?.value
+            .trim();
+
+
+        const password =
+          document
+            .getElementById(
+              'loginPass'
+            )
+            ?.value ||
+          '';
+
+
+        if (
+          !username ||
+          !password
+        ) {
+
+          if (loginError) {
+
+            loginError.textContent =
+              'Enter username and password.';
+
+          }
+
+          return;
+
+        }
+
+
+        if (loginError) {
+
+          loginError.textContent =
+            'Logging in...';
+
+        }
+
+
+        try {
+
+          const data =
+            await apiRequest(
+              '/api/admin/login',
+              {
+
+                method:
+                  'POST',
+
+                body:
+                  JSON.stringify({
+
+                    username,
+
+                    password
+
+                  })
+
+              }
+            );
+
+
+          if (!data.token) {
+
+            throw new Error(
+              'Login succeeded but no authentication token was returned.'
+            );
+
+          }
+
+
+          setToken(
+            data.token
+          );
+
+
+          if (loginError) {
+
+            loginError.textContent =
+              '';
+
+          }
+
+
+          showDashboard();
+
+
+        } catch (error) {
+
+          console.error(
+            'Admin login error:',
+            error
+          );
+
+
+          if (loginError) {
+
+            loginError.textContent =
+              error.message ||
+              'Login failed.';
+
+          }
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /* =========================================================
+     LOGOUT
+     ========================================================= */
+
+  if (logoutBtn) {
+
+    logoutBtn.addEventListener(
+      'click',
+      () => {
+
+        clearToken();
+
+        showLogin();
+
+
+        const password =
+          document.getElementById(
+            'loginPass'
+          );
+
+
+        if (password) {
+
+          password.value =
+            '';
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /* =========================================================
+     VERIFY ADMIN SESSION
+     GET /api/admin/me
+     ========================================================= */
+
+  async function checkAuthentication() {
+
+    const token =
+      getToken();
+
+
+    if (!token) {
+
+      showLogin();
+
+      return;
+
+    }
+
+
+    try {
+
+      await apiRequest(
+        '/api/admin/me'
+      );
+
+
+      showDashboard();
+
+
+    } catch (error) {
+
+      console.error(
+        'Authentication check failed:',
+        error
+      );
+
+
+      clearToken();
+
+      showLogin();
+
+    }
+
+  }
+
+
+  /* =========================================================
+     GET ORDERS
+     GET /api/orders
+     ========================================================= */
+
+  async function getOrders() {
+
+    const params =
+      new URLSearchParams();
+
+
+    if (
+      currentFilter &&
+      currentFilter !== 'All'
+    ) {
+
+      params.set(
+        'status',
+        currentFilter
+      );
+
+    }
+
+
+    if (currentSearch) {
+
+      params.set(
+        'search',
+        currentSearch
+      );
+
+    }
+
+
+    const query =
+      params.toString();
+
+
+    const endpoint =
+      query
+        ? `/api/orders?${query}`
+        : '/api/orders';
+
+
+    const data =
+      await apiRequest(
+        endpoint
+      );
+
+
+    /*
+     * Your backend currently returns:
+     *
+     * [
+     *   { orderId: "...", ... }
+     * ]
+     *
+     * This also supports:
+     *
+     * { orders: [...] }
+     */
+
+    if (Array.isArray(data)) {
+
+      return data;
+
+    }
+
+
+    if (
+      data &&
+      Array.isArray(data.orders)
+    ) {
+
+      return data.orders;
+
+    }
+
+
+    return [];
+
+  }
+
+
+  /* =========================================================
+     LOAD ORDERS
+     ========================================================= */
+
+  async function loadOrders() {
+
+    try {
+
+      const orders =
+        await getOrders();
+
+
+      renderOrders(
+        orders
+      );
+
+
+    } catch (error) {
+
+      console.error(
+        'Could not load orders:',
+        error
+      );
+
+
+      showToast(
+        error.message ||
+        'Could not load orders.'
+      );
+
+    }
+
+  }
+
+
+  /* =========================================================
+     STATS
+     ========================================================= */
+
+  function computeStats(
+    orders
+  ) {
+
+    const total =
+      orders.length;
+
+
+    const pending =
+      orders.filter(
+        order =>
+          order.status ===
+          'Pending'
+      ).length;
+
+
+    const shipped =
+      orders.filter(
+        order =>
+          order.status ===
+            'Shipped' ||
+
+          order.status ===
+            'Out for Delivery'
+      ).length;
+
+
+    const delivered =
+      orders.filter(
+        order =>
+          order.status ===
+          'Delivered'
+      ).length;
+
+
+    const statTotal =
+      document.getElementById(
+        'statTotal'
+      );
+
+
+    const statPending =
+      document.getElementById(
+        'statPending'
+      );
+
+
+    const statShipped =
+      document.getElementById(
+        'statShipped'
+      );
+
+
+    const statDelivered =
+      document.getElementById(
+        'statDelivered'
+      );
+
+
+    if (statTotal) {
+
+      statTotal.textContent =
+        total;
+
+    }
+
+
+    if (statPending) {
+
+      statPending.textContent =
+        pending;
+
+    }
+
+
+    if (statShipped) {
+
+      statShipped.textContent =
+        shipped;
+
+    }
+
+
+    if (statDelivered) {
+
+      statDelivered.textContent =
+        delivered;
+
+    }
+
+  }
+
+
+  /* =========================================================
+     RENDER ORDERS
+     ========================================================= */
+
+  function renderOrders(
+    orders
+  ) {
+
+    computeStats(
+      orders
+    );
+
+
+    const tbody =
+      document.getElementById(
+        'ordersBody'
+      );
+
+
+    const emptyState =
+      document.getElementById(
+        'emptyState'
+      );
+
+
+    const table =
+      document.getElementById(
+        'ordersTable'
+      );
+
+
+    if (
+      !tbody ||
+      !emptyState ||
+      !table
+    ) {
+
+      console.error(
+        'Admin table elements are missing from admin.html'
+      );
+
+      return;
+
+    }
+
+
+    if (
+      orders.length === 0
+    ) {
+
+      table.style.display =
+        'none';
+
+
+      emptyState.style.display =
+        'block';
+
+
+      return;
+
+    }
+
+
+    table.style.display =
+      'table';
+
+
+    emptyState.style.display =
+      'none';
+
+
+    tbody.innerHTML =
+      orders.map(
+        order => {
+
+
+          /*
+           * IMPORTANT:
+           *
+           * Your MongoDB/backend uses:
+           *
+           * order.orderId
+           *
+           * NOT:
+           *
+           * order.id
+           */
+
+          const orderId =
+            escapeHtml(
+              order.orderId ||
+              ''
+            );
+
+
+          const fullName =
+            escapeHtml(
+              order.fullName ||
+              '—'
+            );
+
+
+          const mobile =
+            escapeHtml(
+              order.mobile ||
+              ''
+            );
+
+
+          const email =
+            escapeHtml(
+              order.email ||
+              ''
+            );
+
+
+          const address =
+            escapeHtml(
+              order.address ||
+              ''
+            );
+
+
+          const city =
+            escapeHtml(
+              order.city ||
+              ''
+            );
+
+
+          const state =
+            escapeHtml(
+              order.state ||
+              ''
+            );
+
+
+          const pincode =
+            escapeHtml(
+              order.pincode ||
+              ''
+            );
+
+
+          const trackingId =
+            escapeHtml(
+              order.trackingId ||
+              ''
+            );
+
+
+          const courier =
+            escapeHtml(
+              order.courier ||
+              ''
+            );
+
+
+          const quantity =
+            Number(
+              order.quantity || 1
+            );
+
+
+          const total =
+            Number(
+              order.total || 0
+            );
+
+
+          const paymentStatus =
+            escapeHtml(
+              order.paymentStatus ||
+              'Unpaid'
+            );
+
+
+          const currentStatus =
+            order.status ||
+            'Pending';
+
+
+          return `
+
+            <tr
+              data-id="${orderId}"
+            >
+
+              <!-- ORDER ID -->
+
+              <td>
+
+                <div
+                  class="order-id-cell"
+                >
+                  ${orderId}
+                </div>
+
+                <div
+                  class="order-date"
+                >
+                  ${escapeHtml(
+                    formatDate(
+                      order.createdAt
+                    )
+                  )}
+                </div>
+
+              </td>
+
+
+              <!-- CUSTOMER -->
+
+              <td>
+
+                <div
+                  class="cust-name"
+                >
+                  ${fullName}
+                </div>
+
+                <div
+                  class="cust-sub"
+                >
+                  ${mobile}
+                </div>
+
+                <div
+                  class="cust-sub"
+                >
+                  ${email}
+                </div>
+
+              </td>
+
+
+              <!-- ADDRESS -->
+
+              <td>
+
+                <div
+                  class="addr-cell"
+                >
+                  ${address},
+                  ${city},
+                  ${state}
+                  – ${pincode}
+                </div>
+
+              </td>
+
+
+              <!-- QUANTITY -->
+
+              <td>
+                ${quantity}
+              </td>
+
+
+              <!-- TOTAL -->
+
+              <td>
+
+                <strong>
+                  ₹${total.toLocaleString(
+                    'en-IN'
+                  )}
+                </strong>
+
+              </td>
+
+
+              <!-- PAYMENT -->
+
+              <td>
+
+                <span
+                  class="badge ${statusSlug(
+                    paymentStatus
+                  )}"
+                >
+                  ${paymentStatus}
+                </span>
+
+              </td>
+
+
+              <!-- STATUS -->
+
+              <td>
+
+                <select
+                  class="status-select"
+                  data-field="status"
+                >
+
+                  ${STATUS_OPTIONS
+                    .map(
+                      status => `
+
+                        <option
+                          value="${escapeHtml(
+                            status
+                          )}"
+                          ${
+                            status ===
+                            currentStatus
+                              ? 'selected'
+                              : ''
+                          }
+                        >
+                          ${escapeHtml(
+                            status
+                          )}
+                        </option>
+
+                      `
+                    )
+                    .join('')}
+
+                </select>
+
+              </td>
+
+
+              <!-- TRACKING -->
+
+              <td>
+
+                <div
+                  class="tracking-fields"
+                >
+
+                  <input
+                    type="text"
+                    class="mini-input"
+                    data-field="trackingId"
+                    placeholder="Tracking ID"
+                    value="${trackingId}"
+                  >
+
+                  <input
+                    type="text"
+                    class="mini-input"
+                    data-field="courier"
+                    placeholder="Courier name"
+                    value="${courier}"
+                  >
+
+                </div>
+
+              </td>
+
+
+              <!-- ACTIONS -->
+
+              <td>
+
+                <div
+                  class="row-actions"
+                >
+
+                  <button
+                    class="btn btn-save"
+                    data-action="save"
+                  >
+                    Save Changes
+                  </button>
+
+
+                  <button
+                    class="btn btn-notify"
+                    data-action="notify"
+                  >
+                    Notify Customer
+                  </button>
+
+
+                  <span
+                    class="save-msg"
+                  ></span>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+          `;
+
+        }
+      )
+      .join('');
+
+  }
+
+
+  /* =========================================================
+     SAVE / NOTIFY BUTTONS
+     ========================================================= */
+
+  if (ordersBody) {
+
+    ordersBody.addEventListener(
+      'click',
+      async (e) => {
+
+        const button =
+          e.target.closest(
+            'button[data-action]'
+          );
+
+
+        if (!button) {
+          return;
+        }
+
+
+        const row =
+          e.target.closest(
+            'tr'
+          );
+
+
+        if (!row) {
+          return;
+        }
+
+
+        /*
+         * IMPORTANT:
+         *
+         * data-id contains orderId.
+         */
+
+        const orderId =
+          row.dataset.id;
+
+
+        if (!orderId) {
+
+          alert(
+            'Order ID is missing.'
+          );
+
+          return;
+
+        }
+
+
+        const status =
+          row.querySelector(
+            '[data-field="status"]'
+          )?.value ||
+          'Pending';
+
+
+        const trackingId =
+          row.querySelector(
+            '[data-field="trackingId"]'
+          )?.value
+            .trim() ||
+          '';
+
+
+        const courier =
+          row.querySelector(
+            '[data-field="courier"]'
+          )?.value
+            .trim() ||
+          '';
+
+
+        /* =================================================
+           SAVE CHANGES
+           ================================================= */
+
+        if (
+          button.dataset.action ===
+          'save'
+        ) {
+
+          button.disabled =
+            true;
+
+
+          button.textContent =
+            'Saving...';
+
+
+          try {
+
+            await apiRequest(
+
+              `/api/orders/${encodeURIComponent(
+                orderId
+              )}`,
+
+              {
+
+                method:
+                  'PATCH',
+
+                body:
+                  JSON.stringify({
+
+                    status,
+
+                    trackingId,
+
+                    courier
+
+                  })
+
+              }
+
+            );
+
+
+            const msg =
+              row.querySelector(
+                '.save-msg'
+              );
+
+
+            if (msg) {
+
+              msg.textContent =
+                'Saved ✓';
+
+
+              setTimeout(
+                () => {
+
+                  msg.textContent =
+                    '';
+
+                },
+                2500
+              );
+
+            }
+
+
+            /*
+             * Reload real MongoDB data
+             */
+
+            await loadOrders();
+
+
+          } catch (error) {
+
+            console.error(
+              'Save order error:',
+              error
+            );
+
+
+            alert(
+              error.message ||
+              'Could not save order.'
+            );
+
+
+          } finally {
+
+            button.disabled =
+              false;
+
+
+            button.textContent =
+              'Save Changes';
+
+          }
+
+        }
+
+
+        /* =================================================
+           MANUAL NOTIFICATION
+           ================================================= */
+
+        if (
+          button.dataset.action ===
+          'notify'
+        ) {
+
+          button.disabled =
+            true;
+
+
+          button.textContent =
+            'Sending...';
+
+
+          try {
+
+            await apiRequest(
+
+              `/api/orders/${encodeURIComponent(
+                orderId
+              )}/notify`,
+
+              {
+
+                method:
+                  'POST'
+
+              }
+
+            );
+
+
+            showToast(
+              'Customer notification sent.'
+            );
+
+
+          } catch (error) {
+
+            console.error(
+              'Notification error:',
+              error
+            );
+
+
+            alert(
+              error.message ||
+              'Could not send notification.'
+            );
+
+
+          } finally {
+
+            button.disabled =
+              false;
+
+
+            button.textContent =
+              'Notify Customer';
+
+          }
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /* =========================================================
+     FILTER CHIPS
+     ========================================================= */
+
+  if (filterChips) {
+
+    filterChips.addEventListener(
+      'click',
+      async (e) => {
+
+        const chip =
+          e.target.closest(
+            '.filter-chip'
+          );
+
+
+        if (!chip) {
+          return;
+        }
+
+
+        document
+          .querySelectorAll(
+            '.filter-chip'
+          )
+          .forEach(
+            item => {
+
+              item.classList.remove(
+                'active'
+              );
+
+            }
+          );
+
+
+        chip.classList.add(
+          'active'
+        );
+
+
+        currentFilter =
+          chip.dataset.filter ||
+          'All';
+
+
+        await loadOrders();
+
+      }
+    );
+
+  }
+
+
+  /* =========================================================
+     SEARCH
+     ========================================================= */
+
+  if (searchInput) {
+
+    let searchTimer = null;
+
+
+    searchInput.addEventListener(
+      'input',
+      () => {
+
+        currentSearch =
+          searchInput.value.trim();
+
+
+        clearTimeout(
+          searchTimer
+        );
+
+
+        /*
+         * Small delay so we don't
+         * request the backend on
+         * every single keystroke.
+         */
+
+        searchTimer =
+          setTimeout(
+            () => {
+
+              loadOrders();
+
+            },
+            300
+          );
+
+      }
+    );
+
+  }
+
+
+  /* =========================================================
+     START ADMIN
+     ========================================================= */
+
+  checkAuthentication();
+
+});
