@@ -1414,73 +1414,167 @@ document.addEventListener('DOMContentLoaded', () => {
            MANUAL NOTIFICATION
            ================================================= */
 
-        if (
-          button.dataset.action ===
-          'notify'
-        ) {
+      /* =========================================================
+   WHATSAPP CLICK-TO-CHAT NOTIFICATION
+   ========================================================= */
 
-          button.disabled =
-            true;
+if (
+  button.dataset.action === 'notify'
+) {
 
+  /* -------------------------------------------------------
+     CUSTOMER DETAILS
+     ------------------------------------------------------- */
 
-          button.textContent =
-            'Sending...';
-
-
-          try {
-
-            await apiRequest(
-
-              `/api/orders/${encodeURIComponent(
-                orderId
-              )}/notify`,
-
-              {
-
-                method:
-                  'POST'
-
-              }
-
-            );
+  const customerName =
+    row.querySelector('.cust-name')?.textContent.trim() ||
+    'Customer';
 
 
-            showToast(
-              'Customer notification sent.'
-            );
+  const mobileText =
+    row.querySelector('.cust-sub')?.textContent.trim() ||
+    '';
 
 
-          } catch (error) {
-
-            console.error(
-              'Notification error:',
-              error
-            );
+  const status =
+    row.querySelector('[data-field="status"]')?.value ||
+    'Pending';
 
 
-            alert(
-              error.message ||
-              'Could not send notification.'
-            );
+  const trackingId =
+    row.querySelector('[data-field="trackingId"]')?.value.trim() ||
+    '';
 
 
-          } finally {
+  const courier =
+    row.querySelector('[data-field="courier"]')?.value.trim() ||
+    '';
 
-            button.disabled =
-              false;
+
+  /* -------------------------------------------------------
+     CLEAN MOBILE NUMBER
+     ------------------------------------------------------- */
+
+  let phone =
+    mobileText.replace(/\D/g, '');
 
 
-            button.textContent =
-              'Notify Customer';
+  /*
+   * Indian number:
+   *
+   * 9876543210
+   * ↓
+   * 919876543210
+   */
 
-          }
+  if (
+    phone.length === 10
+  ) {
 
-        }
-
-      }
-    );
+    phone =
+      '91' + phone;
 
   }
+
+
+  /*
+   * Handle numbers that already contain 91.
+   */
+
+  if (
+    phone.length === 12 &&
+    phone.startsWith('91')
+  ) {
+
+    // already correct
+
+  }
+
+
+  /* -------------------------------------------------------
+     VALIDATE PHONE
+     ------------------------------------------------------- */
+
+  if (
+    phone.length !== 12 ||
+    !phone.startsWith('91')
+  ) {
+
+    showToast(
+      'Invalid customer mobile number.'
+    );
+
+    return;
+
+  }
+
+
+  /* -------------------------------------------------------
+     BUILD MESSAGE
+     ------------------------------------------------------- */
+
+  let message =
+`Hi ${customerName} 👋
+
+Your Dhaan Foods order has been updated.
+
+Order ID: ${orderId}
+Status: ${status}`;
+
+
+  if (trackingId) {
+
+    message +=
+`\nTracking ID: ${trackingId}`;
+
+  }
+
+
+  if (courier) {
+
+    message +=
+`\nCourier: ${courier}`;
+
+  }
+
+
+  if (!trackingId) {
+
+    message +=
+`\nTracking details will be shared once your order is dispatched.`;
+
+  }
+
+
+  message +=
+`
+
+Thank you for choosing Dhaan Foods! 🌾`;
+
+
+  /* -------------------------------------------------------
+     WHATSAPP URL
+     ------------------------------------------------------- */
+
+  const whatsappUrl =
+    `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+
+  /* -------------------------------------------------------
+     OPEN WHATSAPP
+     ------------------------------------------------------- */
+
+  window.open(
+    whatsappUrl,
+    '_blank'
+  );
+
+
+  showToast(
+    'WhatsApp message prepared.'
+  );
+
+}
 
 
   /* =========================================================
