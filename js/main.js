@@ -1,4 +1,3 @@
-```javascript
 /* =========================================================
    DHAAN — main.js
    Real Razorpay Payment + Render Backend Integration
@@ -9,12 +8,14 @@ document.addEventListener('DOMContentLoaded', () => {
   /* =========================================================
      BACKEND CONFIGURATION
      ========================================================= */
+
   const API_URL = 'https://dhaan-backend.onrender.com';
 
 
   /* =========================================================
      PROMO VIDEO
      ========================================================= */
+
   const promoVideo = document.getElementById('promoVideo');
   const playOverlay = document.getElementById('playOverlay');
   const promoMuteToggle = document.getElementById('promoMuteToggle');
@@ -24,8 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (promoVideo && playOverlay) {
 
     playOverlay.addEventListener('click', () => {
+
       promoVideo.muted = false;
-      promoVideo.play();
+
+      promoVideo.play().catch(() => {});
 
       playOverlay.classList.add('hidden');
 
@@ -40,211 +43,399 @@ document.addEventListener('DOMContentLoaded', () => {
       if (promoIconUnmuted) {
         promoIconUnmuted.style.display = 'block';
       }
+
     });
 
+
     promoVideo.addEventListener('click', () => {
+
       if (promoVideo.paused) {
-        promoVideo.play();
+        promoVideo.play().catch(() => {});
       } else {
         promoVideo.pause();
       }
+
     });
 
+
     promoVideo.addEventListener('ended', () => {
+
       playOverlay.classList.remove('hidden');
 
       if (promoMuteToggle) {
         promoMuteToggle.style.display = 'none';
       }
+
     });
 
+
     if (promoMuteToggle) {
+
       promoMuteToggle.addEventListener('click', () => {
 
-        promoVideo.muted = !promoVideo.muted;
+        promoVideo.muted =
+          !promoVideo.muted;
+
 
         if (promoIconMuted) {
+
           promoIconMuted.style.display =
-            promoVideo.muted ? 'block' : 'none';
+            promoVideo.muted
+              ? 'block'
+              : 'none';
+
         }
 
+
         if (promoIconUnmuted) {
+
           promoIconUnmuted.style.display =
-            promoVideo.muted ? 'none' : 'block';
+            promoVideo.muted
+              ? 'none'
+              : 'block';
+
         }
+
       });
+
     }
+
   }
 
 
   /* =========================================================
      HERO VIDEO
      ========================================================= */
-  const heroVideo = document.getElementById('heroVideo');
-  const muteToggle = document.getElementById('muteToggle');
-  const iconMuted = document.getElementById('iconMuted');
-  const iconUnmuted = document.getElementById('iconUnmuted');
+
+  const heroVideo =
+    document.getElementById('heroVideo');
+
+  const muteToggle =
+    document.getElementById('muteToggle');
+
+  const iconMuted =
+    document.getElementById('iconMuted');
+
+  const iconUnmuted =
+    document.getElementById('iconUnmuted');
+
 
   if (heroVideo && muteToggle) {
 
     muteToggle.addEventListener('click', () => {
 
-      heroVideo.muted = !heroVideo.muted;
+      heroVideo.muted =
+        !heroVideo.muted;
+
 
       if (iconMuted) {
+
         iconMuted.style.display =
-          heroVideo.muted ? 'block' : 'none';
+          heroVideo.muted
+            ? 'block'
+            : 'none';
+
       }
 
+
       if (iconUnmuted) {
+
         iconUnmuted.style.display =
-          heroVideo.muted ? 'none' : 'block';
+          heroVideo.muted
+            ? 'none'
+            : 'block';
+
       }
+
 
       muteToggle.setAttribute(
         'aria-label',
-        heroVideo.muted ? 'Unmute video' : 'Mute video'
+        heroVideo.muted
+          ? 'Unmute video'
+          : 'Mute video'
       );
+
     });
 
+
     heroVideo.play().catch(() => {});
+
   }
 
 
   /* =========================================================
      MOBILE NAV
      ========================================================= */
-  const navToggle = document.getElementById('navToggle');
-  const header = document.getElementById('siteHeader');
+
+  const navToggle =
+    document.getElementById('navToggle');
+
+  const header =
+    document.getElementById('siteHeader');
+
 
   if (navToggle && header) {
 
     navToggle.addEventListener('click', () => {
-      header.classList.toggle('menu-open');
+
+      header.classList.toggle(
+        'menu-open'
+      );
+
     });
 
-    document.querySelectorAll('.mobile-menu a').forEach(a => {
-      a.addEventListener('click', () => {
-        header.classList.remove('menu-open');
+
+    document
+      .querySelectorAll('.mobile-menu a')
+      .forEach(a => {
+
+        a.addEventListener('click', () => {
+
+          header.classList.remove(
+            'menu-open'
+          );
+
+        });
+
       });
-    });
+
   }
 
 
   /* =========================================================
      ACTIVE NAV LINK
      ========================================================= */
-  const sections = document.querySelectorAll('section[id]');
-  const navAnchors = document.querySelectorAll('.nav-links a');
 
-  if (sections.length && navAnchors.length) {
+  const sections =
+    document.querySelectorAll(
+      'section[id]'
+    );
 
-    const spy = new IntersectionObserver((entries) => {
+  const navAnchors =
+    document.querySelectorAll(
+      '.nav-links a'
+    );
 
-      entries.forEach(entry => {
 
-        if (entry.isIntersecting) {
+  if (
+    sections.length &&
+    navAnchors.length
+  ) {
 
-          navAnchors.forEach(a =>
-            a.classList.remove('active')
-          );
+    const spy =
+      new IntersectionObserver(
+        (entries) => {
 
-          const match = document.querySelector(
-            `.nav-links a[href="#${entry.target.id}"]`
-          );
+          entries.forEach(entry => {
 
-          if (match) {
-            match.classList.add('active');
-          }
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+
+            navAnchors.forEach(a => {
+
+              a.classList.remove(
+                'active'
+              );
+
+            });
+
+
+            const match =
+              document.querySelector(
+                `.nav-links a[href="#${entry.target.id}"]`
+              );
+
+
+            if (match) {
+
+              match.classList.add(
+                'active'
+              );
+
+            }
+
+          });
+
+        },
+        {
+          rootMargin:
+            '-40% 0px -50% 0px'
         }
-      });
+      );
 
-    }, {
-      rootMargin: '-40% 0px -50% 0px'
+
+    sections.forEach(section => {
+
+      spy.observe(section);
+
     });
 
-    sections.forEach(s => spy.observe(s));
   }
 
 
   /* =========================================================
      SCROLL REVEAL
      ========================================================= */
-  const revealEls = document.querySelectorAll('.reveal');
 
-  const revealObserver = new IntersectionObserver((entries) => {
+  const revealEls =
+    document.querySelectorAll(
+      '.reveal'
+    );
 
-    entries.forEach(entry => {
 
-      if (entry.isIntersecting) {
+  if (revealEls.length) {
 
-        entry.target.classList.add('in');
+    const revealObserver =
+      new IntersectionObserver(
+        (entries) => {
 
-        revealObserver.unobserve(entry.target);
-      }
+          entries.forEach(entry => {
+
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+
+            entry.target.classList.add(
+              'in'
+            );
+
+
+            revealObserver.unobserve(
+              entry.target
+            );
+
+          });
+
+        },
+        {
+          threshold: 0.12
+        }
+      );
+
+
+    revealEls.forEach(el => {
+
+      revealObserver.observe(el);
+
     });
 
-  }, {
-    threshold: 0.12
-  });
-
-  revealEls.forEach(el => revealObserver.observe(el));
+  }
 
 
   /* =========================================================
      COUNT-UP STATS
      ========================================================= */
-  const counters = document.querySelectorAll('[data-count]');
 
-  const countObserver = new IntersectionObserver((entries) => {
+  const counters =
+    document.querySelectorAll(
+      '[data-count]'
+    );
 
-    entries.forEach(entry => {
 
-      if (!entry.isIntersecting) return;
+  if (counters.length) {
 
-      const el = entry.target;
+    const countObserver =
+      new IntersectionObserver(
+        (entries) => {
 
-      const target =
-        parseInt(el.dataset.count, 10);
+          entries.forEach(entry => {
 
-      const duration = 1400;
+            if (!entry.isIntersecting) {
+              return;
+            }
 
-      const start = performance.now();
 
-      function tick(now) {
+            const el =
+              entry.target;
 
-        const progress =
-          Math.min((now - start) / duration, 1);
 
-        const value =
-          Math.floor(progress * target);
+            const target =
+              parseInt(
+                el.dataset.count,
+                10
+              );
 
-        el.textContent =
-          value.toLocaleString('en-IN') +
-          (progress >= 1 ? '+' : '');
 
-        if (progress < 1) {
-          requestAnimationFrame(tick);
+            const duration =
+              1400;
+
+
+            const start =
+              performance.now();
+
+
+            function tick(now) {
+
+              const progress =
+                Math.min(
+                  (now - start) /
+                    duration,
+                  1
+                );
+
+
+              const value =
+                Math.floor(
+                  progress * target
+                );
+
+
+              el.textContent =
+                value.toLocaleString(
+                  'en-IN'
+                ) +
+                (
+                  progress >= 1
+                    ? '+'
+                    : ''
+                );
+
+
+              if (progress < 1) {
+
+                requestAnimationFrame(
+                  tick
+                );
+
+              }
+
+            }
+
+
+            requestAnimationFrame(
+              tick
+            );
+
+
+            countObserver.unobserve(
+              el
+            );
+
+          });
+
+        },
+        {
+          threshold: 0.6
         }
-      }
+      );
 
-      requestAnimationFrame(tick);
 
-      countObserver.unobserve(el);
+    counters.forEach(el => {
+
+      countObserver.observe(el);
+
     });
 
-  }, {
-    threshold: 0.6
-  });
-
-  counters.forEach(el =>
-    countObserver.observe(el)
-  );
+  }
 
 
   /* =========================================================
      INGREDIENTS
      ========================================================= */
+
   const ingredients = [
 
     ['01-badam', 'Badam'],
@@ -252,13 +443,36 @@ document.addEventListener('DOMContentLoaded', () => {
     ['03-cashewnut', 'Cashewnut'],
     ['04-walnut', 'Walnut'],
 
-    ['05-sprouted-ragi', 'Sprouted Ragi'],
-    ['06-sprouted-pearl-millet', 'Sprouted Pearl Millet'],
-    ['07-sprouted-horse-gram', 'Sprouted Horse Gram'],
-    ['08-sprouted-green-gram', 'Sprouted Green Gram'],
+    [
+      '05-sprouted-ragi',
+      'Sprouted Ragi'
+    ],
 
-    ['09-sprouted-black-chickpea', 'Sprouted Black Chickpea'],
-    ['10-sprouted-black-grams', 'Sprouted Black Grams'],
+    [
+      '06-sprouted-pearl-millet',
+      'Sprouted Pearl Millet'
+    ],
+
+    [
+      '07-sprouted-horse-gram',
+      'Sprouted Horse Gram'
+    ],
+
+    [
+      '08-sprouted-green-gram',
+      'Sprouted Green Gram'
+    ],
+
+    [
+      '09-sprouted-black-chickpea',
+      'Sprouted Black Chickpea'
+    ],
+
+    [
+      '10-sprouted-black-grams',
+      'Sprouted Black Grams'
+    ],
+
     ['11-soy-beans', 'Soy Beans'],
     ['12-groundnut', 'Groundnut'],
 
@@ -279,129 +493,158 @@ document.addEventListener('DOMContentLoaded', () => {
 
     ['25-rice', 'Rice'],
     ['26-dry-dates', 'Dry Dates']
+
   ];
 
+
   const ingGrid =
-    document.getElementById('ingGrid');
+    document.getElementById(
+      'ingGrid'
+    );
+
 
   if (ingGrid) {
 
     ingGrid.innerHTML =
-      ingredients.map(([file, name], i) => `
+      ingredients
+        .map(([file, name], i) => `
 
-        <div class="ing-card">
+          <div class="ing-card">
 
-          <div class="thumb">
+            <div class="thumb">
 
-            <span class="num">
-              ${i + 1}
-            </span>
+              <span class="num">
+                ${i + 1}
+              </span>
 
-            <img
-              src="assets/ingredients/${file}.jpg"
-              alt="${name}"
-              loading="lazy"
-            >
+              <img
+                src="assets/ingredients/${file}.jpg"
+                alt="${name}"
+                loading="lazy"
+              >
+
+            </div>
+
+            <p>${name}</p>
 
           </div>
 
-          <p>${name}</p>
+        `)
+        .join('');
 
-        </div>
-
-      `).join('');
   }
 
 
   /* =========================================================
      REVIEWS
      ========================================================= */
+
   const reviews = [
 
     {
       name: 'Priya Ramesh',
       city: 'Chennai',
       rating: 5,
-      text: 'My son actually looks forward to breakfast now. The porridge is filling and I love that it has no added preservatives.'
+      text:
+        'My son actually looks forward to breakfast now. The porridge is filling and I love that it has no added preservatives.'
     },
 
     {
       name: 'Arun Kumar',
       city: 'Coimbatore',
       rating: 5,
-      text: 'Been using it for 3 months as a pre-workout meal. High protein, easy to digest, and genuinely tasty with warm milk.'
+      text:
+        'Been using it for 3 months as a pre-workout meal. High protein, easy to digest, and genuinely tasty with warm milk.'
     },
 
     {
       name: 'Divya Sundar',
       city: 'Bengaluru',
       rating: 4,
-      text: 'Great for my toddler — I mix it into her regular cereal. Noticed better appetite and energy through the day.'
+      text:
+        'Great for my toddler — I mix it into her regular cereal. Noticed better appetite and energy through the day.'
     },
 
     {
       name: 'Karthik Raja',
       city: 'Madurai',
       rating: 5,
-      text: 'Switched from a market brand to Dhaan and the difference in taste and texture is clear. 26 ingredients really shows.'
+      text:
+        'Switched from a market brand to Dhaan and the difference in taste and texture is clear. 26 ingredients really shows.'
     },
 
     {
       name: 'Meena Iyer',
       city: 'Salem',
       rating: 5,
-      text: 'Whole family drinks it now, from my father to my daughter. Simple to prepare and doesn\'t feel like "health food".'
+      text:
+        'Whole family drinks it now, from my father to my daughter. Simple to prepare and doesn\'t feel like "health food".'
     },
 
     {
       name: 'Suresh Babu',
       city: 'Trichy',
       rating: 4,
-      text: 'Good fibre content, kept me full till lunch. Packaging is sturdy and delivery was quicker than expected.'
+      text:
+        'Good fibre content, kept me full till lunch. Packaging is sturdy and delivery was quicker than expected.'
     }
 
   ];
 
+
   const reviewGrid =
-    document.getElementById('reviewGrid');
+    document.getElementById(
+      'reviewGrid'
+    );
+
 
   if (reviewGrid) {
 
     reviewGrid.innerHTML =
-      reviews.map(r => `
+      reviews
+        .map(r => `
 
-        <div class="review-card">
+          <div class="review-card">
 
-          <div class="stars">
-            ${'★'.repeat(r.rating)}
-            ${'☆'.repeat(5 - r.rating)}
-          </div>
+            <div class="stars">
 
-          <p class="quote">
-            "${r.text}"
-          </p>
+              ${'★'.repeat(r.rating)}
 
-          <div class="review-who">
+              ${'☆'.repeat(
+                5 - r.rating
+              )}
 
-            <span class="avatar">
-              ${r.name.charAt(0)}
-            </span>
+            </div>
 
-            <div>
+            <p class="quote">
+              "${r.text}"
+            </p>
 
-              <strong>${r.name}</strong>
+            <div class="review-who">
 
-              <span>
-                ${r.city} · Verified Buyer
+              <span class="avatar">
+                ${r.name.charAt(0)}
               </span>
+
+              <div>
+
+                <strong>
+                  ${r.name}
+                </strong>
+
+                <span>
+                  ${r.city} · Verified Buyer
+                </span>
+
+              </div>
 
             </div>
 
           </div>
 
-        </div>
+        `)
+        .join('');
 
-      `).join('');
   }
 
 
@@ -410,30 +653,46 @@ document.addEventListener('DOMContentLoaded', () => {
      ========================================================= */
 
   const UNIT_PRICE = 299;
+
   const DELIVERY = 40;
 
   let qty = 1;
 
+
   const qtyInput =
-    document.getElementById('qtyInput');
+    document.getElementById(
+      'qtyInput'
+    );
 
   const qtyMinus =
-    document.getElementById('qtyMinus');
+    document.getElementById(
+      'qtyMinus'
+    );
 
   const qtyPlus =
-    document.getElementById('qtyPlus');
+    document.getElementById(
+      'qtyPlus'
+    );
 
   const sumQty =
-    document.getElementById('sumQty');
+    document.getElementById(
+      'sumQty'
+    );
 
   const sumProduct =
-    document.getElementById('sumProduct');
+    document.getElementById(
+      'sumProduct'
+    );
 
   const sumDelivery =
-    document.getElementById('sumDelivery');
+    document.getElementById(
+      'sumDelivery'
+    );
 
   const sumTotal =
-    document.getElementById('sumTotal');
+    document.getElementById(
+      'sumTotal'
+    );
 
 
   function renderSummary() {
@@ -441,57 +700,95 @@ document.addEventListener('DOMContentLoaded', () => {
     const productTotal =
       UNIT_PRICE * qty;
 
+
     const total =
       productTotal + DELIVERY;
 
+
     if (sumQty) {
-      sumQty.textContent = qty;
+
+      sumQty.textContent =
+        qty;
+
     }
+
 
     if (sumProduct) {
+
       sumProduct.textContent =
         `₹${productTotal}`;
+
     }
+
 
     if (sumDelivery) {
+
       sumDelivery.textContent =
         `₹${DELIVERY}`;
+
     }
+
 
     if (sumTotal) {
+
       sumTotal.textContent =
         `₹${total}`;
+
     }
 
+
     if (qtyInput) {
-      qtyInput.value = qty;
+
+      qtyInput.value =
+        qty;
+
     }
+
   }
+
 
   renderSummary();
 
 
   if (qtyMinus) {
 
-    qtyMinus.addEventListener('click', () => {
+    qtyMinus.addEventListener(
+      'click',
+      () => {
 
-      qty =
-        Math.max(1, qty - 1);
+        qty =
+          Math.max(
+            1,
+            qty - 1
+          );
 
-      renderSummary();
-    });
+
+        renderSummary();
+
+      }
+    );
+
   }
 
 
   if (qtyPlus) {
 
-    qtyPlus.addEventListener('click', () => {
+    qtyPlus.addEventListener(
+      'click',
+      () => {
 
-      qty =
-        Math.min(10, qty + 1);
+        qty =
+          Math.min(
+            10,
+            qty + 1
+          );
 
-      renderSummary();
-    });
+
+        renderSummary();
+
+      }
+    );
+
   }
 
 
@@ -500,40 +797,75 @@ document.addEventListener('DOMContentLoaded', () => {
      ========================================================= */
 
   const form =
-    document.getElementById('orderForm');
+    document.getElementById(
+      'orderForm'
+    );
+
 
   const processingModal =
-    document.getElementById('processingModal');
+    document.getElementById(
+      'processingModal'
+    );
+
 
   const confirmModal =
-    document.getElementById('confirmModal');
+    document.getElementById(
+      'confirmModal'
+    );
+
 
   const orderIdDisplay =
-    document.getElementById('orderIdDisplay');
+    document.getElementById(
+      'orderIdDisplay'
+    );
+
 
   const closeConfirm =
-    document.getElementById('closeConfirm');
+    document.getElementById(
+      'closeConfirm'
+    );
 
 
-  function setError(fieldEl, message) {
+  function setError(
+    fieldEl,
+    message
+  ) {
+
+    if (!fieldEl) {
+      return;
+    }
+
 
     const wrap =
-      fieldEl.closest('.field');
+      fieldEl.closest(
+        '.field'
+      );
 
-    if (!wrap) return;
+
+    if (!wrap) {
+      return;
+    }
+
 
     wrap.classList.toggle(
       'error',
       !!message
     );
 
+
     const msg =
-      wrap.querySelector('.err-msg');
+      wrap.querySelector(
+        '.err-msg'
+      );
+
 
     if (msg) {
+
       msg.textContent =
         message || '';
+
     }
+
   }
 
 
@@ -541,29 +873,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let valid = true;
 
+
     const name =
-      document.getElementById('fullName');
+      document.getElementById(
+        'fullName'
+      );
+
 
     const mobile =
-      document.getElementById('mobile');
+      document.getElementById(
+        'mobile'
+      );
+
 
     const email =
-      document.getElementById('email');
+      document.getElementById(
+        'email'
+      );
+
 
     const address =
-      document.getElementById('address');
+      document.getElementById(
+        'address'
+      );
+
 
     const city =
-      document.getElementById('city');
+      document.getElementById(
+        'city'
+      );
+
 
     const state =
-      document.getElementById('state');
+      document.getElementById(
+        'state'
+      );
+
 
     const pincode =
-      document.getElementById('pincode');
+      document.getElementById(
+        'pincode'
+      );
 
 
-    if (!name.value.trim()) {
+    if (!name || !name.value.trim()) {
 
       setError(
         name,
@@ -574,13 +927,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     } else {
 
-      setError(name, '');
+      setError(
+        name,
+        ''
+      );
+
     }
 
 
-    if (!/^[6-9]\d{9}$/.test(
-      mobile.value.trim()
-    )) {
+    if (
+      !mobile ||
+      !/^[6-9]\d{9}$/.test(
+        mobile.value.trim()
+      )
+    ) {
 
       setError(
         mobile,
@@ -591,11 +951,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     } else {
 
-      setError(mobile, '');
+      setError(
+        mobile,
+        ''
+      );
+
     }
 
 
     if (
+      email &&
       email.value.trim() &&
       !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
         email.value.trim()
@@ -611,11 +976,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     } else {
 
-      setError(email, '');
+      setError(
+        email,
+        ''
+      );
+
     }
 
 
-    if (!address.value.trim()) {
+    if (
+      !address ||
+      !address.value.trim()
+    ) {
 
       setError(
         address,
@@ -626,11 +998,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     } else {
 
-      setError(address, '');
+      setError(
+        address,
+        ''
+      );
+
     }
 
 
-    if (!city.value.trim()) {
+    if (
+      !city ||
+      !city.value.trim()
+    ) {
 
       setError(
         city,
@@ -641,11 +1020,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     } else {
 
-      setError(city, '');
+      setError(
+        city,
+        ''
+      );
+
     }
 
 
-    if (!state.value.trim()) {
+    if (
+      !state ||
+      !state.value.trim()
+    ) {
 
       setError(
         state,
@@ -656,13 +1042,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     } else {
 
-      setError(state, '');
+      setError(
+        state,
+        ''
+      );
+
     }
 
 
-    if (!/^\d{6}$/.test(
-      pincode.value.trim()
-    )) {
+    if (
+      !pincode ||
+      !/^\d{6}$/.test(
+        pincode.value.trim()
+      )
+    ) {
 
       setError(
         pincode,
@@ -673,11 +1066,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     } else {
 
-      setError(pincode, '');
+      setError(
+        pincode,
+        ''
+      );
+
     }
 
 
     return valid;
+
   }
 
 
@@ -685,17 +1083,26 @@ document.addEventListener('DOMContentLoaded', () => {
      SHOW CONFIRMATION
      ========================================================= */
 
-  function showConfirmation(orderId) {
+  function showConfirmation(
+    orderId
+  ) {
 
     if (orderIdDisplay) {
 
       orderIdDisplay.textContent =
         `Order ID: ${orderId}`;
+
     }
 
+
     if (confirmModal) {
-      confirmModal.classList.add('open');
+
+      confirmModal.classList.add(
+        'open'
+      );
+
     }
+
   }
 
 
@@ -703,14 +1110,16 @@ document.addEventListener('DOMContentLoaded', () => {
      REAL RAZORPAY PAYMENT
      ========================================================= */
 
-  async function startPayment(orderPayload) {
+  async function startPayment(
+    orderPayload
+  ) {
 
-    if (!processingModal) {
-      console.error(
-        'processingModal not found'
+    if (processingModal) {
+
+      processingModal.classList.add(
+        'open'
       );
-    } else {
-      processingModal.classList.add('open');
+
     }
 
 
@@ -724,6 +1133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Creating Dhaan order...'
       );
 
+
       const response =
         await fetch(
           `${API_URL}/api/create-order`,
@@ -736,13 +1146,28 @@ document.addEventListener('DOMContentLoaded', () => {
             },
 
             body:
-              JSON.stringify(orderPayload)
+              JSON.stringify(
+                orderPayload
+              )
+
           }
         );
 
 
-      const order =
-        await response.json();
+      let order;
+
+      try {
+
+        order =
+          await response.json();
+
+      } catch (jsonError) {
+
+        throw new Error(
+          'Invalid response from Dhaan server.'
+        );
+
+      }
 
 
       console.log(
@@ -757,6 +1182,7 @@ document.addEventListener('DOMContentLoaded', () => {
           order.error ||
           'Could not create order.'
         );
+
       }
 
 
@@ -770,6 +1196,7 @@ document.addEventListener('DOMContentLoaded', () => {
           order.message ||
           'Razorpay payment is not enabled on the server.'
         );
+
       }
 
 
@@ -782,6 +1209,23 @@ document.addEventListener('DOMContentLoaded', () => {
         throw new Error(
           'Invalid Razorpay order response.'
         );
+
+      }
+
+
+      /* -----------------------------------------
+         CHECK RAZORPAY SCRIPT
+         ----------------------------------------- */
+
+      if (
+        typeof window.Razorpay ===
+        'undefined'
+      ) {
+
+        throw new Error(
+          'Razorpay Checkout script is not loaded.'
+        );
+
       }
 
 
@@ -790,19 +1234,11 @@ document.addEventListener('DOMContentLoaded', () => {
          ----------------------------------------- */
 
       if (processingModal) {
-        processingModal.classList.remove('open');
-      }
 
-
-      /* -----------------------------------------
-         CHECK RAZORPAY CHECKOUT SCRIPT
-         ----------------------------------------- */
-
-      if (typeof Razorpay === 'undefined') {
-
-        throw new Error(
-          'Razorpay Checkout script is not loaded.'
+        processingModal.classList.remove(
+          'open'
         );
+
       }
 
 
@@ -812,14 +1248,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const options = {
 
-        key: order.key,
+        key:
+          order.key,
 
-        amount: order.amount,
+        amount:
+          order.amount,
 
         currency:
           order.currency || 'INR',
 
-        name: 'Dhaan Foods',
+        name:
+          'Dhaan Foods',
 
         description:
           'Dhaan Smart Start Health Mix',
@@ -837,6 +1276,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           email:
             orderPayload.email || ''
+
         },
 
         notes: {
@@ -849,10 +1289,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
           dhaan_order_id:
             order.orderId
+
         },
 
         theme: {
-          color: '#6B1420'
+
+          color:
+            '#6B1420'
+
         },
 
 
@@ -860,108 +1304,142 @@ document.addEventListener('DOMContentLoaded', () => {
            STEP 3 — PAYMENT SUCCESS
            --------------------------------------- */
 
-        handler: async function (paymentResponse) {
-
-          console.log(
-            'Razorpay payment response:',
+        handler:
+          async function (
             paymentResponse
-          );
-
-
-          try {
-
-            if (processingModal) {
-              processingModal.classList.add('open');
-            }
-
-
-            /* -----------------------------------
-               STEP 4 — VERIFY PAYMENT
-               ----------------------------------- */
-
-            const verifyResponse =
-              await fetch(
-                `${API_URL}/api/verify-payment`,
-                {
-                  method: 'POST',
-
-                  headers: {
-                    'Content-Type':
-                      'application/json'
-                  },
-
-                  body: JSON.stringify({
-
-                    razorpay_order_id:
-                      paymentResponse
-                        .razorpay_order_id,
-
-                    razorpay_payment_id:
-                      paymentResponse
-                        .razorpay_payment_id,
-
-                    razorpay_signature:
-                      paymentResponse
-                        .razorpay_signature
-                  })
-                }
-              );
-
-
-            const verifyData =
-              await verifyResponse.json();
-
+          ) {
 
             console.log(
-              'Payment verification response:',
-              verifyData
+              'Razorpay payment response:',
+              paymentResponse
             );
 
 
-            if (
-              !verifyResponse.ok ||
-              !verifyData.success
-            ) {
+            try {
 
-              throw new Error(
-                verifyData.error ||
-                'Payment verification failed.'
+              if (processingModal) {
+
+                processingModal.classList.add(
+                  'open'
+                );
+
+              }
+
+
+              /* -----------------------------------
+                 STEP 4 — VERIFY PAYMENT
+                 ----------------------------------- */
+
+              const verifyResponse =
+                await fetch(
+                  `${API_URL}/api/verify-payment`,
+                  {
+                    method: 'POST',
+
+                    headers: {
+                      'Content-Type':
+                        'application/json'
+                    },
+
+                    body:
+                      JSON.stringify({
+
+                        razorpay_order_id:
+                          paymentResponse
+                            .razorpay_order_id,
+
+                        razorpay_payment_id:
+                          paymentResponse
+                            .razorpay_payment_id,
+
+                        razorpay_signature:
+                          paymentResponse
+                            .razorpay_signature
+
+                      })
+
+                  }
+                );
+
+
+              let verifyData;
+
+              try {
+
+                verifyData =
+                  await verifyResponse.json();
+
+              } catch (jsonError) {
+
+                throw new Error(
+                  'Invalid payment verification response.'
+                );
+
+              }
+
+
+              console.log(
+                'Payment verification response:',
+                verifyData
               );
+
+
+              if (
+                !verifyResponse.ok ||
+                !verifyData.success
+              ) {
+
+                throw new Error(
+                  verifyData.error ||
+                  'Payment verification failed.'
+                );
+
+              }
+
+
+              /* -----------------------------------
+                 PAYMENT VERIFIED
+                 ----------------------------------- */
+
+              if (processingModal) {
+
+                processingModal.classList.remove(
+                  'open'
+                );
+
+              }
+
+
+              showConfirmation(
+                verifyData.orderId ||
+                order.orderId
+              );
+
+
+            } catch (error) {
+
+              if (processingModal) {
+
+                processingModal.classList.remove(
+                  'open'
+                );
+
+              }
+
+
+              console.error(
+                'Payment verification error:',
+                error
+              );
+
+
+              alert(
+                'Payment was completed, but verification failed. Please contact Dhaan support.'
+              );
+
             }
 
-
-            /* -----------------------------------
-               PAYMENT VERIFIED
-               ----------------------------------- */
-
-            if (processingModal) {
-              processingModal.classList.remove('open');
-            }
-
-
-            showConfirmation(
-              verifyData.orderId ||
-              order.orderId
-            );
-
-
-          } catch (error) {
-
-            if (processingModal) {
-              processingModal.classList.remove('open');
-            }
-
-            console.error(
-              'Payment verification error:',
-              error
-            );
-
-
-            alert(
-              'Payment was completed, but verification failed. Please contact Dhaan support.'
-            );
-          }
-        },
+          },
 
 
         /* ---------------------------------------
@@ -970,17 +1448,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         modal: {
 
-          ondismiss: function () {
+          ondismiss:
+            function () {
 
-            if (processingModal) {
-              processingModal.classList.remove('open');
+              if (processingModal) {
+
+                processingModal.classList.remove(
+                  'open'
+                );
+
+              }
+
+
+              console.log(
+                'Razorpay checkout closed.'
+              );
+
             }
 
-            console.log(
-              'Razorpay checkout closed.'
-            );
-          }
         }
+
       };
 
 
@@ -989,7 +1476,9 @@ document.addEventListener('DOMContentLoaded', () => {
          ----------------------------------------- */
 
       const rzp =
-        new Razorpay(options);
+        new window.Razorpay(
+          options
+        );
 
 
       /* -----------------------------------------
@@ -1005,14 +1494,21 @@ document.addEventListener('DOMContentLoaded', () => {
             response.error
           );
 
+
           if (processingModal) {
-            processingModal.classList.remove('open');
+
+            processingModal.classList.remove(
+              'open'
+            );
+
           }
+
 
           alert(
             response.error?.description ||
             'Payment failed. Please try again.'
           );
+
         }
       );
 
@@ -1027,7 +1523,11 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (error) {
 
       if (processingModal) {
-        processingModal.classList.remove('open');
+
+        processingModal.classList.remove(
+          'open'
+        );
+
       }
 
 
@@ -1041,7 +1541,9 @@ document.addEventListener('DOMContentLoaded', () => {
         error.message ||
         'Could not start payment. Please try again.'
       );
+
     }
+
   }
 
 
@@ -1062,14 +1564,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
           const firstError =
             form.querySelector(
-              '.field.error input'
+              '.field.error input, .field.error textarea, .field.error select'
             );
 
+
           if (firstError) {
+
             firstError.focus();
+
           }
 
+
           return;
+
         }
 
 
@@ -1092,7 +1599,8 @@ document.addEventListener('DOMContentLoaded', () => {
             DELIVERY,
 
           total:
-            UNIT_PRICE * qty + DELIVERY,
+            UNIT_PRICE * qty +
+            DELIVERY,
 
           fullName:
             document
@@ -1135,6 +1643,7 @@ document.addEventListener('DOMContentLoaded', () => {
               .getElementById('pincode')
               .value
               .trim()
+
         };
 
 
@@ -1144,9 +1653,13 @@ document.addEventListener('DOMContentLoaded', () => {
         );
 
 
-        startPayment(payload);
+        startPayment(
+          payload
+        );
+
       }
     );
+
   }
 
 
@@ -1161,34 +1674,52 @@ document.addEventListener('DOMContentLoaded', () => {
       () => {
 
         if (confirmModal) {
-          confirmModal.classList.remove('open');
+
+          confirmModal.classList.remove(
+            'open'
+          );
+
         }
 
 
         if (form) {
+
           form.reset();
+
         }
 
 
         const state =
-          document.getElementById('state');
+          document.getElementById(
+            'state'
+          );
+
 
         if (state) {
-          state.value = 'Tamil Nadu';
+
+          state.value =
+            'Tamil Nadu';
+
         }
 
 
         qty = 1;
 
+
         renderSummary();
 
 
         window.scrollTo({
+
           top: 0,
+
           behavior: 'smooth'
+
         });
+
       }
     );
+
   }
 
 
@@ -1197,7 +1728,10 @@ document.addEventListener('DOMContentLoaded', () => {
      ========================================================= */
 
   const newsletterForm =
-    document.getElementById('newsletterForm');
+    document.getElementById(
+      'newsletterForm'
+    );
+
 
   if (newsletterForm) {
 
@@ -1207,8 +1741,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         e.preventDefault();
 
+
         const input =
-          newsletterForm.querySelector('input');
+          newsletterForm.querySelector(
+            'input'
+          );
+
 
         if (input) {
 
@@ -1216,10 +1754,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
           input.placeholder =
             'Thanks for subscribing!';
+
         }
+
       }
     );
+
   }
 
 });
-```
