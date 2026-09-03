@@ -554,91 +554,81 @@ document.addEventListener('DOMContentLoaded', () => {
       city: 'Coimbatore',
       rating: 5,
       text:
-        'Been using it for 3 months as a pre-workout meal. High protein, easy to digest, and genuinely tasty with warm milk.'
+        'Very good taste and easy to prepare. The ingredients feel natural and the whole family enjoys it.'
     },
 
     {
-      name: 'Divya Sundar',
+      name: 'Meena S',
       city: 'Bengaluru',
-      rating: 4,
+      rating: 5,
       text:
-        'Great for my toddler — I mix it into her regular cereal. Noticed better appetite and energy through the day.'
+        'I have been using Dhaan regularly and really like the taste. It is convenient for busy mornings.'
     },
 
     {
-      name: 'Karthik Raja',
+      name: 'Karthik R',
       city: 'Madurai',
       rating: 5,
       text:
-        'Switched from a market brand to Dhaan and the difference in taste and texture is clear. 26 ingredients really shows.'
+        'Good quality health mix. Delivery was quick and the packaging was neat.'
     },
 
     {
-      name: 'Meena Iyer',
+      name: 'Divya M',
       city: 'Salem',
       rating: 5,
       text:
-        'Whole family drinks it now, from my father to my daughter. Simple to prepare and doesn\'t feel like "health food".'
+        'My kids enjoy it and I feel comfortable giving it to them. The flavour is mild and pleasant.'
     },
 
     {
-      name: 'Suresh Babu',
-      city: 'Trichy',
-      rating: 4,
+      name: 'Suresh P',
+      city: 'Erode',
+      rating: 5,
       text:
-        'Good fibre content, kept me full till lunch. Packaging is sturdy and delivery was quicker than expected.'
+        'A convenient breakfast option with a nice combination of ingredients.'
     }
 
   ];
 
 
-  const reviewGrid =
+  const reviewsGrid =
     document.getElementById(
-      'reviewGrid'
+      'reviewsGrid'
     );
 
 
-  if (reviewGrid) {
+  if (reviewsGrid) {
 
-    reviewGrid.innerHTML =
+    reviewsGrid.innerHTML =
       reviews
-        .map(r => `
+        .map(review => `
 
           <div class="review-card">
 
-            <div class="stars">
-
-              ${'★'.repeat(r.rating)}
-
-              ${'☆'.repeat(
-                5 - r.rating
-              )}
-
-            </div>
-
-            <p class="quote">
-              "${r.text}"
-            </p>
-
-            <div class="review-who">
-
-              <span class="avatar">
-                ${r.name.charAt(0)}
-              </span>
+            <div class="review-top">
 
               <div>
 
                 <strong>
-                  ${r.name}
+                  ${review.name}
                 </strong>
 
                 <span>
-                  ${r.city} · Verified Buyer
+                  ${review.city}
                 </span>
 
               </div>
 
+              <div class="stars">
+                ${'★'.repeat(review.rating)}
+              </div>
+
             </div>
+
+            <p>
+              “${review.text}”
+            </p>
 
           </div>
 
@@ -649,20 +639,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* =========================================================
-     ORDER FORM
+     ORDER / QUANTITY
      ========================================================= */
+
+  let qty = 1;
 
   const UNIT_PRICE = 299;
 
   const DELIVERY = 0;
 
-  let qty = 1;
-
-
-  const qtyInput =
-    document.getElementById(
-      'qtyInput'
-    );
 
   const qtyMinus =
     document.getElementById(
@@ -674,80 +659,71 @@ document.addEventListener('DOMContentLoaded', () => {
       'qtyPlus'
     );
 
-  const sumQty =
+  const qtyValue =
     document.getElementById(
-      'sumQty'
+      'qtyValue'
     );
 
-  const sumProduct =
+
+  const productTotalEl =
     document.getElementById(
-      'sumProduct'
+      'productTotal'
     );
 
-  const sumDelivery =
+  const deliveryEl =
     document.getElementById(
-      'sumDelivery'
+      'delivery'
     );
 
-  const sumTotal =
+  const totalEl =
     document.getElementById(
-      'sumTotal'
+      'total'
     );
 
 
   function renderSummary() {
 
+    if (qtyValue) {
+
+      qtyValue.textContent =
+        qty;
+
+    }
+
+
     const productTotal =
       UNIT_PRICE * qty;
-
 
     const total =
       productTotal + DELIVERY;
 
 
-    if (sumQty) {
+    if (productTotalEl) {
 
-      sumQty.textContent =
-        qty;
-
-    }
-
-
-    if (sumProduct) {
-
-      sumProduct.textContent =
+      productTotalEl.textContent =
         `₹${productTotal}`;
 
     }
 
 
-    if (sumDelivery) {
+    if (deliveryEl) {
 
-      sumDelivery.textContent =
-        `₹${DELIVERY}`;
+      deliveryEl.textContent =
+        DELIVERY === 0
+          ? 'FREE'
+          : `₹${DELIVERY}`;
 
     }
 
 
-    if (sumTotal) {
+    if (totalEl) {
 
-      sumTotal.textContent =
+      totalEl.textContent =
         `₹${total}`;
 
     }
 
-
-    if (qtyInput) {
-
-      qtyInput.value =
-        qty;
-
-    }
-
   }
-
-
-  renderSummary();
 
 
   if (qtyMinus) {
@@ -756,14 +732,13 @@ document.addEventListener('DOMContentLoaded', () => {
       'click',
       () => {
 
-        qty =
-          Math.max(
-            1,
-            qty - 1
-          );
+        if (qty > 1) {
 
+          qty--;
 
-        renderSummary();
+          renderSummary();
+
+        }
 
       }
     );
@@ -777,14 +752,13 @@ document.addEventListener('DOMContentLoaded', () => {
       'click',
       () => {
 
-        qty =
-          Math.min(
-            10,
-            qty + 1
-          );
+        if (qty < 10) {
 
+          qty++;
 
-        renderSummary();
+          renderSummary();
+
+        }
 
       }
     );
@@ -792,8 +766,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
+  renderSummary();
+
+
   /* =========================================================
-     VALIDATION
+     ORDER FORM
      ========================================================= */
 
   const form =
@@ -807,12 +784,15 @@ document.addEventListener('DOMContentLoaded', () => {
       'processingModal'
     );
 
-
   const confirmModal =
     document.getElementById(
       'confirmModal'
     );
 
+  const closeConfirm =
+    document.getElementById(
+      'closeConfirm'
+    );
 
   const orderIdDisplay =
     document.getElementById(
@@ -820,258 +800,100 @@ document.addEventListener('DOMContentLoaded', () => {
     );
 
 
-  const closeConfirm =
-    document.getElementById(
-      'closeConfirm'
-    );
-
-
-  function setError(
-    fieldEl,
-    message
-  ) {
-
-    if (!fieldEl) {
-      return;
-    }
-
-
-    const wrap =
-      fieldEl.closest(
-        '.field'
-      );
-
-
-    if (!wrap) {
-      return;
-    }
-
-
-    wrap.classList.toggle(
-      'error',
-      !!message
-    );
-
-
-    const msg =
-      wrap.querySelector(
-        '.err-msg'
-      );
-
-
-    if (msg) {
-
-      msg.textContent =
-        message || '';
-
-    }
-
-  }
-
+  /* =========================================================
+     VALIDATION
+     ========================================================= */
 
   function validateForm() {
+
+    if (!form) {
+      return false;
+    }
+
 
     let valid = true;
 
 
-    const name =
-      document.getElementById(
-        'fullName'
-      );
+    const fields = [
+      'fullName',
+      'mobile',
+      'email',
+      'address',
+      'city',
+      'state',
+      'pincode'
+    ];
 
 
-    const mobile =
-      document.getElementById(
-        'mobile'
-      );
+    fields.forEach(id => {
+
+      const input =
+        document.getElementById(id);
+
+      if (!input) {
+        return;
+      }
 
 
-    const email =
-      document.getElementById(
-        'email'
-      );
+      const value =
+        input.value.trim();
 
 
-    const address =
-      document.getElementById(
-        'address'
-      );
+      let fieldValid =
+        value.length > 0;
 
 
-    const city =
-      document.getElementById(
-        'city'
-      );
+      if (id === 'mobile') {
+
+        fieldValid =
+          /^[6-9]\d{9}$/.test(
+            value
+          );
+
+      }
 
 
-    const state =
-      document.getElementById(
-        'state'
-      );
+      if (id === 'email') {
+
+        fieldValid =
+          /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+            value
+          );
+
+      }
 
 
-    const pincode =
-      document.getElementById(
-        'pincode'
-      );
+      if (id === 'pincode') {
+
+        fieldValid =
+          /^\d{6}$/.test(
+            value
+          );
+
+      }
 
 
-    if (!name || !name.value.trim()) {
-
-      setError(
-        name,
-        'Please enter your name'
-      );
-
-      valid = false;
-
-    } else {
-
-      setError(
-        name,
-        ''
-      );
-
-    }
+      const field =
+        input.closest('.field');
 
 
-    if (
-      !mobile ||
-      !/^[6-9]\d{9}$/.test(
-        mobile.value.trim()
-      )
-    ) {
+      if (field) {
 
-      setError(
-        mobile,
-        'Enter a valid 10-digit mobile number'
-      );
+        field.classList.toggle(
+          'error',
+          !fieldValid
+        );
 
-      valid = false;
-
-    } else {
-
-      setError(
-        mobile,
-        ''
-      );
-
-    }
+      }
 
 
-    if (
-      email &&
-      email.value.trim() &&
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-        email.value.trim()
-      )
-    ) {
+      if (!fieldValid) {
 
-      setError(
-        email,
-        'Enter a valid email'
-      );
+        valid = false;
 
-      valid = false;
+      }
 
-    } else {
-
-      setError(
-        email,
-        ''
-      );
-
-    }
-
-
-    if (
-      !address ||
-      !address.value.trim()
-    ) {
-
-      setError(
-        address,
-        'Please enter your address'
-      );
-
-      valid = false;
-
-    } else {
-
-      setError(
-        address,
-        ''
-      );
-
-    }
-
-
-    if (
-      !city ||
-      !city.value.trim()
-    ) {
-
-      setError(
-        city,
-        'Please enter your city'
-      );
-
-      valid = false;
-
-    } else {
-
-      setError(
-        city,
-        ''
-      );
-
-    }
-
-
-    if (
-      !state ||
-      !state.value.trim()
-    ) {
-
-      setError(
-        state,
-        'Please enter your state'
-      );
-
-      valid = false;
-
-    } else {
-
-      setError(
-        state,
-        ''
-      );
-
-    }
-
-
-    if (
-      !pincode ||
-      !/^\d{6}$/.test(
-        pincode.value.trim()
-      )
-    ) {
-
-      setError(
-        pincode,
-        'Enter a valid 6-digit pincode'
-      );
-
-      valid = false;
-
-    } else {
-
-      setError(
-        pincode,
-        ''
-      );
-
-    }
+    });
 
 
     return valid;
@@ -1155,6 +977,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
       let order;
+
 
       try {
 
@@ -1364,6 +1187,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
               let verifyData;
 
+
               try {
 
                 verifyData =
@@ -1410,10 +1234,41 @@ document.addEventListener('DOMContentLoaded', () => {
               }
 
 
-              showConfirmation(
+              /* -----------------------------------
+                 REDIRECT TO THANK YOU PAGE
+                 ----------------------------------- */
+
+              const confirmedOrderId =
                 verifyData.orderId ||
-                order.orderId
-              );
+                order.orderId;
+
+
+              const confirmedAmount =
+                Number(order.amount || 0) / 100 ||
+                Number(orderPayload.total || 0);
+
+
+              const thankYouParams =
+                new URLSearchParams({
+
+                  orderId:
+                    confirmedOrderId,
+
+                  amount:
+                    String(
+                      confirmedAmount
+                    ),
+
+                  quantity:
+                    String(
+                      orderPayload.quantity || 1
+                    )
+
+                });
+
+
+              window.location.href =
+                `thank-you.html?${thankYouParams.toString()}`;
 
 
             } catch (error) {

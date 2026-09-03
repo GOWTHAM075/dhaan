@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thank You | Dhaan Foods</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;background:#faf7f4;color:#333;display:flex;align-items:center;justify-content:center;padding:24px}
+.card{width:100%;max-width:560px;background:#fff;border-radius:18px;padding:42px 28px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.1)}
+.check{width:76px;height:76px;margin:0 auto 22px;border-radius:50%;background:#eaf7ee;color:#16803c;display:flex;align-items:center;justify-content:center;font-size:42px;font-weight:bold}
+h1{margin:0 0 10px;color:#6B1420;font-size:32px}
+.subtitle{margin:0 auto 28px;max-width:430px;color:#666;line-height:1.6}
+.details{text-align:left;border:1px solid #eee;border-radius:12px;overflow:hidden;margin:24px 0}
+.row{display:flex;justify-content:space-between;gap:20px;padding:15px 17px;border-bottom:1px solid #eee}
+.row:last-child{border-bottom:0}.label{color:#777}.value{font-weight:700;text-align:right}.free{color:#16803c}
+.note{font-size:14px;color:#777;line-height:1.6;margin:22px 0}
+.btn{display:inline-block;width:100%;border-radius:10px;padding:14px 20px;background:#6B1420;color:#fff;text-decoration:none;font-size:16px;font-weight:700}
+@media(max-width:480px){.card{padding:34px 20px}h1{font-size:28px}}
+</style>
+</head>
+<body>
+<main class="card">
+<div class="check">✓</div>
+<h1>Thank You!</h1>
+<p class="subtitle">Your order has been successfully placed and your payment has been confirmed.</p>
+<div class="details">
+<div class="row"><span class="label">Order ID</span><span class="value" id="orderId">—</span></div>
+<div class="row"><span class="label">Amount Paid</span><span class="value" id="amount">₹299</span></div>
+<div class="row"><span class="label">Delivery</span><span class="value free">FREE</span></div>
+<div class="row"><span class="label">Status</span><span class="value free">Confirmed</span></div>
+</div>
+<p class="note">A confirmation email will be sent to the email address provided with your order. Your order will be processed shortly.</p>
+<a class="btn" href="index.html">Continue Shopping</a>
+</main>
+<script>
+const params=new URLSearchParams(window.location.search);
+const orderId=params.get('orderId');
+const amount=Number(params.get('amount'));
+if(orderId) document.getElementById('orderId').textContent=orderId;
+if(Number.isFinite(amount)&&amount>0) document.getElementById('amount').textContent=`₹${amount.toLocaleString('en-IN')}`;
+</script>
+</body>
+</html>
