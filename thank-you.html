@@ -1,44 +1,1039 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thank You | Dhaan Foods</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;background:#faf7f4;color:#333;display:flex;align-items:center;justify-content:center;padding:24px}
-.card{width:100%;max-width:560px;background:#fff;border-radius:18px;padding:42px 28px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.1)}
-.check{width:76px;height:76px;margin:0 auto 22px;border-radius:50%;background:#eaf7ee;color:#16803c;display:flex;align-items:center;justify-content:center;font-size:42px;font-weight:bold}
-h1{margin:0 0 10px;color:#6B1420;font-size:32px}
-.subtitle{margin:0 auto 28px;max-width:430px;color:#666;line-height:1.6}
-.details{text-align:left;border:1px solid #eee;border-radius:12px;overflow:hidden;margin:24px 0}
-.row{display:flex;justify-content:space-between;gap:20px;padding:15px 17px;border-bottom:1px solid #eee}
-.row:last-child{border-bottom:0}.label{color:#777}.value{font-weight:700;text-align:right}.free{color:#16803c}
-.note{font-size:14px;color:#777;line-height:1.6;margin:22px 0}
-.btn{display:inline-block;width:100%;border-radius:10px;padding:14px 20px;background:#6B1420;color:#fff;text-decoration:none;font-size:16px;font-weight:700}
-@media(max-width:480px){.card{padding:34px 20px}h1{font-size:28px}}
-</style>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Thank You | Dhaan Foods
+  </title>
+
+
+  <!-- =====================================================
+       META PIXEL
+       ===================================================== -->
+
+  <script>
+
+    !function(f,b,e,v,n,t,s)
+    {
+      if(f.fbq)return;
+
+      n=f.fbq=function(){
+        n.callMethod ?
+        n.callMethod.apply(n,arguments) :
+        n.queue.push(arguments)
+      };
+
+      if(!f._fbq)f._fbq=n;
+
+      n.push=n;
+      n.loaded=!0;
+      n.version='2.0';
+      n.queue=[];
+
+      t=b.createElement(e);
+      t.async=!0;
+      t.src=v;
+
+      s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)
+
+    }(
+      window,
+      document,
+      'script',
+      'https://connect.facebook.net/en_US/fbevents.js'
+    );
+
+
+    fbq(
+      'init',
+      'YOUR_PIXEL_ID'
+    );
+
+
+    fbq(
+      'track',
+      'PageView'
+    );
+
+  </script>
+
+
+  <noscript>
+
+    <img
+      height="1"
+      width="1"
+      style="display:none"
+      src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"
+    >
+
+  </noscript>
+
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    body {
+
+      margin: 0;
+
+      min-height: 100vh;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      background: #faf7f4;
+
+      color: #333;
+
+      padding: 35px 20px;
+
+    }
+
+
+    .container {
+
+      width: 100%;
+
+      max-width: 900px;
+
+      margin: 0 auto;
+
+    }
+
+
+    .card {
+
+      background: #fff;
+
+      border: 1px solid #e5e5e5;
+
+      border-radius: 4px;
+
+      padding: 34px;
+
+    }
+
+
+    h1 {
+
+      margin: 0 0 24px;
+
+      color: #2f5da8;
+
+      font-size: 24px;
+
+      font-weight: 700;
+
+    }
+
+
+    .notice {
+
+      border-left: 4px solid #c54b2c;
+
+      padding: 4px 0 4px 18px;
+
+      margin-bottom: 34px;
+
+      line-height: 1.65;
+
+      color: #555;
+
+      font-size: 15px;
+
+    }
+
+
+    .top-info {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      border-bottom: 1px solid #ddd;
+
+      padding-bottom: 22px;
+
+      margin-bottom: 34px;
+
+    }
+
+
+    .info {
+
+      padding: 0 18px;
+
+      border-right: 1px solid #ddd;
+
+    }
+
+
+    .info:first-child {
+
+      padding-left: 0;
+
+    }
+
+
+    .info:last-child {
+
+      border-right: 0;
+
+    }
+
+
+    .info-label {
+
+      display: block;
+
+      font-size: 11px;
+
+      text-transform: uppercase;
+
+      color: #777;
+
+      margin-bottom: 5px;
+
+    }
+
+
+    .info-value {
+
+      font-size: 15px;
+
+      font-weight: 700;
+
+      color: #333;
+
+      word-break: break-word;
+
+    }
+
+
+    h2 {
+
+      font-family:
+        Georgia,
+        'Times New Roman',
+        serif;
+
+      font-size: 23px;
+
+      margin: 0 0 16px;
+
+      color: #222;
+
+    }
+
+
+    .order-table {
+
+      width: 100%;
+
+      border: 1px solid #ddd;
+
+      border-radius: 3px;
+
+      overflow: hidden;
+
+      margin-bottom: 32px;
+
+    }
+
+
+    .table-header,
+    .product-row,
+    .total-row {
+
+      display: grid;
+
+      grid-template-columns:
+        1fr 180px;
+
+      padding: 16px 18px;
+
+      border-bottom: 1px solid #ddd;
+
+    }
+
+
+    .table-header {
+
+      background: #f5f5f5;
+
+      text-transform: uppercase;
+
+      font-size: 12px;
+
+      letter-spacing: 1px;
+
+      color: #555;
+
+    }
+
+
+    .product-row {
+
+      font-size: 14px;
+
+      color: #444;
+
+    }
+
+
+    .product-name {
+
+      color: #4e6592;
+
+    }
+
+
+    .product-price {
+
+      text-align: left;
+
+    }
+
+
+    .total-row {
+
+      border-bottom: 0;
+
+    }
+
+
+    .total-row strong {
+
+      font-weight: 700;
+
+    }
+
+
+    .address-box {
+
+      border: 1px solid #ddd;
+
+      padding: 20px;
+
+      line-height: 1.65;
+
+      margin-bottom: 30px;
+
+    }
+
+
+    .address-title {
+
+      font-family:
+        Georgia,
+        'Times New Roman',
+        serif;
+
+      font-size: 21px;
+
+      font-weight: 700;
+
+      margin-bottom: 15px;
+
+    }
+
+
+    .address {
+
+      white-space: pre-line;
+
+      color: #444;
+
+    }
+
+
+    .buttons {
+
+      display: flex;
+
+      gap: 12px;
+
+      margin-top: 25px;
+
+    }
+
+
+    .btn {
+
+      display: inline-block;
+
+      padding: 13px 22px;
+
+      border-radius: 6px;
+
+      text-decoration: none;
+
+      font-size: 15px;
+
+      font-weight: 700;
+
+      text-align: center;
+
+    }
+
+
+    .primary {
+
+      background: #6B1420;
+
+      color: #fff;
+
+    }
+
+
+    .secondary {
+
+      background: #eee;
+
+      color: #333;
+
+    }
+
+
+    @media (max-width: 700px) {
+
+      .card {
+
+        padding: 25px 18px;
+
+      }
+
+
+      .top-info {
+
+        grid-template-columns:
+          repeat(2, 1fr);
+
+        gap: 20px 0;
+
+      }
+
+
+      .info:nth-child(2) {
+
+        border-right: 0;
+
+      }
+
+
+      .info:nth-child(3) {
+
+        padding-left: 0;
+
+      }
+
+
+      .table-header,
+      .product-row,
+      .total-row {
+
+        grid-template-columns:
+          1fr 110px;
+
+      }
+
+    }
+
+
+    @media (max-width: 480px) {
+
+      body {
+
+        padding: 15px 10px;
+
+      }
+
+
+      h1 {
+
+        font-size: 21px;
+
+      }
+
+
+      .notice {
+
+        font-size: 14px;
+
+      }
+
+
+      .top-info {
+
+        grid-template-columns: 1fr 1fr;
+
+      }
+
+
+      .info {
+
+        padding: 0 10px;
+
+      }
+
+
+      .info:nth-child(3) {
+
+        padding-left: 0;
+
+      }
+
+
+      .table-header,
+      .product-row,
+      .total-row {
+
+        grid-template-columns:
+          1fr 90px;
+
+        padding: 14px 12px;
+
+      }
+
+
+      .buttons {
+
+        flex-direction: column;
+
+      }
+
+
+      .btn {
+
+        width: 100%;
+
+      }
+
+    }
+
+  </style>
+
 </head>
+
+
 <body>
-<main class="card">
-<div class="check">✓</div>
-<h1>Thank You!</h1>
-<p class="subtitle">Your order has been successfully placed and your payment has been confirmed.</p>
-<div class="details">
-<div class="row"><span class="label">Order ID</span><span class="value" id="orderId">—</span></div>
-<div class="row"><span class="label">Amount Paid</span><span class="value" id="amount">₹299</span></div>
-<div class="row"><span class="label">Delivery</span><span class="value free">FREE</span></div>
-<div class="row"><span class="label">Status</span><span class="value free">Confirmed</span></div>
-</div>
-<p class="note">A confirmation email will be sent to the email address provided with your order. Your order will be processed shortly.</p>
-<a class="btn" href="index.html">Continue Shopping</a>
-</main>
-<script>
-const params=new URLSearchParams(window.location.search);
-const orderId=params.get('orderId');
-const amount=Number(params.get('amount'));
-if(orderId) document.getElementById('orderId').textContent=orderId;
-if(Number.isFinite(amount)&&amount>0) document.getElementById('amount').textContent=`₹${amount.toLocaleString('en-IN')}`;
-</script>
+
+
+  <div class="container">
+
+    <div class="card">
+
+
+      <!-- =================================================
+           TITLE
+           ================================================= -->
+
+      <h1>
+        Thank you for placing an order with us!
+      </h1>
+
+
+      <!-- =================================================
+           DELIVERY NOTICE
+           ================================================= -->
+
+      <div class="notice">
+
+        Please note that your Dhaan Foods order will
+        normally be delivered across India within
+        <strong>3–5 business days</strong>.
+        Delivery times may vary depending on your
+        location and courier service.
+
+        If you have any questions about your order,
+        please contact Dhaan Foods customer support.
+
+      </div>
+
+
+      <!-- =================================================
+           ORDER INFORMATION
+           ================================================= -->
+
+      <div class="top-info">
+
+
+        <div class="info">
+
+          <span class="info-label">
+            Order Number
+          </span>
+
+          <span
+            class="info-value"
+            id="orderId"
+          >
+            —
+          </span>
+
+        </div>
+
+
+        <div class="info">
+
+          <span class="info-label">
+            Date
+          </span>
+
+          <span
+            class="info-value"
+            id="orderDate"
+          >
+            —
+          </span>
+
+        </div>
+
+
+        <div class="info">
+
+          <span class="info-label">
+            Email
+          </span>
+
+          <span
+            class="info-value"
+            id="email"
+          >
+            —
+          </span>
+
+        </div>
+
+
+        <div class="info">
+
+          <span class="info-label">
+            Total
+          </span>
+
+          <span
+            class="info-value"
+            id="topTotal"
+          >
+            ₹299
+          </span>
+
+        </div>
+
+
+      </div>
+
+
+      <!-- =================================================
+           ORDER DETAILS
+           ================================================= -->
+
+      <h2>
+        Order details
+      </h2>
+
+
+      <div class="order-table">
+
+
+        <div class="table-header">
+
+          <div>
+            Product
+          </div>
+
+          <div>
+            Total
+          </div>
+
+        </div>
+
+
+        <div class="product-row">
+
+          <div class="product-name">
+
+            Dhaan Smart Start Health Mix
+            × <span id="quantity">1</span>
+
+          </div>
+
+          <div
+            class="product-price"
+            id="productTotal"
+          >
+            ₹299
+          </div>
+
+        </div>
+
+
+        <div class="product-row">
+
+          <div>
+            Delivery
+          </div>
+
+          <div>
+            FREE
+          </div>
+
+        </div>
+
+
+        <div class="total-row">
+
+          <div>
+            Subtotal:
+          </div>
+
+          <div>
+            <strong id="subtotal">
+              ₹299
+            </strong>
+          </div>
+
+        </div>
+
+
+        <div class="total-row">
+
+          <div>
+            Payment method:
+          </div>
+
+          <div>
+            Razorpay
+          </div>
+
+        </div>
+
+
+        <div class="total-row">
+
+          <div>
+            Total:
+          </div>
+
+          <div>
+            <strong id="total">
+              ₹299
+            </strong>
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+      <!-- =================================================
+           BILLING / DELIVERY ADDRESS
+           ================================================= -->
+
+      <div class="address-box">
+
+
+        <div class="address-title">
+          Billing address
+        </div>
+
+
+        <div
+          class="address"
+          id="billingAddress"
+        >
+          Customer Name
+        </div>
+
+
+      </div>
+
+
+      <!-- =================================================
+           BUTTONS
+           ================================================= -->
+
+      <div class="buttons">
+
+        <a
+          href="index.html"
+          class="btn primary"
+        >
+          Continue Shopping
+        </a>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+       ===================================================== -->
+
+  <script>
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+
+    /* -----------------------------------------
+       GET ORDER DATA
+       ----------------------------------------- */
+
+    const orderId =
+      params.get('orderId');
+
+
+    const amount =
+      Number(
+        params.get('amount')
+      );
+
+
+    const quantity =
+      Number(
+        params.get('quantity')
+      ) || 1;
+
+
+    const customerName =
+      params.get('name') || '';
+
+
+    const email =
+      params.get('email') || '';
+
+
+    const mobile =
+      params.get('mobile') || '';
+
+
+    const address =
+      params.get('address') || '';
+
+
+    const city =
+      params.get('city') || '';
+
+
+    const state =
+      params.get('state') || '';
+
+
+    const pincode =
+      params.get('pincode') || '';
+
+
+    /* -----------------------------------------
+       DISPLAY ORDER ID
+       ----------------------------------------- */
+
+    if (orderId) {
+
+      document.getElementById(
+        'orderId'
+      ).textContent =
+        orderId;
+
+    }
+
+
+    /* -----------------------------------------
+       DISPLAY DATE
+       ----------------------------------------- */
+
+    const today =
+      new Date();
+
+
+    document.getElementById(
+      'orderDate'
+    ).textContent =
+      today.toLocaleDateString(
+        'en-IN',
+        {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric'
+        }
+      );
+
+
+    /* -----------------------------------------
+       AMOUNT
+       ----------------------------------------- */
+
+    let finalAmount =
+      amount;
+
+
+    if (
+      !Number.isFinite(finalAmount) ||
+      finalAmount <= 0
+    ) {
+
+      finalAmount =
+        299 * quantity;
+
+    }
+
+
+    const formattedAmount =
+      `₹${finalAmount.toLocaleString(
+        'en-IN'
+      )}`;
+
+
+    document.getElementById(
+      'topTotal'
+    ).textContent =
+      formattedAmount;
+
+
+    document.getElementById(
+      'productTotal'
+    ).textContent =
+      formattedAmount;
+
+
+    document.getElementById(
+      'subtotal'
+    ).textContent =
+      formattedAmount;
+
+
+    document.getElementById(
+      'total'
+    ).textContent =
+      formattedAmount;
+
+
+    /* -----------------------------------------
+       QUANTITY
+       ----------------------------------------- */
+
+    document.getElementById(
+      'quantity'
+    ).textContent =
+      quantity;
+
+
+    /* -----------------------------------------
+       EMAIL
+       ----------------------------------------- */
+
+    if (email) {
+
+      document.getElementById(
+        'email'
+      ).textContent =
+        email;
+
+    }
+
+
+    /* -----------------------------------------
+       ADDRESS
+       ----------------------------------------- */
+
+    const addressParts = [
+
+      customerName,
+
+      address,
+
+      city,
+
+      state,
+
+      pincode,
+
+      mobile
+
+    ].filter(Boolean);
+
+
+    if (addressParts.length) {
+
+      document.getElementById(
+        'billingAddress'
+      ).textContent =
+        addressParts.join('\n');
+
+    }
+
+
+    /* =================================================
+       META PIXEL — PURCHASE EVENT
+       ================================================= */
+
+    if (
+      typeof fbq === 'function' &&
+      finalAmount > 0
+    ) {
+
+      fbq(
+        'track',
+        'Purchase',
+        {
+          value:
+            finalAmount,
+
+          currency:
+            'INR',
+
+          content_name:
+            'Dhaan Smart Start Health Mix',
+
+          content_type:
+            'product',
+
+          contents: [
+            {
+              id:
+                'dhan-smart-start-health-mix',
+
+              quantity:
+                quantity
+            }
+          ]
+        },
+        {
+          eventID:
+            orderId ||
+            `dhan_${Date.now()}`
+        }
+      );
+
+    }
+
+  </script>
+
+
 </body>
 </html>

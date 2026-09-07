@@ -1,6 +1,7 @@
 /* =========================================================
    DHAAN — main.js
-   Real Razorpay Payment + Render Backend Integration
+   Razorpay Payment + Render Backend Integration
+   Quantity + Thank You Page Fix
    ========================================================= */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -9,80 +10,59 @@ document.addEventListener('DOMContentLoaded', () => {
      BACKEND CONFIGURATION
      ========================================================= */
 
-  const API_URL = 'https://dhaan-backend.onrender.com';
+  const API_URL =
+    'https://dhaan-backend.onrender.com';
 
 
   /* =========================================================
      PROMO VIDEO
      ========================================================= */
 
-  const promoVideo = document.getElementById('promoVideo');
-  const playOverlay = document.getElementById('playOverlay');
-  const promoMuteToggle = document.getElementById('promoMuteToggle');
-  const promoIconMuted = document.getElementById('promoIconMuted');
-  const promoIconUnmuted = document.getElementById('promoIconUnmuted');
+  const promoVideo =
+    document.getElementById('promoVideo');
+
+  const playOverlay =
+    document.getElementById('playOverlay');
+
+  const promoMuteToggle =
+    document.getElementById('promoMuteToggle');
+
+  const promoIconMuted =
+    document.getElementById('promoIconMuted');
+
+  const promoIconUnmuted =
+    document.getElementById('promoIconUnmuted');
+
 
   if (promoVideo && playOverlay) {
 
-    playOverlay.addEventListener('click', () => {
+    playOverlay.addEventListener(
+      'click',
+      () => {
 
-      promoVideo.muted = false;
+        promoVideo.muted = false;
 
-      promoVideo.play().catch(() => {});
+        promoVideo
+          .play()
+          .catch(() => {});
 
-      playOverlay.classList.add('hidden');
-
-      if (promoMuteToggle) {
-        promoMuteToggle.style.display = 'flex';
-      }
-
-      if (promoIconMuted) {
-        promoIconMuted.style.display = 'none';
-      }
-
-      if (promoIconUnmuted) {
-        promoIconUnmuted.style.display = 'block';
-      }
-
-    });
+        playOverlay.classList.add(
+          'hidden'
+        );
 
 
-    promoVideo.addEventListener('click', () => {
+        if (promoMuteToggle) {
 
-      if (promoVideo.paused) {
-        promoVideo.play().catch(() => {});
-      } else {
-        promoVideo.pause();
-      }
+          promoMuteToggle.style.display =
+            'flex';
 
-    });
-
-
-    promoVideo.addEventListener('ended', () => {
-
-      playOverlay.classList.remove('hidden');
-
-      if (promoMuteToggle) {
-        promoMuteToggle.style.display = 'none';
-      }
-
-    });
-
-
-    if (promoMuteToggle) {
-
-      promoMuteToggle.addEventListener('click', () => {
-
-        promoVideo.muted =
-          !promoVideo.muted;
+        }
 
 
         if (promoIconMuted) {
 
           promoIconMuted.style.display =
-            promoVideo.muted
-              ? 'block'
-              : 'none';
+            'none';
 
         }
 
@@ -90,13 +70,85 @@ document.addEventListener('DOMContentLoaded', () => {
         if (promoIconUnmuted) {
 
           promoIconUnmuted.style.display =
-            promoVideo.muted
-              ? 'none'
-              : 'block';
+            'block';
 
         }
 
-      });
+      }
+    );
+
+
+    promoVideo.addEventListener(
+      'click',
+      () => {
+
+        if (promoVideo.paused) {
+
+          promoVideo
+            .play()
+            .catch(() => {});
+
+        } else {
+
+          promoVideo.pause();
+
+        }
+
+      }
+    );
+
+
+    promoVideo.addEventListener(
+      'ended',
+      () => {
+
+        playOverlay.classList.remove(
+          'hidden'
+        );
+
+
+        if (promoMuteToggle) {
+
+          promoMuteToggle.style.display =
+            'none';
+
+        }
+
+      }
+    );
+
+
+    if (promoMuteToggle) {
+
+      promoMuteToggle.addEventListener(
+        'click',
+        () => {
+
+          promoVideo.muted =
+            !promoVideo.muted;
+
+
+          if (promoIconMuted) {
+
+            promoIconMuted.style.display =
+              promoVideo.muted
+                ? 'block'
+                : 'none';
+
+          }
+
+
+          if (promoIconUnmuted) {
+
+            promoIconUnmuted.style.display =
+              promoVideo.muted
+                ? 'none'
+                : 'block';
+
+          }
+
+        }
+      );
 
     }
 
@@ -122,43 +174,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (heroVideo && muteToggle) {
 
-    muteToggle.addEventListener('click', () => {
+    muteToggle.addEventListener(
+      'click',
+      () => {
 
-      heroVideo.muted =
-        !heroVideo.muted;
+        heroVideo.muted =
+          !heroVideo.muted;
 
 
-      if (iconMuted) {
+        if (iconMuted) {
 
-        iconMuted.style.display =
+          iconMuted.style.display =
+            heroVideo.muted
+              ? 'block'
+              : 'none';
+
+        }
+
+
+        if (iconUnmuted) {
+
+          iconUnmuted.style.display =
+            heroVideo.muted
+              ? 'none'
+              : 'block';
+
+        }
+
+
+        muteToggle.setAttribute(
+          'aria-label',
           heroVideo.muted
-            ? 'block'
-            : 'none';
+            ? 'Unmute video'
+            : 'Mute video'
+        );
 
       }
+    );
 
 
-      if (iconUnmuted) {
-
-        iconUnmuted.style.display =
-          heroVideo.muted
-            ? 'none'
-            : 'block';
-
-      }
-
-
-      muteToggle.setAttribute(
-        'aria-label',
-        heroVideo.muted
-          ? 'Unmute video'
-          : 'Mute video'
-      );
-
-    });
-
-
-    heroVideo.play().catch(() => {});
+    heroVideo
+      .play()
+      .catch(() => {});
 
   }
 
@@ -176,26 +233,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (navToggle && header) {
 
-    navToggle.addEventListener('click', () => {
+    navToggle.addEventListener(
+      'click',
+      () => {
 
-      header.classList.toggle(
-        'menu-open'
-      );
+        header.classList.toggle(
+          'menu-open'
+        );
 
-    });
+      }
+    );
 
 
     document
-      .querySelectorAll('.mobile-menu a')
+      .querySelectorAll(
+        '.mobile-menu a'
+      )
       .forEach(a => {
 
-        a.addEventListener('click', () => {
+        a.addEventListener(
+          'click',
+          () => {
 
-          header.classList.remove(
-            'menu-open'
-          );
+            header.classList.remove(
+              'menu-open'
+            );
 
-        });
+          }
+        );
 
       });
 
@@ -224,12 +289,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const spy =
       new IntersectionObserver(
-        (entries) => {
+        entries => {
 
           entries.forEach(entry => {
 
-            if (!entry.isIntersecting) {
+            if (
+              !entry.isIntersecting
+            ) {
+
               return;
+
             }
 
 
@@ -289,12 +358,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const revealObserver =
       new IntersectionObserver(
-        (entries) => {
+        entries => {
 
           entries.forEach(entry => {
 
-            if (!entry.isIntersecting) {
+            if (
+              !entry.isIntersecting
+            ) {
+
               return;
+
             }
 
 
@@ -339,12 +412,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const countObserver =
       new IntersectionObserver(
-        (entries) => {
+        entries => {
 
           entries.forEach(entry => {
 
-            if (!entry.isIntersecting) {
+            if (
+              !entry.isIntersecting
+            ) {
+
               return;
+
             }
 
 
@@ -439,8 +516,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const ingredients = [
 
     ['01-badam', 'Badam'],
+
     ['02-pista', 'Pista'],
+
     ['03-cashewnut', 'Cashewnut'],
+
     ['04-walnut', 'Walnut'],
 
     [
@@ -473,26 +553,85 @@ document.addEventListener('DOMContentLoaded', () => {
       'Sprouted Black Grams'
     ],
 
-    ['11-soy-beans', 'Soy Beans'],
-    ['12-groundnut', 'Groundnut'],
+    [
+      '11-soy-beans',
+      'Soy Beans'
+    ],
 
-    ['13-kidney-beans', 'Kidney Beans'],
-    ['14-bengal-gram', 'Bengal Gram'],
-    ['15-cardamom', 'Cardamom'],
-    ['16-foxtail-millet', 'Foxtail Millet'],
+    [
+      '12-groundnut',
+      'Groundnut'
+    ],
 
-    ['17-dry-ginger', 'Dry Ginger'],
-    ['18-white-sorghum', 'White Sorghum'],
-    ['19-red-rice', 'Red Rice'],
-    ['20-corn', 'Corn'],
+    [
+      '13-kidney-beans',
+      'Kidney Beans'
+    ],
 
-    ['21-black-rice', 'Black Rice'],
-    ['22-pumpkin-seeds', 'Pumpkin Seeds'],
-    ['23-sago', 'Sago'],
-    ['24-blackeyed-pea', 'Blackeyed Pea'],
+    [
+      '14-bengal-gram',
+      'Bengal Gram'
+    ],
 
-    ['25-rice', 'Rice'],
-    ['26-dry-dates', 'Dry Dates']
+    [
+      '15-cardamom',
+      'Cardamom'
+    ],
+
+    [
+      '16-foxtail-millet',
+      'Foxtail Millet'
+    ],
+
+    [
+      '17-dry-ginger',
+      'Dry Ginger'
+    ],
+
+    [
+      '18-white-sorghum',
+      'White Sorghum'
+    ],
+
+    [
+      '19-red-rice',
+      'Red Rice'
+    ],
+
+    [
+      '20-corn',
+      'Corn'
+    ],
+
+    [
+      '21-black-rice',
+      'Black Rice'
+    ],
+
+    [
+      '22-pumpkin-seeds',
+      'Pumpkin Seeds'
+    ],
+
+    [
+      '23-sago',
+      'Sago'
+    ],
+
+    [
+      '24-blackeyed-pea',
+      'Blackeyed Pea'
+    ],
+
+    [
+      '25-rice',
+      'Rice'
+    ],
+
+    [
+      '26-dry-dates',
+      'Dry Dates'
+    ]
 
   ];
 
@@ -507,29 +646,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     ingGrid.innerHTML =
       ingredients
-        .map(([file, name], i) => `
+        .map(
+          ([file, name], i) => `
 
-          <div class="ing-card">
+            <div class="ing-card">
 
-            <div class="thumb">
+              <div class="thumb">
 
-              <span class="num">
-                ${i + 1}
-              </span>
+                <span class="num">
+                  ${i + 1}
+                </span>
 
-              <img
-                src="assets/ingredients/${file}.jpg"
-                alt="${name}"
-                loading="lazy"
-              >
+                <img
+                  src="assets/ingredients/${file}.jpg"
+                  alt="${name}"
+                  loading="lazy"
+                >
+
+              </div>
+
+              <p>${name}</p>
 
             </div>
 
-            <p>${name}</p>
-
-          </div>
-
-        `)
+          `
+        )
         .join('');
 
   }
@@ -602,37 +743,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
     reviewsGrid.innerHTML =
       reviews
-        .map(review => `
+        .map(
+          review => `
 
-          <div class="review-card">
+            <div class="review-card">
 
-            <div class="review-top">
+              <div class="review-top">
 
-              <div>
+                <div>
 
-                <strong>
-                  ${review.name}
-                </strong>
+                  <strong>
+                    ${review.name}
+                  </strong>
 
-                <span>
-                  ${review.city}
-                </span>
+                  <span>
+                    ${review.city}
+                  </span>
+
+                </div>
+
+                <div class="stars">
+                  ${'★'.repeat(
+                    review.rating
+                  )}
+                </div>
 
               </div>
 
-              <div class="stars">
-                ${'★'.repeat(review.rating)}
-              </div>
+              <p>
+                “${review.text}”
+              </p>
 
             </div>
 
-            <p>
-              “${review.text}”
-            </p>
-
-          </div>
-
-        `)
+          `
+        )
         .join('');
 
   }
@@ -649,6 +794,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const DELIVERY = 0;
 
 
+  /* =========================================================
+     IMPORTANT:
+     These IDs match your actual index.html
+     
+     qtyMinus
+     qtyPlus
+     qtyInput
+     sumQty
+     sumProduct
+     sumTotal
+     ========================================================= */
+
   const qtyMinus =
     document.getElementById(
       'qtyMinus'
@@ -659,102 +816,112 @@ document.addEventListener('DOMContentLoaded', () => {
       'qtyPlus'
     );
 
-  const qtyValue =
+  const qtyInput =
     document.getElementById(
-      'qtyValue'
+      'qtyInput'
+    );
+
+  const sumQty =
+    document.getElementById(
+      'sumQty'
+    );
+
+  const sumProduct =
+    document.getElementById(
+      'sumProduct'
+    );
+
+  const sumTotal =
+    document.getElementById(
+      'sumTotal'
     );
 
 
-  const productTotalEl =
-    document.getElementById(
-      'productTotal'
-    );
-
-  const deliveryEl =
-    document.getElementById(
-      'delivery'
-    );
-
-  const totalEl =
-    document.getElementById(
-      'total'
-    );
-
+  /* =========================================================
+     RENDER ORDER SUMMARY
+     ========================================================= */
 
   function renderSummary() {
 
-    if (qtyValue) {
+    /* Quantity number */
 
-      qtyValue.textContent =
-        qty;
+    if (qtyInput) {
+
+      qtyInput.value =
+        String(qty);
 
     }
 
 
+    /* Summary quantity */
+
+    if (sumQty) {
+
+      sumQty.textContent =
+        String(qty);
+
+    }
+
+
+    /* Product total */
+
     const productTotal =
       UNIT_PRICE * qty;
+
+
+    /* Grand total */
 
     const total =
       productTotal + DELIVERY;
 
 
-    if (productTotalEl) {
+    /* Product amount */
 
-      productTotalEl.textContent =
-        `₹${productTotal}`;
+    if (sumProduct) {
 
-    }
-
-
-    if (deliveryEl) {
-
-      deliveryEl.textContent =
-        DELIVERY === 0
-          ? 'FREE'
-          : `₹${DELIVERY}`;
+      sumProduct.textContent =
+        `₹${productTotal.toLocaleString(
+          'en-IN'
+        )}`;
 
     }
 
 
-    if (totalEl) {
+    /* Grand total */
 
-      totalEl.textContent =
-        `₹${total}`;
+    if (sumTotal) {
+
+      sumTotal.textContent =
+        `₹${total.toLocaleString(
+          'en-IN'
+        )}`;
 
     }
 
   }
 
 
-  if (qtyMinus) {
-
-    qtyMinus.addEventListener(
-      'click',
-      () => {
-
-        if (qty > 1) {
-
-          qty--;
-
-          renderSummary();
-
-        }
-
-      }
-    );
-
-  }
-
+  /* =========================================================
+     PLUS BUTTON
+     ========================================================= */
 
   if (qtyPlus) {
 
+    qtyPlus.type =
+      'button';
+
+
     qtyPlus.addEventListener(
       'click',
-      () => {
+      function (event) {
+
+        event.preventDefault();
+        event.stopPropagation();
+
 
         if (qty < 10) {
 
-          qty++;
+          qty += 1;
 
           renderSummary();
 
@@ -765,6 +932,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
   }
 
+
+  /* =========================================================
+     MINUS BUTTON
+     ========================================================= */
+
+  if (qtyMinus) {
+
+    qtyMinus.type =
+      'button';
+
+
+    qtyMinus.addEventListener(
+      'click',
+      function (event) {
+
+        event.preventDefault();
+        event.stopPropagation();
+
+
+        if (qty > 1) {
+
+          qty -= 1;
+
+          renderSummary();
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /* =========================================================
+     INITIAL QUANTITY
+     ========================================================= */
 
   renderSummary();
 
@@ -784,15 +987,18 @@ document.addEventListener('DOMContentLoaded', () => {
       'processingModal'
     );
 
+
   const confirmModal =
     document.getElementById(
       'confirmModal'
     );
 
+
   const closeConfirm =
     document.getElementById(
       'closeConfirm'
     );
+
 
   const orderIdDisplay =
     document.getElementById(
@@ -801,13 +1007,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* =========================================================
-     VALIDATION
+     FORM VALIDATION
      ========================================================= */
 
   function validateForm() {
 
     if (!form) {
+
       return false;
+
     }
 
 
@@ -815,13 +1023,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     const fields = [
+
       'fullName',
+
       'mobile',
+
       'email',
+
       'address',
+
       'city',
+
       'state',
+
       'pincode'
+
     ];
 
 
@@ -830,8 +1046,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const input =
         document.getElementById(id);
 
+
       if (!input) {
+
         return;
+
       }
 
 
@@ -843,6 +1062,8 @@ document.addEventListener('DOMContentLoaded', () => {
         value.length > 0;
 
 
+      /* Mobile */
+
       if (id === 'mobile') {
 
         fieldValid =
@@ -853,6 +1074,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
 
+      /* Email */
+
       if (id === 'email') {
 
         fieldValid =
@@ -862,6 +1085,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       }
 
+
+      /* Pincode */
 
       if (id === 'pincode') {
 
@@ -902,7 +1127,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* =========================================================
-     SHOW CONFIRMATION
+     SHOW CONFIRMATION MODAL
      ========================================================= */
 
   function showConfirmation(
@@ -947,9 +1172,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
 
-      /* -----------------------------------------
+      /* =====================================================
          STEP 1 — CREATE ORDER ON BACKEND
-         ----------------------------------------- */
+         ===================================================== */
 
       console.log(
         'Creating Dhaan order...'
@@ -960,11 +1185,14 @@ document.addEventListener('DOMContentLoaded', () => {
         await fetch(
           `${API_URL}/api/create-order`,
           {
+
             method: 'POST',
 
             headers: {
+
               'Content-Type':
                 'application/json'
+
             },
 
             body:
@@ -999,6 +1227,10 @@ document.addEventListener('DOMContentLoaded', () => {
       );
 
 
+      /* =====================================================
+         CHECK SERVER RESPONSE
+         ===================================================== */
+
       if (!response.ok) {
 
         throw new Error(
@@ -1009,9 +1241,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
 
-      /* -----------------------------------------
+      /* =====================================================
          CHECK RAZORPAY ENABLED
-         ----------------------------------------- */
+         ===================================================== */
 
       if (!order.paymentEnabled) {
 
@@ -1022,6 +1254,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       }
 
+
+      /* =====================================================
+         CHECK ORDER DATA
+         ===================================================== */
 
       if (
         !order.id ||
@@ -1036,9 +1272,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
 
-      /* -----------------------------------------
+      /* =====================================================
          CHECK RAZORPAY SCRIPT
-         ----------------------------------------- */
+         ===================================================== */
 
       if (
         typeof window.Razorpay ===
@@ -1052,9 +1288,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
 
-      /* -----------------------------------------
+      /* =====================================================
          CLOSE PROCESSING MODAL
-         ----------------------------------------- */
+         ===================================================== */
 
       if (processingModal) {
 
@@ -1065,9 +1301,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
 
-      /* -----------------------------------------
+      /* =====================================================
          STEP 2 — RAZORPAY CHECKOUT
-         ----------------------------------------- */
+         ===================================================== */
 
       const options = {
 
@@ -1089,6 +1325,11 @@ document.addEventListener('DOMContentLoaded', () => {
         order_id:
           order.id,
 
+
+        /* ===================================================
+           CUSTOMER DETAILS
+           =================================================== */
+
         prefill: {
 
           name:
@@ -1102,6 +1343,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         },
 
+
+        /* ===================================================
+           RAZORPAY NOTES
+           =================================================== */
+
         notes: {
 
           customer_name:
@@ -1111,9 +1357,19 @@ document.addEventListener('DOMContentLoaded', () => {
             orderPayload.mobile,
 
           dhaan_order_id:
-            order.orderId
+            order.orderId,
+
+          quantity:
+            String(
+              orderPayload.quantity
+            )
 
         },
+
+
+        /* ===================================================
+           THEME
+           =================================================== */
 
         theme: {
 
@@ -1123,9 +1379,9 @@ document.addEventListener('DOMContentLoaded', () => {
         },
 
 
-        /* ---------------------------------------
+        /* ===================================================
            STEP 3 — PAYMENT SUCCESS
-           --------------------------------------- */
+           =================================================== */
 
         handler:
           async function (
@@ -1149,19 +1405,22 @@ document.addEventListener('DOMContentLoaded', () => {
               }
 
 
-              /* -----------------------------------
+              /* =================================================
                  STEP 4 — VERIFY PAYMENT
-                 ----------------------------------- */
+                 ================================================= */
 
               const verifyResponse =
                 await fetch(
                   `${API_URL}/api/verify-payment`,
                   {
+
                     method: 'POST',
 
                     headers: {
+
                       'Content-Type':
                         'application/json'
+
                     },
 
                     body:
@@ -1208,6 +1467,10 @@ document.addEventListener('DOMContentLoaded', () => {
               );
 
 
+              /* =================================================
+                 CHECK PAYMENT VERIFICATION
+                 ================================================= */
+
               if (
                 !verifyResponse.ok ||
                 !verifyData.success
@@ -1221,9 +1484,9 @@ document.addEventListener('DOMContentLoaded', () => {
               }
 
 
-              /* -----------------------------------
+              /* =================================================
                  PAYMENT VERIFIED
-                 ----------------------------------- */
+                 ================================================= */
 
               if (processingModal) {
 
@@ -1234,25 +1497,39 @@ document.addEventListener('DOMContentLoaded', () => {
               }
 
 
-              /* -----------------------------------
-                 REDIRECT TO THANK YOU PAGE
-                 ----------------------------------- */
+              /* =================================================
+                 CONFIRMED ORDER ID
+                 ================================================= */
 
               const confirmedOrderId =
                 verifyData.orderId ||
                 order.orderId;
 
 
-              const confirmedAmount =
-                Number(order.amount || 0) / 100 ||
-                Number(orderPayload.total || 0);
+              /* =================================================
+                 CONFIRMED AMOUNT
+                 ================================================= */
 
+              const confirmedAmount =
+                Number(
+                  order.amount || 0
+                ) / 100 ||
+                Number(
+                  orderPayload.total || 0
+                );
+
+
+              /* =================================================
+                 SAVE COMPLETE ORDER DATA
+                 
+                 These parameters are used by thank-you.html
+                 ================================================= */
 
               const thankYouParams =
                 new URLSearchParams({
 
                   orderId:
-                    confirmedOrderId,
+                    confirmedOrderId || '',
 
                   amount:
                     String(
@@ -1262,14 +1539,38 @@ document.addEventListener('DOMContentLoaded', () => {
                   quantity:
                     String(
                       orderPayload.quantity || 1
-                    )
+                    ),
+
+                  name:
+                    orderPayload.fullName || '',
+
+                  email:
+                    orderPayload.email || '',
+
+                  mobile:
+                    orderPayload.mobile || '',
+
+                  address:
+                    orderPayload.address || '',
+
+                  city:
+                    orderPayload.city || '',
+
+                  state:
+                    orderPayload.state || '',
+
+                  pincode:
+                    orderPayload.pincode || ''
 
                 });
 
 
+              /* =================================================
+                 REDIRECT TO THANK YOU PAGE
+                 ================================================= */
+
               window.location.href =
                 `thank-you.html?${thankYouParams.toString()}`;
-
 
             } catch (error) {
 
@@ -1297,9 +1598,9 @@ document.addEventListener('DOMContentLoaded', () => {
           },
 
 
-        /* ---------------------------------------
+        /* =====================================================
            PAYMENT WINDOW CLOSED
-           --------------------------------------- */
+           ===================================================== */
 
         modal: {
 
@@ -1326,9 +1627,9 @@ document.addEventListener('DOMContentLoaded', () => {
       };
 
 
-      /* -----------------------------------------
+      /* =====================================================
          CREATE RAZORPAY INSTANCE
-         ----------------------------------------- */
+         ===================================================== */
 
       const rzp =
         new window.Razorpay(
@@ -1336,9 +1637,9 @@ document.addEventListener('DOMContentLoaded', () => {
         );
 
 
-      /* -----------------------------------------
+      /* =====================================================
          PAYMENT FAILED
-         ----------------------------------------- */
+         ===================================================== */
 
       rzp.on(
         'payment.failed',
@@ -1368,9 +1669,9 @@ document.addEventListener('DOMContentLoaded', () => {
       );
 
 
-      /* -----------------------------------------
+      /* =====================================================
          OPEN RAZORPAY
-         ----------------------------------------- */
+         ===================================================== */
 
       rzp.open();
 
@@ -1410,10 +1711,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     form.addEventListener(
       'submit',
-      (e) => {
+      e => {
 
         e.preventDefault();
 
+
+        /* ===================================================
+           VALIDATE
+           =================================================== */
 
         if (!validateForm()) {
 
@@ -1435,9 +1740,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
 
-        /* -----------------------------------------
+        /* ===================================================
            CUSTOMER ORDER PAYLOAD
-           ----------------------------------------- */
+           =================================================== */
 
         const payload = {
 
@@ -1457,45 +1762,68 @@ document.addEventListener('DOMContentLoaded', () => {
             UNIT_PRICE * qty +
             DELIVERY,
 
+
+          /* CUSTOMER */
+
           fullName:
             document
-              .getElementById('fullName')
+              .getElementById(
+                'fullName'
+              )
               .value
               .trim(),
+
 
           mobile:
             document
-              .getElementById('mobile')
+              .getElementById(
+                'mobile'
+              )
               .value
               .trim(),
+
 
           email:
             document
-              .getElementById('email')
+              .getElementById(
+                'email'
+              )
               .value
               .trim(),
+
 
           address:
             document
-              .getElementById('address')
+              .getElementById(
+                'address'
+              )
               .value
               .trim(),
+
 
           city:
             document
-              .getElementById('city')
+              .getElementById(
+                'city'
+              )
               .value
               .trim(),
+
 
           state:
             document
-              .getElementById('state')
+              .getElementById(
+                'state'
+              )
               .value
               .trim(),
 
+
           pincode:
             document
-              .getElementById('pincode')
+              .getElementById(
+                'pincode'
+              )
               .value
               .trim()
 
@@ -1508,6 +1836,10 @@ document.addEventListener('DOMContentLoaded', () => {
         );
 
 
+        /* ===================================================
+           START PAYMENT
+           =================================================== */
+
         startPayment(
           payload
         );
@@ -1519,7 +1851,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* =========================================================
-     CLOSE CONFIRMATION
+     CLOSE CONFIRMATION MODAL
      ========================================================= */
 
   if (closeConfirm) {
@@ -1544,6 +1876,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
 
+        /* Restore default state */
+
         const state =
           document.getElementById(
             'state'
@@ -1558,11 +1892,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
 
+        /* Reset quantity */
+
         qty = 1;
 
 
         renderSummary();
 
+
+        /* Scroll to top */
 
         window.scrollTo({
 
@@ -1592,7 +1930,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     newsletterForm.addEventListener(
       'submit',
-      (e) => {
+      e => {
 
         e.preventDefault();
 
@@ -1616,5 +1954,6 @@ document.addEventListener('DOMContentLoaded', () => {
     );
 
   }
+
 
 });
