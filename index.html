@@ -18,6 +18,50 @@
   <link rel="icon" href="assets/img/logo.png">
   <link rel="stylesheet" href="css/style.css">
 
+  <!-- Schema.org Structured Data (Google Knowledge Graph & Rich Snippets) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://dhaanfoods.com/#organization",
+        "name": "Dhaan Foods",
+        "alternateName": ["Dhaan", "Dhaan Foods India"],
+        "url": "https://dhaanfoods.com/",
+        "logo": "https://dhaanfoods.com/assets/img/logo.png",
+        "description": "100% natural, nutrient-rich health mix made with 26 natural ingredients delivering 18g plant-based protein."
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://dhaanfoods.com/#website",
+        "url": "https://dhaanfoods.com/",
+        "name": "Dhaan Foods",
+        "publisher": {
+          "@id": "https://dhaanfoods.com/#organization"
+        }
+      },
+      {
+        "@type": "Product",
+        "name": "Dhaan Smart Start Health Mix",
+        "image": "https://dhaanfoods.com/assets/img/hero-product.png",
+        "description": "Nutrient-rich health mix with 26 natural ingredients, 18g protein, high fibre, high iron, gluten-free.",
+        "brand": {
+          "@type": "Brand",
+          "name": "Dhaan Foods"
+        },
+        "offers": {
+          "@type": "Offer",
+          "url": "https://dhaanfoods.com/",
+          "priceCurrency": "INR",
+          "price": "299",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    ]
+  }
+  </script>
+
   <!-- Meta Pixel Code -->
   <script>
     !function(f,b,e,v,n,t,s)
