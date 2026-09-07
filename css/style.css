@@ -409,17 +409,21 @@ section{position:relative;}
   position:absolute;
   background:var(--white);
   border-radius:var(--radius-md);
-  box-shadow:var(--shadow-lift);
-  padding:12px 16px;
+  box-shadow:0 12px 28px rgba(10,24,48,.18), 0 2px 6px rgba(10,24,48,.08);
+  border:1px solid rgba(240,169,59,.25);
+  padding:10px 16px;
   display:flex;
   align-items:center;
   gap:10px;
   font-size:13px;
   font-weight:700;
   color:var(--navy-900);
+  z-index:3;
+  white-space:nowrap;
+  pointer-events:none;
 }
-.hero-art .chip.chip-1{top:6%;left:-2%;}
-.hero-art .chip.chip-2{bottom:10%;right:-4%;}
+.hero-art .chip.chip-1{top:-18px;left:0;}
+.hero-art .chip.chip-2{bottom:-18px;right:15px;}
 .hero-art .chip svg{flex:none;}
 
 @media (max-width:900px){
