@@ -17,6 +17,7 @@
 
   <!-- =====================================================
        META PIXEL
+       Pixel ID: 2097054410902553
        ===================================================== -->
 
   <script>
@@ -53,12 +54,18 @@
     );
 
 
+    /*
+     * YOUR ACTUAL META PIXEL ID
+     */
     fbq(
       'init',
-      'YOUR_PIXEL_ID'
+      '2097054410902553'
     );
 
 
+    /*
+     * Track page visit
+     */
     fbq(
       'track',
       'PageView'
@@ -67,13 +74,16 @@
   </script>
 
 
+  <!-- Meta Pixel noscript fallback -->
+
   <noscript>
 
     <img
       height="1"
       width="1"
       style="display:none"
-      src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"
+      src="https://www.facebook.com/tr?id=2097054410902553&ev=PageView&noscript=1"
+      alt=""
     >
 
   </noscript>
@@ -482,7 +492,8 @@
 
       .top-info {
 
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns:
+          1fr 1fr;
 
       }
 
@@ -990,7 +1001,22 @@
 
     /* =================================================
        META PIXEL — PURCHASE EVENT
+       =================================================
+
+       IMPORTANT:
+       Razorpay amount is normally in INR.
+
+       Example:
+       amount = 299
+
+       Meta receives:
+       value = 299
+       currency = INR
+
+       This Purchase event should fire only on
+       the successful order/thank-you page.
        ================================================= */
+
 
     if (
       typeof fbq === 'function' &&
@@ -1001,6 +1027,7 @@
         'track',
         'Purchase',
         {
+
           value:
             finalAmount,
 
@@ -1014,26 +1041,43 @@
             'product',
 
           contents: [
+
             {
+
               id:
                 'dhan-smart-start-health-mix',
 
               quantity:
                 quantity
+
             }
+
           ]
+
         },
+
         {
+
+          /*
+           * Unique event ID prevents the same
+           * purchase from being counted multiple
+           * times when the order ID is available.
+           */
+
           eventID:
             orderId ||
             `dhan_${Date.now()}`
+
         }
+
       );
 
     }
+
 
   </script>
 
 
 </body>
+
 </html>
