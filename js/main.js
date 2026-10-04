@@ -789,7 +789,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let qty = 1;
 
-  const UNIT_PRICE = 299;
+  const UNIT_PRICE = 349;
 
   const DELIVERY = 0;
 
