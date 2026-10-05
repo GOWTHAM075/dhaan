@@ -198,6 +198,114 @@
     padding: 17px 13px;
     border-radius: 14px;
   }
+  .offer-card {
+  width: 100%;
+  max-width: 430px;
+  padding: 20px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #fffaf3, #fff);
+  border: 1px solid #f1dfc8;
+  box-shadow: 0 8px 25px rgba(70, 45, 20, 0.08);
+  font-family: Arial, sans-serif;
+}
+
+/* Single pack */
+.single-price {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: #fff;
+  border: 1px solid #eadbc8;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.price-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #777;
+  letter-spacing: .6px;
+}
+
+.price {
+  font-size: 24px;
+  font-weight: 800;
+  color: #222;
+}
+
+/* Offer badge */
+.offer-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 12px;
+  border-radius: 50px;
+  background: #fff0e8;
+  color: #e4572e;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  margin-bottom: 8px;
+}
+
+/* Bundle */
+.bundle-title {
+  font-size: 22px;
+  color: #222;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.bundle-title strong {
+  font-weight: 800;
+}
+
+/* Prices */
+.bundle-price {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.old-price {
+  font-size: 17px;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.new-price {
+  font-size: 30px;
+  font-weight: 900;
+  color: #16803c;
+}
+
+.save-badge {
+  padding: 5px 9px;
+  border-radius: 6px;
+  background: #e8f7ed;
+  color: #16803c;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+/* Details */
+.bundle-info {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding-top: 12px;
+  border-top: 1px dashed #dfcfbc;
+  color: #555;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.bundle-info span {
+  white-space: nowrap;
+}
 
   .order-block h3 {
     font-size: 16px;
@@ -753,24 +861,30 @@
       </p>
 
 
-      <div class="price-section">
+     <div class="offer-card">
 
-  <div class="mrp price-box">
-    <small>PRICE</small>
-    <span>₹349</span>
+  <div class="single-price">
+    <span class="price-label">1 PACK</span>
+    <span class="price">₹349</span>
   </div>
 
-  <div class="offer-box">
-    <div class="offer-badge">🔥 LIMITED OFFER</div>
+  <div class="offer-badge">
+    🔥 LIMITED TIME OFFER
+  </div>
 
-    <div class="offer-content">
-      <span class="offer-label">BUY 2 PACKS</span>
-      <strong>₹598</strong>
-    </div>
+  <div class="bundle-title">
+    Buy <strong>2 Packs</strong>
+  </div>
 
-    <div class="offer-saving">
-      Save ₹100 • Only ₹299 each
-    </div>
+  <div class="bundle-price">
+    <span class="old-price">₹700</span>
+    <span class="new-price">₹598</span>
+    <span class="save-badge">SAVE ₹102</span>
+  </div>
+
+  <div class="bundle-info">
+    <span>✓ 2 × 500g Packs</span>
+    <span>✓ Only ₹299 each</span>
   </div>
 
 </div>
