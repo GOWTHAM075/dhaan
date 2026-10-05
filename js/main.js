@@ -1,7 +1,7 @@
 /* =========================================================
    DHAAN — main.js
    Razorpay Payment + Render Backend Integration
-   Quantity + Thank You Page Fix
+   Quantity + Offer Pricing + Thank You Page
    ========================================================= */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -784,26 +784,51 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* =========================================================
-     ORDER / QUANTITY
+     ORDER / QUANTITY / OFFER PRICING
      ========================================================= */
 
   let qty = 1;
 
+
+  /* -----------------------------------------
+     NORMAL SINGLE PACK PRICE
+     ----------------------------------------- */
+
   const UNIT_PRICE = 349;
 
-  const DELIVERY = 0;
+
+  /* -----------------------------------------
+     TWO PACK OFFER
+     -----------------------------------------
+
+     1 PACK
+     ₹349
+
+     2 PACKS
+     Original ₹700
+     Offer   ₹598
+     Save    ₹102
+
+     3 PACKS
+     ₹598 + ₹349 = ₹947
+
+     4 PACKS
+     ₹598 + ₹598 = ₹1196
+     ----------------------------------------- */
+
+  const TWO_PACK_ORIGINAL =
+    700;
+
+  const TWO_PACK_OFFER =
+    598;
+
+
+  const DELIVERY =
+    0;
 
 
   /* =========================================================
-     IMPORTANT:
-     These IDs match your actual index.html
-     
-     qtyMinus
-     qtyPlus
-     qtyInput
-     sumQty
-     sumProduct
-     sumTotal
+     IMPORTANT IDs
      ========================================================= */
 
   const qtyMinus =
@@ -836,6 +861,269 @@ document.addEventListener('DOMContentLoaded', () => {
       'sumTotal'
     );
 
+  const sumDelivery =
+    document.getElementById(
+      'sumDelivery'
+    );
+
+
+  /* =========================================================
+     GET OFFER PRICING
+     ========================================================= */
+
+  function getPricing(quantity) {
+
+    quantity =
+      Number(quantity) || 1;
+
+
+    /* -----------------------------------------
+       1 PACK
+       ----------------------------------------- */
+
+    if (quantity === 1) {
+
+      return {
+
+        regularTotal:
+          349,
+
+        discount:
+          0,
+
+        offerTotal:
+          349,
+
+        delivery:
+          0
+
+      };
+
+    }
+
+
+    /* -----------------------------------------
+       2 OR MORE PACKS
+
+       Every pair = ₹598
+
+       Remaining single pack = ₹349
+       ----------------------------------------- */
+
+    const pairs =
+      Math.floor(
+        quantity / 2
+      );
+
+
+    const remaining =
+      quantity % 2;
+
+
+    const offerTotal =
+      (
+        pairs *
+        TWO_PACK_OFFER
+      ) +
+      (
+        remaining *
+        UNIT_PRICE
+      );
+
+
+    const regularTotal =
+      quantity *
+      UNIT_PRICE;
+
+
+    const discount =
+      regularTotal -
+      offerTotal;
+
+
+    return {
+
+      regularTotal:
+        regularTotal,
+
+      discount:
+        discount,
+
+      offerTotal:
+        offerTotal,
+
+      delivery:
+        DELIVERY
+
+    };
+
+  }
+
+
+  /* =========================================================
+     CREATE / UPDATE OFFER ROW
+     ========================================================= */
+
+  function updateOfferDisplay(
+    pricing
+  ) {
+
+    if (!sumProduct) {
+      return;
+    }
+
+
+    /* -----------------------------------------
+       FIND PRODUCT SUMMARY ROW
+       ----------------------------------------- */
+
+    const productRow =
+      sumProduct.closest('.row');
+
+
+    if (!productRow) {
+      return;
+    }
+
+
+    /* -----------------------------------------
+       CREATE DISCOUNT ROW
+       IF IT DOES NOT EXIST
+       ----------------------------------------- */
+
+    let discountRow =
+      document.getElementById(
+        'discountRow'
+      );
+
+
+    if (
+      pricing.discount > 0
+    ) {
+
+      if (!discountRow) {
+
+        discountRow =
+          document.createElement(
+            'div'
+          );
+
+        discountRow.id =
+          'discountRow';
+
+        discountRow.className =
+          'row';
+
+
+        discountRow.innerHTML = `
+
+          <span>
+            Offer Discount
+          </span>
+
+          <span
+            id="sumDiscount"
+          >
+            -₹${pricing.discount.toLocaleString('en-IN')}
+          </span>
+
+        `;
+
+
+        productRow.insertAdjacentElement(
+          'afterend',
+          discountRow
+        );
+
+      }
+
+
+      const discountAmount =
+        document.getElementById(
+          'sumDiscount'
+        );
+
+
+      if (discountAmount) {
+
+        discountAmount.textContent =
+          `-₹${pricing.discount.toLocaleString('en-IN')}`;
+
+      }
+
+
+      discountRow.style.display =
+        'flex';
+
+    } else {
+
+      if (discountRow) {
+
+        discountRow.style.display =
+          'none';
+
+      }
+
+    }
+
+
+    /* -----------------------------------------
+       PRODUCT DISPLAY
+       ----------------------------------------- */
+
+    if (
+      qty === 1
+    ) {
+
+      sumProduct.textContent =
+        '₹349';
+
+    } else if (
+      qty === 2
+    ) {
+
+      sumProduct.innerHTML = `
+
+        <del
+          style="
+            opacity:0.6;
+            margin-right:8px;
+            font-size:0.9em;
+          "
+        >
+          ₹700
+        </del>
+
+        <strong>
+          ₹598
+        </strong>
+
+      `;
+
+    } else {
+
+      sumProduct.innerHTML = `
+
+        <del
+          style="
+            opacity:0.6;
+            margin-right:8px;
+            font-size:0.9em;
+          "
+        >
+          ₹${pricing.regularTotal.toLocaleString('en-IN')}
+        </del>
+
+        <strong>
+          ₹${pricing.offerTotal.toLocaleString('en-IN')}
+        </strong>
+
+      `;
+
+    }
+
+  }
+
 
   /* =========================================================
      RENDER ORDER SUMMARY
@@ -843,7 +1131,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderSummary() {
 
-    /* Quantity number */
+    /* -----------------------------------------
+       QUANTITY INPUT
+       ----------------------------------------- */
 
     if (qtyInput) {
 
@@ -853,7 +1143,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    /* Summary quantity */
+    /* -----------------------------------------
+       SUMMARY QUANTITY
+       ----------------------------------------- */
 
     if (sumQty) {
 
@@ -863,38 +1155,43 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    /* Product total */
+    /* -----------------------------------------
+       GET PRICING
+       ----------------------------------------- */
 
-    const productTotal =
-      UNIT_PRICE * qty;
-
-
-    /* Grand total */
-
-    const total =
-      productTotal + DELIVERY;
+    const pricing =
+      getPricing(qty);
 
 
-    /* Product amount */
+    /* -----------------------------------------
+       UPDATE PRODUCT / OFFER
+       ----------------------------------------- */
 
-    if (sumProduct) {
+    updateOfferDisplay(
+      pricing
+    );
 
-      sumProduct.textContent =
-        `₹${productTotal.toLocaleString(
-          'en-IN'
-        )}`;
+
+    /* -----------------------------------------
+       DELIVERY
+       ----------------------------------------- */
+
+    if (sumDelivery) {
+
+      sumDelivery.textContent =
+        'FREE';
 
     }
 
 
-    /* Grand total */
+    /* -----------------------------------------
+       FINAL TOTAL
+       ----------------------------------------- */
 
     if (sumTotal) {
 
       sumTotal.textContent =
-        `₹${total.toLocaleString(
-          'en-IN'
-        )}`;
+        `₹${pricing.offerTotal.toLocaleString('en-IN')}`;
 
     }
 
@@ -916,6 +1213,7 @@ document.addEventListener('DOMContentLoaded', () => {
       function (event) {
 
         event.preventDefault();
+
         event.stopPropagation();
 
 
@@ -948,6 +1246,7 @@ document.addEventListener('DOMContentLoaded', () => {
       function (event) {
 
         event.preventDefault();
+
         event.stopPropagation();
 
 
@@ -1019,7 +1318,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    let valid = true;
+    let valid =
+      true;
 
 
     const fields = [
@@ -1044,7 +1344,9 @@ document.addEventListener('DOMContentLoaded', () => {
     fields.forEach(id => {
 
       const input =
-        document.getElementById(id);
+        document.getElementById(
+          id
+        );
 
 
       if (!input) {
@@ -1062,9 +1364,13 @@ document.addEventListener('DOMContentLoaded', () => {
         value.length > 0;
 
 
-      /* Mobile */
+      /* -----------------------------------------
+         MOBILE
+         ----------------------------------------- */
 
-      if (id === 'mobile') {
+      if (
+        id === 'mobile'
+      ) {
 
         fieldValid =
           /^[6-9]\d{9}$/.test(
@@ -1074,21 +1380,42 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
 
-      /* Email */
+      /* -----------------------------------------
+         EMAIL
 
-      if (id === 'email') {
+         Email is optional.
+         ----------------------------------------- */
 
-        fieldValid =
-          /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-            value
-          );
+      if (
+        id === 'email'
+      ) {
+
+        if (
+          value.length === 0
+        ) {
+
+          fieldValid =
+            true;
+
+        } else {
+
+          fieldValid =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+              value
+            );
+
+        }
 
       }
 
 
-      /* Pincode */
+      /* -----------------------------------------
+         PINCODE
+         ----------------------------------------- */
 
-      if (id === 'pincode') {
+      if (
+        id === 'pincode'
+      ) {
 
         fieldValid =
           /^\d{6}$/.test(
@@ -1099,7 +1426,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
       const field =
-        input.closest('.field');
+        input.closest(
+          '.field'
+        );
 
 
       if (field) {
@@ -1114,7 +1443,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (!fieldValid) {
 
-        valid = false;
+        valid =
+          false;
 
       }
 
@@ -1181,12 +1511,19 @@ document.addEventListener('DOMContentLoaded', () => {
       );
 
 
+      console.log(
+        'Payment amount:',
+        orderPayload.total
+      );
+
+
       const response =
         await fetch(
           `${API_URL}/api/create-order`,
           {
 
-            method: 'POST',
+            method:
+              'POST',
 
             headers: {
 
@@ -1273,6 +1610,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
       /* =====================================================
+         CHECK AMOUNT
+
+         Frontend expected amount must match
+         backend Razorpay order amount.
+         ===================================================== */
+
+      const expectedAmountPaise =
+        Math.round(
+          Number(
+            orderPayload.total
+          ) * 100
+        );
+
+
+      const backendAmountPaise =
+        Number(
+          order.amount
+        );
+
+
+      console.log(
+        'Expected Razorpay amount:',
+        expectedAmountPaise
+      );
+
+
+      console.log(
+        'Backend Razorpay amount:',
+        backendAmountPaise
+      );
+
+
+      /*
+        Do not allow accidental mismatch.
+
+        Example:
+
+        1 pack:
+        expected = 34900
+
+        2 packs:
+        expected = 59800
+      */
+
+      if (
+        backendAmountPaise !==
+        expectedAmountPaise
+      ) {
+
+        throw new Error(
+          `Payment amount mismatch. Expected ₹${orderPayload.total}, but backend created ₹${(backendAmountPaise / 100).toFixed(2)}.`
+        );
+
+      }
+
+
+      /* =====================================================
          CHECK RAZORPAY SCRIPT
          ===================================================== */
 
@@ -1314,7 +1708,8 @@ document.addEventListener('DOMContentLoaded', () => {
           order.amount,
 
         currency:
-          order.currency || 'INR',
+          order.currency ||
+          'INR',
 
         name:
           'Dhaan Foods',
@@ -1339,7 +1734,8 @@ document.addEventListener('DOMContentLoaded', () => {
             orderPayload.mobile,
 
           email:
-            orderPayload.email || ''
+            orderPayload.email ||
+            ''
 
         },
 
@@ -1362,6 +1758,21 @@ document.addEventListener('DOMContentLoaded', () => {
           quantity:
             String(
               orderPayload.quantity
+            ),
+
+          regular_total:
+            String(
+              orderPayload.regularTotal
+            ),
+
+          discount:
+            String(
+              orderPayload.discount
+            ),
+
+          offer_total:
+            String(
+              orderPayload.total
             )
 
         },
@@ -1414,7 +1825,8 @@ document.addEventListener('DOMContentLoaded', () => {
                   `${API_URL}/api/verify-payment`,
                   {
 
-                    method: 'POST',
+                    method:
+                      'POST',
 
                     headers: {
 
@@ -1521,15 +1933,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
               /* =================================================
                  SAVE COMPLETE ORDER DATA
-                 
-                 These parameters are used by thank-you.html
+
+                 Used by thank-you.html
                  ================================================= */
 
               const thankYouParams =
                 new URLSearchParams({
 
                   orderId:
-                    confirmedOrderId || '',
+                    confirmedOrderId ||
+                    '',
 
                   amount:
                     String(
@@ -1538,29 +1951,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
                   quantity:
                     String(
-                      orderPayload.quantity || 1
+                      orderPayload.quantity ||
+                      1
                     ),
 
                   name:
-                    orderPayload.fullName || '',
+                    orderPayload.fullName ||
+                    '',
 
                   email:
-                    orderPayload.email || '',
+                    orderPayload.email ||
+                    '',
 
                   mobile:
-                    orderPayload.mobile || '',
+                    orderPayload.mobile ||
+                    '',
 
                   address:
-                    orderPayload.address || '',
+                    orderPayload.address ||
+                    '',
 
                   city:
-                    orderPayload.city || '',
+                    orderPayload.city ||
+                    '',
 
                   state:
-                    orderPayload.state || '',
+                    orderPayload.state ||
+                    '',
 
                   pincode:
-                    orderPayload.pincode || ''
+                    orderPayload.pincode ||
+                    '',
+
+                  regularTotal:
+                    String(
+                      orderPayload.regularTotal ||
+                      0
+                    ),
+
+                  discount:
+                    String(
+                      orderPayload.discount ||
+                      0
+                    ),
+
+                  offerTotal:
+                    String(
+                      orderPayload.total ||
+                      0
+                    )
 
                 });
 
@@ -1590,6 +2029,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
               alert(
+                error.message ||
                 'Payment was completed, but verification failed. Please contact Dhaan support.'
               );
 
@@ -1741,6 +2181,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         /* ===================================================
+           GET CURRENT OFFER PRICING
+           =================================================== */
+
+        const pricing =
+          getPricing(qty);
+
+
+        /* ===================================================
            CUSTOMER ORDER PAYLOAD
            =================================================== */
 
@@ -1755,12 +2203,37 @@ document.addEventListener('DOMContentLoaded', () => {
           unitPrice:
             UNIT_PRICE,
 
+
+          /* -----------------------------------------
+             ORIGINAL TOTAL
+             ----------------------------------------- */
+
+          regularTotal:
+            pricing.regularTotal,
+
+
+          /* -----------------------------------------
+             OFFER DISCOUNT
+             ----------------------------------------- */
+
+          discount:
+            pricing.discount,
+
+
+          /* -----------------------------------------
+             FREE DELIVERY
+             ----------------------------------------- */
+
           delivery:
-            DELIVERY,
+            pricing.delivery,
+
+
+          /* -----------------------------------------
+             ACTUAL PAYMENT AMOUNT
+             ----------------------------------------- */
 
           total:
-            UNIT_PRICE * qty +
-            DELIVERY,
+            pricing.offerTotal,
 
 
           /* CUSTOMER */
@@ -1833,6 +2306,26 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(
           'Dhaan order payload:',
           payload
+        );
+
+
+        console.log(
+          `Quantity: ${qty}`
+        );
+
+
+        console.log(
+          `Original: ₹${pricing.regularTotal}`
+        );
+
+
+        console.log(
+          `Discount: ₹${pricing.discount}`
+        );
+
+
+        console.log(
+          `Final payment: ₹${pricing.offerTotal}`
         );
 
 
