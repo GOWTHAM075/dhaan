@@ -748,6 +748,28 @@
 }
 }
 
+
+/* =========================================================
+   HERO OFFER — DESKTOP + RESPONSIVE FIX
+   ========================================================= */
+.hero-offer{width:100%;max-width:520px;margin:14px 0 20px;font-family:inherit}
+.hero-offer .hero-price{display:flex;align-items:baseline;gap:9px;margin:0 0 10px;padding:0}
+.hero-offer .hero-price span{font-size:13px;line-height:1;font-weight:800;letter-spacing:.8px;color:var(--ink-500,#777)}
+.hero-offer .hero-price strong{font-size:22px;line-height:1;font-weight:800;color:var(--ink,#111827)}
+.hero-offer .offer-label{display:inline-flex;align-items:center;gap:5px;width:fit-content;margin:0 0 6px;padding:6px 11px;border-radius:999px;background:#fff1f0;color:#a71932;font-size:12px;line-height:1;font-weight:800;letter-spacing:.45px}
+.hero-offer .offer-heading{margin:0 0 4px;padding:0;color:#111827;font-size:21px;line-height:1.2;font-weight:500}
+.hero-offer .offer-heading strong{font-weight:900}
+.hero-offer .offer-price{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:0 0 8px;padding:0}
+.hero-offer .offer-original{font-size:16px;line-height:1;color:#888;text-decoration:line-through}
+.hero-offer .offer-price>strong{font-size:28px;line-height:1;font-weight:900;color:#a71932}
+.hero-offer .save-tag{display:inline-flex;align-items:center;padding:5px 8px;border-radius:6px;background:#eaf7ed;color:#16803c;font-size:11px;line-height:1;font-weight:800}
+.hero-offer .offer-details{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin:0;padding:0;color:#555;font-size:13px;line-height:1.35;font-weight:600}
+.hero-offer .offer-details span{white-space:nowrap}
+.hero-copy .hero-actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:18px}
+.hero-copy .hero-actions>span{white-space:nowrap}
+@media (min-width:901px){.hero-copy{min-width:0}.hero-offer{max-width:500px}}
+@media (max-width:900px){.hero-offer{max-width:100%}}
+@media (max-width:600px){.hero-offer{margin-top:12px;margin-bottom:18px}.hero-offer .hero-price strong{font-size:21px}.hero-offer .offer-heading{font-size:19px}.hero-offer .offer-price>strong{font-size:25px}.hero-offer .offer-details{gap:7px 15px;font-size:12px}.hero-copy .hero-actions{gap:12px}.hero-copy .hero-actions>span{white-space:normal}}
 </style>
 
 
@@ -861,33 +883,33 @@
       </p>
 
 
-     <div class="offer-card">
+      <div class="hero-offer">
 
-  <div class="single-price">
-    <span class="price-label">1 PACK</span>
-    <span class="price">₹349</span>
-  </div>
+        <div class="hero-price">
+          <span>1 PACK</span>
+          <strong>₹349</strong>
+        </div>
 
-  <div class="offer-badge">
-    🔥 LIMITED TIME OFFER
-  </div>
+        <div class="offer-label">
+          🔥 LIMITED TIME OFFER
+        </div>
 
-  <div class="bundle-title">
-    Buy <strong>2 Packs</strong>
-  </div>
+        <div class="offer-heading">
+          Buy <strong>2 Packs</strong>
+        </div>
 
-  <div class="bundle-price">
-    <span class="old-price">₹700</span>
-    <span class="new-price">₹598</span>
-    <span class="save-badge">SAVE ₹102</span>
-  </div>
+        <div class="offer-price">
+          <span class="offer-original">₹700</span>
+          <strong>₹598</strong>
+          <span class="save-tag">SAVE ₹102</span>
+        </div>
 
-  <div class="bundle-info">
-    <span>✓ 2 × 500g Packs</span>
-    <span>✓ Only ₹299 each</span>
-  </div>
+        <div class="offer-details">
+          <span>✓ 2 × 500g Packs</span>
+          <span>✓ Only ₹299 each</span>
+        </div>
 
-</div>
+      </div>
 
 
       <div class="hero-actions">
