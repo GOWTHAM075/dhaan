@@ -423,10 +423,15 @@
       <p class="desc">A perfect blend of 26 natural ingredients for a nutritious start to your day — for kids and adults alike.</p>
 
    <div class="price-box">
-  <div class="mrp">
-    <small>PRICE</small>
-    <span>₹349</span>
-  </div>
+ <div class="mrp">
+  <small>PRICE</small>
+  <span>₹349</span>
+</div>
+
+<div class="offer-price">
+  <small>LIMITED OFFER</small>
+  <span>Buy 2 @ ₹598</span>
+</div>
 </div>
 
       <div class="hero-actions">
@@ -785,43 +790,62 @@
           </div>
         </div>
 
-        <!-- ORDER SUMMARY -->
-        <div class="order-block">
-          <h3><span class="num">3</span> Order Summary</h3>
-         <div class="summary-rows">
+    <!-- ORDER SUMMARY -->
+<div class="order-block">
+  <h3><span class="num">3</span> Order Summary</h3>
 
-  <div class="row">
-    <span>
-      Product
-      (<span id="sumQty">1</span> × ₹349)
-    </span>
-    <span id="sumProduct">₹349</span>
-  </div>
+  <div class="summary-rows">
 
-  <div class="row">
-    <span>Delivery Charges</span>
-    <span id="sumDelivery">FREE</span>
-  </div>
-
-  <div class="row total">
-    <span>Total Amount</span>
-    <span id="sumTotal">₹349</span>
-  </div>
-
-</div>
-          <button type="submit" class="btn btn-gold btn-block">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="#0A1830" stroke-width="1.8"/><path d="M8 11V8C8 5.8 9.8 4 12 4C14.2 4 16 5.8 16 8V11" stroke="#0A1830" stroke-width="1.8"/></svg>
-            Proceed to Payment
-          </button>
-          <p class="pay-note">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 11V8C8 5.8 9.8 4 12 4C14.2 4 16 5.8 16 8V11" stroke="currentColor" stroke-width="1.8"/></svg>
-            Secure &amp; Safe Payments via Razorpay
-          </p>
-        </div>
-      </form>
+    <div class="row">
+      <span>
+        Product
+        (<span id="sumQty">1</span> × ₹349)
+      </span>
+      <span id="sumProduct">₹349</span>
     </div>
+
+    <!-- OFFER DISCOUNT -->
+    <div class="row" id="discountRow" style="display:none;">
+      <span>Offer Discount / Saving</span>
+      <span id="sumDiscount" style="color:#4CA82A;font-weight:700;">
+        -₹0
+      </span>
+    </div>
+
+    <div class="row">
+      <span>Delivery Charges</span>
+      <span id="sumDelivery" style="color:#4CA82A;font-weight:700;">
+        FREE
+      </span>
+    </div>
+
+    <div class="row total">
+      <span>Total Amount</span>
+      <span id="sumTotal">₹349</span>
+    </div>
+
   </div>
-</section>
+
+  <button type="submit" class="btn btn-gold btn-block">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+      <rect x="5" y="11" width="14" height="9" rx="2"
+        stroke="#0A1830" stroke-width="1.8"/>
+      <path d="M8 11V8C8 5.8 9.8 4 12 4C14.2 4 16 5.8 16 8V11"
+        stroke="#0A1830" stroke-width="1.8"/>
+    </svg>
+    Proceed to Payment
+  </button>
+
+  <p class="pay-note">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+      <rect x="5" y="11" width="14" height="9" rx="2"
+        stroke="currentColor" stroke-width="1.8"/>
+      <path d="M8 11V8C8 5.8 9.8 4 12 4C14.2 4 16 5.8 16 8V11"
+        stroke="currentColor" stroke-width="1.8"/>
+    </svg>
+    Secure &amp; Safe Payments via Razorpay
+  </p>
+</div>
 
 <!-- ============ MODALS ============ -->
 <div class="modal-overlay" id="processingModal">
