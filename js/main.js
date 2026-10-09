@@ -1872,21 +1872,53 @@ function getPricing(quantity) {
               /*
                 Send customer to thank-you page
               */
+const confirmedAmount = Number(order.amount) / 100;
 
-              const params =
-                new URLSearchParams({
+const params = new URLSearchParams({
+  order_id:
+    razorpayResponse.razorpay_order_id || order.id || "",
 
-                  order_id:
-                    razorpayResponse.razorpay_order_id,
+  payment_id:
+    razorpayResponse.razorpay_payment_id || "",
 
-                  payment_id:
-                    razorpayResponse.razorpay_payment_id
+  orderId:
+    verifyData.orderId ||
+    razorpayResponse.razorpay_order_id ||
+    order.id ||
+    "",
 
-                });
+  quantity:
+    String(Number(orderPayload.quantity) || 1),
 
+  // Razorpay amount is in paise; bill needs rupees.
+  amount:
+    String(confirmedAmount),
 
-              window.location.href =
-                `thank-you.html?${params.toString()}`;
+  name:
+    orderPayload.fullName || "",
+
+  email:
+    orderPayload.email || "",
+
+  mobile:
+    orderPayload.mobile || "",
+
+  address:
+    orderPayload.address || "",
+
+  city:
+    orderPayload.city || "",
+
+  state:
+    orderPayload.state || "",
+
+  pincode:
+    orderPayload.pincode || ""
+});
+
+window.location.href =
+  `thank-you.html?${params.toString()}`;
+
 
             } catch (error) {
 
