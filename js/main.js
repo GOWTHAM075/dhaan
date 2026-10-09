@@ -797,99 +797,27 @@ document.addEventListener('DOMContentLoaded', () => {
   /* =========================================================
      GET PRICING
      ========================================================= */
+function getPricing(quantity) {
+  quantity = Math.max(
+    1,
+    Math.min(10, parseInt(quantity, 10) || 1)
+  );
 
-  function getPricing(quantity) {
+  const regularTotal = UNIT_PRICE * quantity;
 
-    quantity =
-      Number(quantity) || 1;
+  // One pack has no discount.
+  // More than one pack gets a flat ₹100 discount.
+  const discount = quantity > 1 ? 100 : 0;
 
+  const offerTotal = regularTotal - discount;
 
-    if (quantity < 1) {
-      quantity = 1;
-    }
-
-
-    /*
-      1 PACK
-
-      ₹349
-    */
-
-    if (quantity === 1) {
-
-      return {
-
-        regularTotal:
-          UNIT_PRICE,
-
-        discount:
-          0,
-
-        offerTotal:
-          UNIT_PRICE,
-
-        delivery:
-          DELIVERY
-
-      };
-
-    }
-
-
-    /*
-      2 OR MORE
-
-      Every 2 packs = ₹598
-      Remaining 1 pack = ₹349
-    */
-
-    const pairs =
-      Math.floor(
-        quantity / 2
-      );
-
-    const remaining =
-      quantity % 2;
-
-
-    const offerTotal =
-      (
-        pairs *
-        TWO_PACK_OFFER
-      ) +
-      (
-        remaining *
-        UNIT_PRICE
-      );
-
-
-    const regularTotal =
-      quantity *
-      UNIT_PRICE;
-
-
-    const discount =
-      regularTotal -
-      offerTotal;
-
-
-    return {
-
-      regularTotal:
-        regularTotal,
-
-      discount:
-        discount,
-
-      offerTotal:
-        offerTotal,
-
-      delivery:
-        DELIVERY
-
-    };
-
-  }
+  return {
+    regularTotal,
+    discount,
+    offerTotal,
+    delivery: DELIVERY
+  };
+}
 
 
   /* =========================================================
