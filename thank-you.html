@@ -1,1083 +1,447 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#6B1420">
+  <title>Thank You | Dhaan Foods</title>
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>
-    Thank You | Dhaan Foods
-  </title>
-
-
-  <!-- =====================================================
-       META PIXEL
-       Pixel ID: 2097054410902553
-       ===================================================== -->
-
+  <!-- Meta Pixel -->
   <script>
-
-    !function(f,b,e,v,n,t,s)
-    {
+    !function(f,b,e,v,n,t,s){
       if(f.fbq)return;
-
       n=f.fbq=function(){
-        n.callMethod ?
-        n.callMethod.apply(n,arguments) :
-        n.queue.push(arguments)
+        n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)
       };
-
       if(!f._fbq)f._fbq=n;
-
-      n.push=n;
-      n.loaded=!0;
-      n.version='2.0';
-      n.queue=[];
-
-      t=b.createElement(e);
-      t.async=!0;
-      t.src=v;
-
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];
+      t=b.createElement(e);t.async=!0;t.src=v;
       s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)
+      s.parentNode.insertBefore(t,s);
+    }(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
 
-    }(
-      window,
-      document,
-      'script',
-      'https://connect.facebook.net/en_US/fbevents.js'
-    );
-
-
-    /*
-     * YOUR ACTUAL META PIXEL ID
-     */
-    fbq(
-      'init',
-      '2097054410902553'
-    );
-
-
-    /*
-     * Track page visit
-     */
-    fbq(
-      'track',
-      'PageView'
-    );
-
+    fbq('init','2097054410902553');
+    fbq('track','PageView');
   </script>
 
-
-  <!-- Meta Pixel noscript fallback -->
-
-  <noscript>
-
-    <img
-      height="1"
-      width="1"
-      style="display:none"
-      src="https://www.facebook.com/tr?id=2097054410902553&ev=PageView&noscript=1"
-      alt=""
-    >
-
-  </noscript>
-
-
   <style>
+    *{box-sizing:border-box}
 
-    * {
-      box-sizing: border-box;
+    body{
+      margin:0;
+      min-height:100vh;
+      padding:30px 15px;
+      font-family:Arial,Helvetica,sans-serif;
+      background:#faf7f4;
+      color:#333;
     }
 
-
-    body {
-
-      margin: 0;
-
-      min-height: 100vh;
-
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-      background: #faf7f4;
-
-      color: #333;
-
-      padding: 35px 20px;
-
+    .container{
+      max-width:900px;
+      margin:auto;
     }
 
-
-    .container {
-
-      width: 100%;
-
-      max-width: 900px;
-
-      margin: 0 auto;
-
+    .card{
+      background:#fff;
+      padding:35px;
+      border:1px solid #e5e5e5;
+      border-radius:8px;
+      box-shadow:0 8px 28px rgba(0,0,0,.04);
     }
 
-
-    .card {
-
-      background: #fff;
-
-      border: 1px solid #e5e5e5;
-
-      border-radius: 4px;
-
-      padding: 34px;
-
+    h1{
+      color:#2f5da8;
+      font-size:27px;
+      margin:0 0 25px;
     }
 
-
-    h1 {
-
-      margin: 0 0 24px;
-
-      color: #2f5da8;
-
-      font-size: 24px;
-
-      font-weight: 700;
-
+    .notice{
+      border-left:4px solid #c54b2c;
+      padding:5px 0 5px 18px;
+      margin-bottom:32px;
+      line-height:1.7;
+      color:#555;
     }
 
-
-    .notice {
-
-      border-left: 4px solid #c54b2c;
-
-      padding: 4px 0 4px 18px;
-
-      margin-bottom: 34px;
-
-      line-height: 1.65;
-
-      color: #555;
-
-      font-size: 15px;
-
+    .top-info{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      border-bottom:1px solid #ddd;
+      padding-bottom:22px;
+      margin-bottom:32px;
     }
 
-
-    .top-info {
-
-      display: grid;
-
-      grid-template-columns:
-        repeat(4, 1fr);
-
-      border-bottom: 1px solid #ddd;
-
-      padding-bottom: 22px;
-
-      margin-bottom: 34px;
-
+    .info{
+      padding:0 15px;
+      border-right:1px solid #ddd;
+      min-width:0;
     }
 
+    .info:first-child{padding-left:0}
+    .info:last-child{border-right:0}
 
-    .info {
-
-      padding: 0 18px;
-
-      border-right: 1px solid #ddd;
-
+    .info-label{
+      display:block;
+      font-size:11px;
+      color:#777;
+      margin-bottom:7px;
+      text-transform:uppercase;
     }
 
-
-    .info:first-child {
-
-      padding-left: 0;
-
+    .info-value{
+      font-size:15px;
+      font-weight:bold;
+      overflow-wrap:anywhere;
     }
 
-
-    .info:last-child {
-
-      border-right: 0;
-
+    h2{
+      font-family:Georgia,serif;
+      font-size:25px;
+      color:#222;
+      margin-bottom:18px;
     }
 
-
-    .info-label {
-
-      display: block;
-
-      font-size: 11px;
-
-      text-transform: uppercase;
-
-      color: #777;
-
-      margin-bottom: 5px;
-
+    .order-table{
+      border:1px solid #ddd;
+      border-radius:4px;
+      overflow:hidden;
+      margin-bottom:30px;
     }
-
-
-    .info-value {
-
-      font-size: 15px;
-
-      font-weight: 700;
-
-      color: #333;
-
-      word-break: break-word;
-
-    }
-
-
-    h2 {
-
-      font-family:
-        Georgia,
-        'Times New Roman',
-        serif;
-
-      font-size: 23px;
-
-      margin: 0 0 16px;
-
-      color: #222;
-
-    }
-
-
-    .order-table {
-
-      width: 100%;
-
-      border: 1px solid #ddd;
-
-      border-radius: 3px;
-
-      overflow: hidden;
-
-      margin-bottom: 32px;
-
-    }
-
 
     .table-header,
     .product-row,
-    .total-row {
-
-      display: grid;
-
-      grid-template-columns:
-        1fr 180px;
-
-      padding: 16px 18px;
-
-      border-bottom: 1px solid #ddd;
-
+    .total-row{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 150px;
+      gap:12px;
+      padding:16px 18px;
+      border-bottom:1px solid #ddd;
     }
 
-
-    .table-header {
-
-      background: #f5f5f5;
-
-      text-transform: uppercase;
-
-      font-size: 12px;
-
-      letter-spacing: 1px;
-
-      color: #555;
-
+    .table-header{
+      background:#f5f5f5;
+      text-transform:uppercase;
+      font-size:12px;
+      color:#555;
     }
 
+    .product-name{color:#4e6592}
+    .total-row:last-child{border-bottom:0}
+    .total-row strong{font-weight:bold}
 
-    .product-row {
-
-      font-size: 14px;
-
-      color: #444;
-
+    .address-box{
+      border:1px solid #ddd;
+      padding:22px;
+      margin-bottom:25px;
+      line-height:1.7;
+      border-radius:4px;
     }
 
-
-    .product-name {
-
-      color: #4e6592;
-
+    .address-title{
+      font-family:Georgia,serif;
+      font-size:23px;
+      font-weight:bold;
+      margin-bottom:12px;
     }
 
-
-    .product-price {
-
-      text-align: left;
-
+    #billingAddress{
+      white-space:pre-line;
+      overflow-wrap:anywhere;
     }
 
-
-    .total-row {
-
-      border-bottom: 0;
-
+    .btn{
+      display:inline-block;
+      padding:14px 23px;
+      background:#6B1420;
+      color:#fff;
+      text-decoration:none;
+      border-radius:6px;
+      font-weight:bold;
     }
 
-
-    .total-row strong {
-
-      font-weight: 700;
-
+    .note{
+      font-size:12px;
+      color:#777;
+      line-height:1.6;
+      margin-top:22px;
     }
 
+    @media(max-width:650px){
+      .card{padding:22px 15px}
+      h1{font-size:23px}
 
-    .address-box {
-
-      border: 1px solid #ddd;
-
-      padding: 20px;
-
-      line-height: 1.65;
-
-      margin-bottom: 30px;
-
-    }
-
-
-    .address-title {
-
-      font-family:
-        Georgia,
-        'Times New Roman',
-        serif;
-
-      font-size: 21px;
-
-      font-weight: 700;
-
-      margin-bottom: 15px;
-
-    }
-
-
-    .address {
-
-      white-space: pre-line;
-
-      color: #444;
-
-    }
-
-
-    .buttons {
-
-      display: flex;
-
-      gap: 12px;
-
-      margin-top: 25px;
-
-    }
-
-
-    .btn {
-
-      display: inline-block;
-
-      padding: 13px 22px;
-
-      border-radius: 6px;
-
-      text-decoration: none;
-
-      font-size: 15px;
-
-      font-weight: 700;
-
-      text-align: center;
-
-    }
-
-
-    .primary {
-
-      background: #6B1420;
-
-      color: #fff;
-
-    }
-
-
-    .secondary {
-
-      background: #eee;
-
-      color: #333;
-
-    }
-
-
-    @media (max-width: 700px) {
-
-      .card {
-
-        padding: 25px 18px;
-
+      .top-info{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:20px 0;
       }
 
-
-      .top-info {
-
-        grid-template-columns:
-          repeat(2, 1fr);
-
-        gap: 20px 0;
-
-      }
-
-
-      .info:nth-child(2) {
-
-        border-right: 0;
-
-      }
-
-
-      .info:nth-child(3) {
-
-        padding-left: 0;
-
-      }
-
+      .info:nth-child(2){border-right:0}
+      .info:nth-child(3){padding-left:0}
 
       .table-header,
       .product-row,
-      .total-row {
-
-        grid-template-columns:
-          1fr 110px;
-
+      .total-row{
+        grid-template-columns:minmax(0,1fr) 95px;
+        padding:14px 10px;
+        font-size:14px;
       }
-
     }
-
-
-    @media (max-width: 480px) {
-
-      body {
-
-        padding: 15px 10px;
-
-      }
-
-
-      h1 {
-
-        font-size: 21px;
-
-      }
-
-
-      .notice {
-
-        font-size: 14px;
-
-      }
-
-
-      .top-info {
-
-        grid-template-columns:
-          1fr 1fr;
-
-      }
-
-
-      .info {
-
-        padding: 0 10px;
-
-      }
-
-
-      .info:nth-child(3) {
-
-        padding-left: 0;
-
-      }
-
-
-      .table-header,
-      .product-row,
-      .total-row {
-
-        grid-template-columns:
-          1fr 90px;
-
-        padding: 14px 12px;
-
-      }
-
-
-      .buttons {
-
-        flex-direction: column;
-
-      }
-
-
-      .btn {
-
-        width: 100%;
-
-      }
-
-    }
-
   </style>
-
 </head>
 
-
 <body>
+  <main class="container">
+    <section class="card">
 
-
-  <div class="container">
-
-    <div class="card">
-
-
-      <!-- =================================================
-           TITLE
-           ================================================= -->
-
-      <h1>
-        Thank you for placing an order with us!
-      </h1>
-
-
-      <!-- =================================================
-           DELIVERY NOTICE
-           ================================================= -->
+      <h1>Thank you for placing an order with us!</h1>
 
       <div class="notice">
-
-        Please note that your Dhaan Foods order will
-        normally be delivered across India within
-        <strong>3–5 business days</strong>.
-        Delivery times may vary depending on your
-        location and courier service.
-
-        If you have any questions about your order,
-        please contact Dhaan Foods customer support.
-
+        Your Dhaan Foods order will normally be delivered across India
+        within <strong>3–5 business days</strong>. Delivery times may vary
+        depending on your location and courier service.
       </div>
-
-
-      <!-- =================================================
-           ORDER INFORMATION
-           ================================================= -->
 
       <div class="top-info">
-
-
         <div class="info">
-
-          <span class="info-label">
-            Order Number
-          </span>
-
-          <span
-            class="info-value"
-            id="orderId"
-          >
-            —
-          </span>
-
+          <span class="info-label">Order Number</span>
+          <span class="info-value" id="orderId">—</span>
         </div>
 
-
         <div class="info">
-
-          <span class="info-label">
-            Date
-          </span>
-
-          <span
-            class="info-value"
-            id="orderDate"
-          >
-            —
-          </span>
-
+          <span class="info-label">Date</span>
+          <span class="info-value" id="orderDate">—</span>
         </div>
 
-
         <div class="info">
-
-          <span class="info-label">
-            Email
-          </span>
-
-          <span
-            class="info-value"
-            id="email"
-          >
-            —
-          </span>
-
+          <span class="info-label">Email</span>
+          <span class="info-value" id="email">—</span>
         </div>
 
-
         <div class="info">
-
-          <span class="info-label">
-            Total
-          </span>
-
-          <span
-            class="info-value"
-            id="topTotal"
-          >
-            ₹299
-          </span>
-
+          <span class="info-label">Total</span>
+          <span class="info-value" id="topTotal">₹349</span>
         </div>
-
-
       </div>
 
-
-      <!-- =================================================
-           ORDER DETAILS
-           ================================================= -->
-
-      <h2>
-        Order details
-      </h2>
-
+      <h2>Order details</h2>
 
       <div class="order-table">
 
-
         <div class="table-header">
-
-          <div>
-            Product
-          </div>
-
-          <div>
-            Total
-          </div>
-
+          <div>Product</div>
+          <div>Total</div>
         </div>
 
-
         <div class="product-row">
-
           <div class="product-name">
-
-            Dhaan Smart Start Health Mix
-            × <span id="quantity">1</span>
-
+            Dhaan Smart Start Health Mix ×
+            <span id="quantity">1</span>
           </div>
-
-          <div
-            class="product-price"
-            id="productTotal"
-          >
-            ₹299
-          </div>
-
+          <div id="productTotal">₹349</div>
         </div>
-
 
         <div class="product-row">
-
-          <div>
-            Delivery
-          </div>
-
-          <div>
-            FREE
-          </div>
-
+          <div>Delivery</div>
+          <div>FREE</div>
         </div>
-
 
         <div class="total-row">
-
-          <div>
-            Subtotal:
-          </div>
-
-          <div>
-            <strong id="subtotal">
-              ₹299
-            </strong>
-          </div>
-
+          <div>Regular price:</div>
+          <div><strong id="regularTotal">₹349</strong></div>
         </div>
-
 
         <div class="total-row">
-
-          <div>
-            Payment method:
-          </div>
-
-          <div>
-            Razorpay
-          </div>
-
+          <div>Offer discount:</div>
+          <div><strong id="discount">₹0</strong></div>
         </div>
-
 
         <div class="total-row">
-
-          <div>
-            Total:
-          </div>
-
-          <div>
-            <strong id="total">
-              ₹299
-            </strong>
-          </div>
-
+          <div>Subtotal:</div>
+          <div><strong id="subtotal">₹349</strong></div>
         </div>
 
+        <div class="total-row">
+          <div>Payment method:</div>
+          <div>Razorpay</div>
+        </div>
+
+        <div class="total-row">
+          <div>Total:</div>
+          <div><strong id="total">₹349</strong></div>
+        </div>
 
       </div>
-
-
-      <!-- =================================================
-           BILLING / DELIVERY ADDRESS
-           ================================================= -->
 
       <div class="address-box">
-
-
-        <div class="address-title">
-          Billing address
+        <div class="address-title">Billing address</div>
+        <div id="billingAddress">
+          Customer details were not supplied by checkout.
         </div>
-
-
-        <div
-          class="address"
-          id="billingAddress"
-        >
-          Customer Name
-        </div>
-
-
       </div>
 
+      <a href="index.html" class="btn">Continue Shopping</a>
 
-      <!-- =================================================
-           BUTTONS
-           ================================================= -->
+      <p class="note">
+        Please keep your order number for reference. If your order details
+        are missing, contact Dhaan Foods customer support with your Razorpay
+        payment confirmation.
+      </p>
 
-      <div class="buttons">
-
-        <a
-          href="index.html"
-          class="btn primary"
-        >
-          Continue Shopping
-        </a>
-
-      </div>
-
-
-    </div>
-
-  </div>
-
-
-  <!-- =====================================================
-       JAVASCRIPT
-       ===================================================== -->
+    </section>
+  </main>
 
   <script>
+    (() => {
+      "use strict";
 
-    const params =
-      new URLSearchParams(
-        window.location.search
-      );
+      const params = new URLSearchParams(location.search);
 
-
-    /* -----------------------------------------
-       GET ORDER DATA
-       ----------------------------------------- */
-
-    const orderId =
-      params.get('orderId');
-
-
-    const amount =
-      Number(
-        params.get('amount')
-      );
-
-
-    const quantity =
-      Number(
-        params.get('quantity')
-      ) || 1;
-
-
-    const customerName =
-      params.get('name') || '';
-
-
-    const email =
-      params.get('email') || '';
-
-
-    const mobile =
-      params.get('mobile') || '';
-
-
-    const address =
-      params.get('address') || '';
-
-
-    const city =
-      params.get('city') || '';
-
-
-    const state =
-      params.get('state') || '';
-
-
-    const pincode =
-      params.get('pincode') || '';
-
-
-    /* -----------------------------------------
-       DISPLAY ORDER ID
-       ----------------------------------------- */
-
-    if (orderId) {
-
-      document.getElementById(
-        'orderId'
-      ).textContent =
-        orderId;
-
-    }
-
-
-    /* -----------------------------------------
-       DISPLAY DATE
-       ----------------------------------------- */
-
-    const today =
-      new Date();
-
-
-    document.getElementById(
-      'orderDate'
-    ).textContent =
-      today.toLocaleDateString(
-        'en-IN',
-        {
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric'
+      function getParam(...keys) {
+        for (const key of keys) {
+          const value = params.get(key);
+          if (value && value.trim()) return value.trim();
         }
+        return "";
+      }
+
+      function money(value) {
+        return "₹" + Number(value || 0).toLocaleString("en-IN", {
+          maximumFractionDigits: 2
+        });
+      }
+
+      function numberParam(...keys) {
+        const value = getParam(...keys);
+        if (!value) return NaN;
+
+        const number = Number(value);
+        return Number.isFinite(number) ? number : NaN;
+      }
+
+      // Read quantity from checkout.
+      const requestedQuantity = numberParam("quantity", "qty");
+
+      const quantity =
+        Number.isInteger(requestedQuantity) &&
+        requestedQuantity >= 1 &&
+        requestedQuantity <= 10
+          ? requestedQuantity
+          : 1;
+
+      /*
+       * Offer calculation:
+       * 1 pack = ₹349
+       * 2 packs = ₹598
+       * 3 packs = ₹947
+       * 4 packs = ₹1196
+       */
+
+      const pairs = Math.floor(quantity / 2);
+      const remaining = quantity % 2;
+
+      const offerTotal = pairs * 598 + remaining * 349;
+      const regularTotal = quantity * 349;
+
+      // Prefer the amount passed by checkout; use offer pricing as fallback.
+      const amountFromUrl = numberParam(
+        "amount",
+        "total",
+        "totalAmount"
       );
 
+      const finalAmount =
+        Number.isFinite(amountFromUrl) && amountFromUrl > 0
+          ? amountFromUrl
+          : offerTotal;
 
-    /* -----------------------------------------
-       AMOUNT
-       ----------------------------------------- */
+      const orderId = getParam("orderId", "order_id", "orderID");
+      const email = getParam("email", "customerEmail");
 
-    let finalAmount =
-      amount;
-
-
-    if (
-      !Number.isFinite(finalAmount) ||
-      finalAmount <= 0
-    ) {
-
-      finalAmount =
-        299 * quantity;
-
-    }
-
-
-    const formattedAmount =
-      `₹${finalAmount.toLocaleString(
-        'en-IN'
-      )}`;
-
-
-    document.getElementById(
-      'topTotal'
-    ).textContent =
-      formattedAmount;
-
-
-    document.getElementById(
-      'productTotal'
-    ).textContent =
-      formattedAmount;
-
-
-    document.getElementById(
-      'subtotal'
-    ).textContent =
-      formattedAmount;
-
-
-    document.getElementById(
-      'total'
-    ).textContent =
-      formattedAmount;
-
-
-    /* -----------------------------------------
-       QUANTITY
-       ----------------------------------------- */
-
-    document.getElementById(
-      'quantity'
-    ).textContent =
-      quantity;
-
-
-    /* -----------------------------------------
-       EMAIL
-       ----------------------------------------- */
-
-    if (email) {
-
-      document.getElementById(
-        'email'
-      ).textContent =
-        email;
-
-    }
-
-
-    /* -----------------------------------------
-       ADDRESS
-       ----------------------------------------- */
-
-    const addressParts = [
-
-      customerName,
-
-      address,
-
-      city,
-
-      state,
-
-      pincode,
-
-      mobile
-
-    ].filter(Boolean);
-
-
-    if (addressParts.length) {
-
-      document.getElementById(
-        'billingAddress'
-      ).textContent =
-        addressParts.join('\n');
-
-    }
-
-
-    /* =================================================
-       META PIXEL — PURCHASE EVENT
-       =================================================
-
-       IMPORTANT:
-       Razorpay amount is normally in INR.
-
-       Example:
-       amount = 299
-
-       Meta receives:
-       value = 299
-       currency = INR
-
-       This Purchase event should fire only on
-       the successful order/thank-you page.
-       ================================================= */
-
-
-    if (
-      typeof fbq === 'function' &&
-      finalAmount > 0
-    ) {
-
-      fbq(
-        'track',
-        'Purchase',
-        {
-
-          value:
-            finalAmount,
-
-          currency:
-            'INR',
-
-          content_name:
-            'Dhaan Smart Start Health Mix',
-
-          content_type:
-            'product',
-
-          contents: [
-
-            {
-
-              id:
-                'dhan-smart-start-health-mix',
-
-              quantity:
-                quantity
-
-            }
-
-          ]
-
-        },
-
-        {
-
-          /*
-           * Unique event ID prevents the same
-           * purchase from being counted multiple
-           * times when the order ID is available.
-           */
-
-          eventID:
-            orderId ||
-            `dhan_${Date.now()}`
-
-        }
-
+      const customerName = getParam(
+        "name",
+        "fullName",
+        "customerName"
       );
 
-    }
+      const mobile = getParam("mobile", "phone", "contact");
+      const address = getParam("address", "streetAddress");
+      const city = getParam("city");
+      const state = getParam("state");
+      const pincode = getParam("pincode", "pin", "postalCode");
 
+      document.getElementById("orderId").textContent =
+        orderId || "—";
 
+      document.getElementById("orderDate").textContent =
+        new Date().toLocaleDateString("en-IN", {
+          day: "numeric",
+          month: "long",
+          year: "numeric"
+        });
+
+      document.getElementById("email").textContent =
+        email || "—";
+
+      document.getElementById("quantity").textContent =
+        quantity;
+
+      document.getElementById("topTotal").textContent =
+        money(finalAmount);
+
+      document.getElementById("productTotal").textContent =
+        money(finalAmount);
+
+      document.getElementById("subtotal").textContent =
+        money(finalAmount);
+
+      document.getElementById("total").textContent =
+        money(finalAmount);
+
+      document.getElementById("regularTotal").textContent =
+        money(regularTotal);
+
+      document.getElementById("discount").textContent =
+        "-" + money(Math.max(0, regularTotal - finalAmount));
+
+      const addressParts = [
+        customerName,
+        address,
+        city,
+        state,
+        pincode,
+        mobile
+      ].filter(Boolean);
+
+      document.getElementById("billingAddress").textContent =
+        addressParts.length
+          ? addressParts.join("\n")
+          : "Customer details were not supplied by checkout.";
+
+      // Fire Purchase only if checkout supplied an order/payment reference.
+      const paymentId = getParam(
+        "payment_id",
+        "razorpay_payment_id"
+      );
+
+      if (
+        typeof window.fbq === "function" &&
+        finalAmount > 0 &&
+        (orderId || paymentId)
+      ) {
+        fbq("track", "Purchase", {
+          value: finalAmount,
+          currency: "INR",
+          content_name: "Dhaan Smart Start Health Mix",
+          content_type: "product",
+          contents: [{
+            id: "dhan-smart-start-health-mix",
+            quantity: quantity
+          }]
+        }, {
+          eventID: orderId || paymentId
+        });
+      }
+    })();
   </script>
-
-
 </body>
-
 </html>
