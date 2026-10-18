@@ -11,22 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const API_URL = 'https://dhaan-backend.onrender.com';
 
-  const UNIT_PRICE = 349;
-
-  /*
-    BUY 2 OFFER
-
-    1 Pack  = ₹349
-    2 Packs = ₹598
-    3 Packs = ₹947
-    4 Packs = ₹1196
-
-    Delivery = FREE
-  */
-
-  const TWO_PACK_ORIGINAL = 700;
-  const TWO_PACK_OFFER = 598;
-  const DELIVERY = 0;
+  const UNIT_PRICE = 349;       // Regular price per pack
+  const FESTIVAL_PRICE = 299;   // Festival Sale price per pack
+  const DELIVERY = 0;           // Free delivery
 
 
   /* =========================================================
@@ -804,12 +791,8 @@ function getPricing(quantity) {
   );
 
   const regularTotal = UNIT_PRICE * quantity;
-
-  // One pack has no discount.
-  // More than one pack gets a flat ₹100 discount.
-  const discount = quantity > 1 ? 100 : 0;
-
-  const offerTotal = regularTotal - discount;
+  const offerTotal = FESTIVAL_PRICE * quantity;
+  const discount = regularTotal - offerTotal;
 
   return {
     regularTotal,
