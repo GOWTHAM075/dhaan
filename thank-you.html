@@ -90,7 +90,7 @@
         </div>
         <div class="info">
           <span class="info-label">Total</span>
-          <span class="info-value" id="topTotal">₹349</span>
+          <span class="info-value" id="topTotal">₹299</span>
         </div>
       </div>
 
@@ -104,7 +104,7 @@
           <div class="product-name">
             Dhaan Smart Start Health Mix × <span id="quantity">1</span>
           </div>
-          <div class="product-price" id="productTotal">₹349</div>
+          <div class="product-price" id="productTotal">₹299</div>
         </div>
         <div class="product-row">
           <div>Delivery</div>
@@ -116,11 +116,11 @@
         </div>
         <div class="total-row">
           <div>Offer discount:</div>
-          <div><strong id="discount">₹0</strong></div>
+          <div><strong id="discount">₹50</strong></div>
         </div>
         <div class="total-row">
           <div>Subtotal:</div>
-          <div><strong id="subtotal">₹349</strong></div>
+          <div><strong id="subtotal">₹299</strong></div>
         </div>
         <div class="total-row">
           <div>Payment method:</div>
@@ -128,7 +128,7 @@
         </div>
         <div class="total-row">
           <div>Total:</div>
-          <div><strong id="total">₹349</strong></div>
+          <div><strong id="total">₹299</strong></div>
         </div>
       </div>
 
@@ -178,18 +178,20 @@
         ? quantityRaw
         : 1;
 
-      // Match the backend offer: ₹349 for one; ₹598 for every pair.
-      const pairs = Math.floor(quantity / 2);
-      const remaining = quantity % 2;
-      const calculatedTotal = pairs * 598 + remaining * 349;
+      // Festival Sale: ₹299 per pack. Regular price: ₹349 per pack.
       const regularTotal = quantity * 349;
-      const calculatedDiscount = Math.max(0, regularTotal - calculatedTotal);
+      const calculatedTotal = quantity * 299;
+      const calculatedDiscount = regularTotal - calculatedTotal;
 
-      // Prefer amount from checkout URL. Otherwise calculate using current offer.
+      // Accept the checkout amount only when it matches this quantity's offer.
+      // This prevents a changed URL parameter from showing an inconsistent bill.
       const amountFromUrl = safeNumber(getParam("amount", "total", "totalAmount"));
-      const finalAmount = Number.isFinite(amountFromUrl) && amountFromUrl > 0
-        ? amountFromUrl
-        : calculatedTotal;
+      const finalAmount =
+        Number.isFinite(amountFromUrl) &&
+        amountFromUrl > 0 &&
+        Math.round(amountFromUrl * 100) === Math.round(calculatedTotal * 100)
+          ? amountFromUrl
+          : calculatedTotal;
 
       const orderId = getParam("orderId", "order_id", "orderID");
       const email = getParam("email", "customerEmail");
