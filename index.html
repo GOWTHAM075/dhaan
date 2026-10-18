@@ -233,6 +233,40 @@
 
             box-sizing: border-box;
         }
+        
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.price-label {
+  color: #f0c7c7;
+  font-size: 16px;
+}
+
+.price-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.price-group del {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  opacity: 0.9;
+}
+
+.price-group strong {
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 800;
+}
+
 
         /* =====================================================
            TABLET
@@ -2438,13 +2472,15 @@
                     </div>
 
 
-<div class="price-per-pack">
-  <span>Price per pack</span>
-  <span class="price-values">
+
+<div class="price-row">
+  <span class="price-label">Price per pack</span>
+  <span class="price-group">
     <del>₹349</del>
     <strong>₹299</strong>
   </span>
 </div>
+
 
 
                 </div>
